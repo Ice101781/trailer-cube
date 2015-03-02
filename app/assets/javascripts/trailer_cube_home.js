@@ -50,8 +50,21 @@
 
 
 function on_click() {
+  video.src = sources[0];
   video.load();
   video.play();
+  
+  video_image.width = dimensions[0][0];
+  video_image.height = dimensions[0][1];
+  
+  video_image_context.fillStyle = '0#000000';
+  video_image_context.fillRect(0, 0, video_image.width, video_image.height);
+
+  video_texture.minFilter = THREE.LinearFilter;
+  video_texture.magFilter = THREE.LinearFilter;
+
+  video_screen_materials[0].map = video_texture;
+
   click = false;  
 };
 
@@ -70,13 +83,13 @@ function on_mouse_down(e) {
   
   var intersects = raycaster.intersectObjects(scene.children, true);  
     
-      if( intersects.length > 0 ) {
-        if ( intersects[0].object == video_screen ) {
-          click = true;
-        };
+    if( intersects.length > 0 ) {
+      if ( intersects[0].object == video_screens[0] ) {
+        click = true;
       };
+    };
   
-  console.log(intersects);
+  //console.log(intersects);
 };
 
 
@@ -91,7 +104,8 @@ function on_window_resize(e) {
 //global vars needed for the scene
   var delta, elapsed,
       load_mesh, load_light, 
-      trailer_cube, video, video_image, video_image_context, video_texture, video_screen,
+      trailer_cube, video = create( "video" ), video_image = create( "canvas" ), 
+      video_image_context = video_image.getContext( '2d' ), video_texture = new THREE.Texture( video_image ),
       load_time = 5,
       first_load = true,
       click = false;
@@ -198,35 +212,12 @@ function init() {
         trailer_cube.position.setY(trailer_cube_r*Math.sin(trailer_cube_theta)*Math.sin(trailer_cube_phi));
         trailer_cube.position.setZ(trailer_cube_r*Math.cos(trailer_cube_theta));
 
-  //add trailers to the homepage
-    video = create( "video" );
-      video.src = sources[0];
-
-    video_image = create( "canvas" );
-      video_image.width = dimensions[0][0];
-      video_image.height = dimensions[0][1];
-
-    video_image_context = video_image.getContext( '2d' );
-      video_image_context.fillStyle = '0#000000';
-      video_image_context.fillRect(0, 0, video_image.width, video_image.height);
-
-    video_texture = new THREE.Texture( video_image );
-      video_texture.minFilter = THREE.LinearFilter;
-      video_texture.magFilter = THREE.LinearFilter;
-
-    var video_screen_geometry = new THREE.PlaneBufferGeometry(.16, .09, 4, 4);
-
-    var video_screen_material = new THREE.MeshBasicMaterial(
-      {
-        map: video_texture,
-        overdraw: true,  
-      } 
-    );
-
-    video_screen = new THREE.Mesh(video_screen_geometry, video_screen_material);
-      video_screen.visible = false;
-      scene.add(video_screen);
-      video_screen.position.set( locations[0][0], locations[0][1], locations[0][2] );
+  //add video screens to the scene
+    for(i=0; i<trailers.length; i++) {
+      video_screens[i].visible = false;
+      scene.add(video_screens[i]);
+      video_screens[i].position.set( locations[i][0], locations[i][1], locations[i][2] );
+    };
 };
 
 
@@ -248,9 +239,12 @@ function loaded() {
     //controls.autoRotateSpeed = 0.125;
 
   $( "loading" ).style.display = "none";
+  
   homepage_light.visible = true;
   trailer_cube.visible = true;
-  video_screen.visible = true;
+  for(i=0; i<trailers.length; i++) {
+    video_screens[i].visible = true;
+  };
 };
 
 
