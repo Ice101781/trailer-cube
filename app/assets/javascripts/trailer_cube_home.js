@@ -50,7 +50,9 @@
 
 
 function on_click() {
-  // TO DO:  
+  video.load();
+  video.play();
+  click = false;  
 };
 
 
@@ -68,15 +70,13 @@ function on_mouse_down(e) {
   
   var intersects = raycaster.intersectObjects(scene.children, true);  
     
-    // TO DO:
-
-      //if(intersects.length > 0) {
-        //if (intersects[0].object ==  ) {
-          //click = true;
-        //};
-      //};
+      if( intersects.length > 0 ) {
+        if ( intersects[0].object == video_screen ) {
+          click = true;
+        };
+      };
   
-  //console.log(intersects);
+  console.log(intersects);
 };
 
 
@@ -201,7 +201,6 @@ function init() {
   //add trailers to the homepage
     video = create( "video" );
       video.src = sources[0];
-      video.load();
 
     video_image = create( "canvas" );
       video_image.width = dimensions[0][0];
@@ -252,7 +251,6 @@ function loaded() {
   homepage_light.visible = true;
   trailer_cube.visible = true;
   video_screen.visible = true;
-  video.play();
 };
 
 
@@ -273,11 +271,6 @@ function render() {
       };
     };
 
-  //click logic
-    if(click == true) {
-      on_click();
-    };
-
   //console.log(variable name(s) here);
 };
 
@@ -293,6 +286,13 @@ function animate() {
     if (elapsed >= load_time && first_load == true) {
       loaded();
       first_load = false;
+    };
+
+  //click logic
+    if(click == false) {
+    }  
+    else { 
+      on_click();
     };  
 
   requestAnimationFrame(animate);
