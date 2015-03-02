@@ -4,37 +4,41 @@
   };
 
 
-//refer to HTML tags
+//HTML tag functions
   function $( id ) {
     return document.getElementById( id );
   };
 
+  function append( child, parent ) {
+    return parent.appendChild(child);
+  };
 
-//some global vars
-  var clock = new THREE.Clock();
+  function create( id ) {
+    return document.createElement( id );
+  };
 
-  var width = window.innerWidth;
-  var height = window.innerHeight;
 
-  var container = document.getElementById("container");
+//some global vars, append verifications
+  var clock = new THREE.Clock(),
+      width = window.innerWidth,
+      height = window.innerHeight,
+      container = $("container");
     
-  //verify that document.body is non-null before appending container
-    if(document.body != null) {
-      document.body.appendChild(container);
-    };
+  if(document.body != null) {
+    append( container, document.body );
+  };
 
   var scene = new THREE.Scene(), 
       camera = new THREE.PerspectiveCamera(45, (width/height), 0.01, 100),
       controls = new THREE.OrbitControls(camera, container),
-      renderer = new THREE.WebGLRenderer( { antialias: true, alpha: false } );
+      renderer = new THREE.WebGLRenderer( { antialias: false, alpha: false } );
       
-  //verify that container is non-null before appending renderer, setting attributes, and printing 'loading...' text
-    if(container != null) {    
-      container.appendChild(renderer.domElement);
-      renderer.setSize(width, height);
-      renderer.setClearColor(0x000000);
-      $( "loading" ).style.display = "block";   
-    };
+  if(container != null) {    
+    append( renderer.domElement, container );
+    renderer.setSize(width, height);
+    renderer.setClearColor(0x000000);
+    $( "loading" ).style.display = "block";   
+  };
 
   var projector = new THREE.Projector(),
       raycaster = new THREE.Raycaster(),
@@ -45,26 +49,8 @@
   window.addEventListener('resize', on_window_resize, false);
 
 
-function cube_move() {
-  var axis = new THREE.Vector3(),
-      tangent = new THREE.Vector3(),
-      up = new THREE.Vector3(0, 1, 0),
-      num_points = 100,
-      radians;
-
-  var cube_path = new THREE.SplineCurve3([trailer_cube.position, camera.position]); 
-
-  if (spline_counter <= 0.1) {
-    trailer_cube.position.copy( cube_path.getPointAt(spline_counter) );
-    tangent = cube_path.getTangentAt(spline_counter).normalize();
-    axis.crossVectors(up, tangent).normalize();
-    radians = Math.acos( up.dot(tangent) );
-    trailer_cube.quaternion.setFromAxisAngle(axis, radians);
-    spline_counter += 0.01;
-  };
-
-  //adjust the controls so that the camera always shoots the cube
-    controls.target = trailer_cube.position;
+function on_click() {
+  // TO DO:  
 };
 
 
@@ -81,11 +67,14 @@ function on_mouse_down(e) {
   raycaster.set(camera.position, vector.sub( camera.position ).normalize());
   
   var intersects = raycaster.intersectObjects(scene.children, true);  
-    if(intersects.length > 0) {
-      if (intersects[0].object == trailer_cube) {
-        cube_click = true;
-      };
-    };
+    
+    // TO DO:
+
+      //if(intersects.length > 0) {
+        //if (intersects[0].object ==  ) {
+          //click = true;
+        //};
+      //};
   
   //console.log(intersects);
 };
@@ -105,12 +94,11 @@ function on_window_resize(e) {
       trailer_cube, video, video_image, video_image_context, video_texture, video_screen,
       load_time = 5,
       first_load = true,
-      cube_click = false,
-      spline_counter = 0;
+      click = false;
 
 init();
 animate();
-console.log(trailer_cube.geometry.vertices);
+//console.log(variable name(s) here);
 
 
 function load_screen_mesh() {
@@ -152,7 +140,6 @@ function load_screen_mesh() {
         };
       
         triangle_geo.faces.push( new THREE.Face3( 0, 1, 2 ) );
-
         load_geo.merge(triangle_geo);
       };
 
@@ -164,93 +151,89 @@ function load_screen_mesh() {
 
 
 function load_screen() {
-  load_screen_mesh(); 
- 
-  camera.position.z = 30;
-    
   //add a light to the load scene
     load_light = new THREE.AmbientLight(0xFFFFFF);
       scene.add(load_light);
+  
+  camera.position.z = 30;
+  load_screen_mesh();
 };
 
 
 function init() {
   load_screen();
 
-  //load the objects in the homepage scene
+  //add a light to the home page
+    homepage_light = new THREE.PointLight(0xFFFFFF);
+      homepage_light.visible = false;
+      scene.add(homepage_light);
+      //the homepage light's spherical coordinates parameters
+        var homepage_light_r = 10;
+        var homepage_light_theta = Math.PI/4;
+        var homepage_light_phi = Math.PI/2;
+      //set the homepage light's position at page load
+        homepage_light.position.setX(homepage_light_r*Math.sin(homepage_light_theta)*Math.cos(homepage_light_phi));
+        homepage_light.position.setY(homepage_light_r*Math.sin(homepage_light_theta)*Math.sin(homepage_light_phi));
+        homepage_light.position.setZ(homepage_light_r*Math.cos(homepage_light_theta));
 
-    //add the cube
-      var trailer_cube_geo = new THREE.BoxGeometry(1, 1, 1, 5, 5, 5);
+  //add the cube
+    var trailer_cube_geo = new THREE.BoxGeometry(1, 1, 1, 5, 5, 5);
            
-      var trailer_cube_mat = new THREE.MeshBasicMaterial(
-        {
-          color: 0x4B32AF,
-          wireframe: true,          
-          //normalMap: THREE.ImageUtils.loadTexture("public_assets/cube_normal.jpg"),
-        }
-      );
+    var trailer_cube_mat = new THREE.MeshBasicMaterial(
+      {
+        color: 0x4B32AF,
+        wireframe: true,          
+      }
+    );
 
-      trailer_cube = new THREE.Mesh(trailer_cube_geo, trailer_cube_mat); 
-        trailer_cube.visible = false;
-        scene.add(trailer_cube);        
-        //the cube's spherical coordinates parameters
-          var trailer_cube_r = 0;
-          var trailer_cube_theta = 0;
-          var trailer_cube_phi = 0;
-        //set the cube's position at page load
-          trailer_cube.position.setX(trailer_cube_r*Math.sin(trailer_cube_theta)*Math.cos(trailer_cube_phi));
-          trailer_cube.position.setY(trailer_cube_r*Math.sin(trailer_cube_theta)*Math.sin(trailer_cube_phi));
-          trailer_cube.position.setZ(trailer_cube_r*Math.cos(trailer_cube_theta));
+    trailer_cube = new THREE.Mesh(trailer_cube_geo, trailer_cube_mat); 
+      trailer_cube.visible = false;
+      scene.add(trailer_cube);        
+      //the cube's spherical coordinates parameters
+        var trailer_cube_r = 0;
+        var trailer_cube_theta = 0;
+        var trailer_cube_phi = 0;
+      //set the cube's position at page load
+        trailer_cube.position.setX(trailer_cube_r*Math.sin(trailer_cube_theta)*Math.cos(trailer_cube_phi));
+        trailer_cube.position.setY(trailer_cube_r*Math.sin(trailer_cube_theta)*Math.sin(trailer_cube_phi));
+        trailer_cube.position.setZ(trailer_cube_r*Math.cos(trailer_cube_theta));
 
-    //add a light to the home page
-      homepage_light = new THREE.PointLight(0xFFFFFF);
-        homepage_light.visible = false;
-        scene.add(homepage_light);
-        //the homepage light's spherical coordinates parameters
-          var homepage_light_r = 10;
-          var homepage_light_theta = Math.PI/4;
-          var homepage_light_phi = Math.PI/2;
-        //set the homepage light's position at page load
-          homepage_light.position.setX(homepage_light_r*Math.sin(homepage_light_theta)*Math.cos(homepage_light_phi));
-          homepage_light.position.setY(homepage_light_r*Math.sin(homepage_light_theta)*Math.sin(homepage_light_phi));
-          homepage_light.position.setZ(homepage_light_r*Math.cos(homepage_light_theta));
+  //add trailers to the homepage
+    video = create( "video" );
+      video.src = sources[0];
+      video.load();
 
-    //add trailers to the homepage
-      video = document.createElement( 'video' );
-        video.src = "hd_trailers/furious7.mp4";
-        video.load();
+    video_image = create( "canvas" );
+      video_image.width = dimensions[0][0];
+      video_image.height = dimensions[0][1];
 
-      video_image = document.createElement( 'canvas' );
-        video_image.width = 1280;
-        video_image.height = 720;
+    video_image_context = video_image.getContext( '2d' );
+      video_image_context.fillStyle = '0#000000';
+      video_image_context.fillRect(0, 0, video_image.width, video_image.height);
 
-      video_image_context = video_image.getContext( '2d' );
-        video_image_context.fillStyle = '0#000000';
-        video_image_context.fillRect(0, 0, video_image.width, video_image.height);
+    video_texture = new THREE.Texture( video_image );
+      video_texture.minFilter = THREE.LinearFilter;
+      video_texture.magFilter = THREE.LinearFilter;
 
-      video_texture = new THREE.Texture( video_image );
-        video_texture.minFilter = THREE.LinearFilter;
-        video_texture.magFilter = THREE.LinearFilter;
+    var video_screen_geometry = new THREE.PlaneBufferGeometry(.16, .09, 4, 4);
 
-      var video_screen_geometry = new THREE.PlaneBufferGeometry(.2, .112360, 4, 4);
+    var video_screen_material = new THREE.MeshBasicMaterial(
+      {
+        map: video_texture,
+        overdraw: true,  
+      } 
+    );
 
-      var video_screen_material = new THREE.MeshBasicMaterial(
-        {
-          map: video_texture,
-          overdraw: true,  
-        } 
-      );
-
-      video_screen = new THREE.Mesh(video_screen_geometry, video_screen_material);
-        video_screen.visible = false;
-        scene.add(video_screen);
-        video_screen.position.set(.25, .25, .5);
+    video_screen = new THREE.Mesh(video_screen_geometry, video_screen_material);
+      video_screen.visible = false;
+      scene.add(video_screen);
+      video_screen.position.set( locations[0][0], locations[0][1], locations[0][2] );
 };
 
 
-function loaded() {  
-  scene.remove(load_mesh); 
+function loaded() {
   scene.remove(load_light);
+  scene.remove(load_mesh); 
 
   //the camera's spherical coordinates parameters
     var cam_r = 2;
@@ -266,8 +249,8 @@ function loaded() {
     //controls.autoRotateSpeed = 0.125;
 
   $( "loading" ).style.display = "none";
-  trailer_cube.visible = true;
   homepage_light.visible = true;
+  trailer_cube.visible = true;
   video_screen.visible = true;
   video.play();
 };
@@ -278,23 +261,22 @@ function render() {
   elapsed = clock.getElapsedTime();
 
   controls.update(delta);
-
+  controls.target = new THREE.Vector3(0,0,0);
   renderer.render(scene, camera);
   
-  if (elapsed >= load_time && first_load == true) {
-    loaded();
-    first_load = false;
-  };
-
-  if ( video.readyState === video.HAVE_ENOUGH_DATA ) {
-      
-    video_image_context.drawImage( video, 0, 0 );
+  //update the video texture
+    if ( video.readyState === video.HAVE_ENOUGH_DATA ) {
+      video_image_context.drawImage( video, 0, 0 );
     
-    if ( video_texture ) { 
-      video_texture.needsUpdate = true;
+      if ( video_texture ) { 
+        video_texture.needsUpdate = true;
+      };
     };
-  
-  };
+
+  //click logic
+    if(click == true) {
+      on_click();
+    };
 
   //console.log(variable name(s) here);
 };
@@ -305,21 +287,15 @@ function animate() {
     if (elapsed < load_time) {
       load_mesh.rotation.x += 2*Math.PI/300;
       load_mesh.rotation.y += 2*Math.PI/300;
-      //load_mesh.rotation.z += 2*Math.PI/300;
-      //load_mesh.scale.x += Math.cos(elapsed)/150;
-      //load_mesh.scale.y += Math.cos(elapsed)/150;
-      //load_mesh.scale.z += Math.cos(elapsed)/150;
     };
 
-  //cube movement
-    if(cube_click == false) {
-      //the cube's rotation
-        //trailer_cube.rotation.y -= (2*Math.PI)/2000;
-    }
-    else {
-      cube_move();
+  //load the home page
+    if (elapsed >= load_time && first_load == true) {
+      loaded();
+      first_load = false;
     };  
 
   requestAnimationFrame(animate);
   render();   
 };
+
