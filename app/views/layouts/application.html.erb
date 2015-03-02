@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>    
+    <title>trailer_cube</title>
+    
+    <%= stylesheet_link_tag    'application', media:'all', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  
+  <header id="header" class="navbar navbar-default navbar-fixed-top">
+    <%= site_name_helper %>
+  </header>
+
+  <body><%= yield %></body>
+
+  <footer id="footer" class="navbar navbar-default navbar-fixed-bottom">
+    to be completed.
+  </footer>  
+
+</html>
