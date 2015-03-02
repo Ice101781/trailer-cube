@@ -50,12 +50,12 @@
 
 
 function on_click() {
-  video.src = sources[0];
+  video.src = sources[h];
   video.load();
   video.play();
   
-  video_image.width = dimensions[0][0];
-  video_image.height = dimensions[0][1];
+  video_image.width = dimensions[h][0];
+  video_image.height = dimensions[h][1];
   
   video_image_context.fillStyle = '0#000000';
   video_image_context.fillRect(0, 0, video_image.width, video_image.height);
@@ -63,14 +63,14 @@ function on_click() {
   video_texture.minFilter = THREE.LinearFilter;
   video_texture.magFilter = THREE.LinearFilter;
 
-  video_screen_materials[0].map = video_texture;
+  video_screen_materials[h].map = video_texture;
 
   click = false;  
 };
 
 
 function on_mouse_down(e) {  
-  //prevent OrbitControls functionality
+  //prevent simultaneous OrbitControls functionality
     e.preventDefault();
 
   mouse.x = ( e.clientX / width ) * 2 - 1;
@@ -84,9 +84,12 @@ function on_mouse_down(e) {
   var intersects = raycaster.intersectObjects(scene.children, true);  
     
     if( intersects.length > 0 ) {
-      if ( intersects[0].object == video_screens[0] ) {
-        click = true;
-      };
+      for(h=0; h<trailers.length; h++) {
+        if ( intersects[0].object == video_screens[h] ) {
+          click = true;
+          return h;
+        };
+      };  
     };
   
   //console.log(intersects);
@@ -105,9 +108,8 @@ function on_window_resize(e) {
   var delta, elapsed,
       load_mesh, load_light, 
       trailer_cube, video = create( "video" ), video_image = create( "canvas" ), 
-      video_image_context = video_image.getContext( '2d' ), video_texture = new THREE.Texture( video_image ),
-      load_time = 5,
-      first_load = true,
+        video_image_context = video_image.getContext( '2d' ), video_texture = new THREE.Texture( video_image ),
+      load_time = 5, first_load = true,
       click = false;
 
 init();
@@ -213,10 +215,10 @@ function init() {
         trailer_cube.position.setZ(trailer_cube_r*Math.cos(trailer_cube_theta));
 
   //add video screens to the scene
-    for(i=0; i<trailers.length; i++) {
-      video_screens[i].visible = false;
-      scene.add(video_screens[i]);
-      video_screens[i].position.set( locations[i][0], locations[i][1], locations[i][2] );
+    for(k=0; k<trailers.length; k++) {
+      video_screens[k].visible = false;
+      scene.add(video_screens[k]);
+      video_screens[k].position.set( locations[k][0], locations[k][1], locations[k][2] );
     };
 };
 
@@ -242,8 +244,8 @@ function loaded() {
   
   homepage_light.visible = true;
   trailer_cube.visible = true;
-  for(i=0; i<trailers.length; i++) {
-    video_screens[i].visible = true;
+  for(l=0; l<trailers.length; l++) {
+    video_screens[l].visible = true;
   };
 };
 
