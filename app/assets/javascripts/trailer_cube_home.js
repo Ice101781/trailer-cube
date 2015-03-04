@@ -84,14 +84,16 @@ function on_mouse_down(event) {
   
   var intersects = raycaster.intersectObjects(scene.children, true);  
     
-    if( intersects.length > 0 ) {
-      for(b=0; b<trailers.length; b++) {
-        if ( intersects[0].object == video_screens[b] ) {
-          click = true;
-          return b;
-        };
-      };  
+  if(intersects[0] == undefined || intersects[0].object == trailer_cube) {
+    return;
+  };
+
+  for(b=0; b<trailers.length; b++) {
+    if ( intersects[0].object == video_screens[b] ) {
+      click = true;
+      return b; 
     };
+  };  
   
   //console.log(intersects);
 };
