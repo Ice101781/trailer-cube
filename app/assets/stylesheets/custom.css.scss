@@ -56,16 +56,16 @@ h1 {
 #footer {
   font-family: 'RicassoRegular';
   font-size: 0.5em;
-  text-align: right;
+  text-align: left;
   padding-top: 5px;
-  padding-right: 3px;
+  padding-left: 3px;
 }
 
 #loading {
   font-family: 'RicassoRegular';
   color: $trailer-cube-blue;
   position: absolute;
-  margin-top: 575px;
-  padding-left: 85%;
+  margin-top: 600px;
+  padding-left: 90%;
   display: none;
 }

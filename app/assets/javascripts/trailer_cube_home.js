@@ -83,19 +83,14 @@ function on_mouse_down(event) {
 };
 
 
-function spline_path() {    
-  controls.target = video_screens[b].position;
-
-};
-
-
 function on_click() {
   for(a=0; a<trailers.length; a++) {
       videos[a].pause();
       video_screen_materials[a].map = image_stills[a];
   };
 
-  spline_path();
+  controls.target = video_screens[b].position;
+  camera.position.set( locations[b][0], locations[b][1], locations[b][2]+(.0993) );
   
   videos[b].src = sources[b];
   videos[b].load();
