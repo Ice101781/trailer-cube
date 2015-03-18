@@ -45,11 +45,57 @@
   window.addEventListener('resize', on_window_resize, false);
 
 
+function on_window_resize() {
+  width = window.innerWidth;
+  height = window.innerHeight;
+  renderer.setSize(width, height);
+  camera.aspect = (width/height);
+};
+
+
+//user functions 
+function on_mouse_down(event) {  
+  //prevent simultaneous OrbitControls functionality
+    event.preventDefault();
+
+  mouse.x = ( event.clientX / width ) * 2 - 1;
+  mouse.y = - ( event.clientY / height ) * 2 + 1;
+
+  var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 );
+    vector.unproject(camera);    
+  
+  raycaster.set(camera.position, vector.sub( camera.position ).normalize());
+  
+  var intersects = raycaster.intersectObjects(scene.children, true);  
+    
+    if(intersects[0] == undefined || intersects[0].object == trailer_cube) {
+      return;
+    };
+
+    for(b=0; b<trailers.length; b++) {
+      if ( intersects[0].object == video_screens[b] ) {
+        click = true;
+        return b; 
+      };
+    };  
+  
+  //console.log(intersects);
+};
+
+
+function spline_path() {    
+  controls.target = video_screens[b].position;
+
+};
+
+
 function on_click() {
   for(a=0; a<trailers.length; a++) {
       videos[a].pause();
       video_screen_materials[a].map = image_stills[a];
   };
+
+  spline_path();
   
   videos[b].src = sources[b];
   videos[b].load();
@@ -67,43 +113,6 @@ function on_click() {
   video_screen_materials[b].map = video_textures[b];
 
   click = false;
-};
-
-
-function on_mouse_down(event) {  
-  //prevent simultaneous OrbitControls functionality
-    event.preventDefault();
-
-  mouse.x = ( event.clientX / width ) * 2 - 1;
-  mouse.y = - ( event.clientY / height ) * 2 + 1;
-
-  var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 );
-    vector.unproject(camera);    
-  
-  raycaster.set(camera.position, vector.sub( camera.position ).normalize());
-  
-  var intersects = raycaster.intersectObjects(scene.children, true);  
-    
-  if(intersects[0] == undefined || intersects[0].object == trailer_cube) {
-    return;
-  };
-
-  for(b=0; b<trailers.length; b++) {
-    if ( intersects[0].object == video_screens[b] ) {
-      click = true;
-      return b; 
-    };
-  };  
-  
-  //console.log(intersects);
-};
-
-
-function on_window_resize() {
-  width = window.innerWidth;
-  height = window.innerHeight;
-  renderer.setSize(width, height);
-  camera.aspect = (width/height);
 };
 
 
@@ -246,9 +255,9 @@ function loaded() {
   
   homepage_light.visible = true;
   trailer_cube.visible = true;
-  for(f=0; f<trailers.length; f++) {
-    video_screens[f].visible = true;
-  };
+    for(f=0; f<trailers.length; f++) {
+      video_screens[f].visible = true;
+    };
 };
 
 
@@ -257,7 +266,6 @@ function render() {
   elapsed = clock.getElapsedTime();
 
   controls.update(delta);
-  controls.target = new THREE.Vector3(0,0,0);
   renderer.render(scene, camera);
   
   //update the video texture

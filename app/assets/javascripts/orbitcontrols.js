@@ -31,11 +31,11 @@ THREE.OrbitControls = function ( object, domElement ) {
 	// Set to false to disable this control
 	this.enabled = true;
 
-	// "target" sets the location of focus, where the control orbits around
-	// and where it pans with respect to.
-	this.target = new THREE.Vector3();
-
-	// center is old, deprecated; use "target" instead
+	// "target" sets the location of focus, where the control orbits around,
+	// and where it pans with respect to; default is (0, 0, 0).
+    this.target = new THREE.Vector3();
+   
+	// "center" is old, deprecated; use "target" instead
 	this.center = this.target;
 
 	// This option actually enables dollying in and out; left as "zoom" for
