@@ -13,12 +13,6 @@ var trailers = [],
     video_screens = [];
 
 
-//HTML tag function(s)
-  function create( id ) {
-    return document.createElement( id );
-  };
-
-
 trailers[0] = [
                 titles[0] = "Furious 7",
                 image_stills[0] = THREE.ImageUtils.loadTexture("hd_trailers/furious7/furious7.jpg"),

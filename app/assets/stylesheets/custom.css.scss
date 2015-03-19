@@ -63,9 +63,11 @@ h1 {
 
 #loading {
   font-family: 'RicassoRegular';
+  font-size: 0.75em;
   color: $trailer-cube-blue;
   position: absolute;
-  margin-top: 600px;
-  padding-left: 90%;
+  margin-top: 35px;
+  padding-left: 3px;
   display: none;
 }
+
