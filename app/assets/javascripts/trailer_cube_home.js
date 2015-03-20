@@ -13,11 +13,11 @@
       controls = new THREE.OrbitControls(camera, container),
       renderer = new THREE.WebGLRenderer( { antialias: false, alpha: false } );
       
-  if(container != null) {    
-    append( renderer.domElement, container );
+  if(container != null) {
     renderer.setSize(width, height);
     renderer.setClearColor(0x000000);
-    $( "loading" ).style.display = "block";   
+    $("loading").style.display = "block";
+    append( renderer.domElement, container );   
   };
 
   var projector = new THREE.Projector(),
@@ -48,20 +48,24 @@
     var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 );
       vector.unproject(camera);    
   
-    raycaster.set(camera.position, vector.sub( camera.position ).normalize());
+    raycaster.set( camera.position, vector.sub( camera.position ).normalize() );
   
     var intersects = raycaster.intersectObjects(scene.children, true);  
     
-      if(intersects[0] == undefined || intersects[0].object == trailer_cube) {
-        return;
-      };
+      
 
-      for(b=0; b<trailers.length; b++) {
-        if ( intersects[0].object == video_screens[b] ) {
-          click = true;
-          return b; 
-        };
-      };  
+      if( intersects[0] == undefined || intersects[0].object == trailer_cube ) {
+        controls.target = new THREE.Vector3();
+        camera.position.set(0, 0, 2);
+      } 
+      else {
+        for( b=0; b<trailers.length; b++ ) {
+          if ( intersects[0].object == video_screens[b] ) {
+            click = true;
+            return b; 
+          };
+        };  
+      };
   
     //console.log(intersects);
   };
@@ -69,17 +73,17 @@
 
   function on_click() {
     for(a=0; a<trailers.length; a++) {
-        videos[a].pause();
-        video_screen_materials[a].map = image_stills[a];
+      videos[a].pause();
+      video_screen_materials[a].map = image_stills[a];
     };
 
     controls.target = video_screens[b].position;
     camera.position.set( locations[b][0], locations[b][1], locations[b][2]+(.0993) );
-  
+    
     videos[b].src = sources[b];
     videos[b].load();
     videos[b].play();
-  
+
     video_images[b].width = dimensions[b][0];
     video_images[b].height = dimensions[b][1];
   
@@ -157,7 +161,7 @@ function load_screen() {
     load_light = new THREE.AmbientLight(0xFFFFFF);
       scene.add(load_light);
   
-  camera.position.z = 15;
+  camera.position.z = 50;
   load_screen_mesh();
 };
 
@@ -227,12 +231,12 @@ function loaded() {
     //controls.autoRotateSpeed = 0.125;
 
   $( "loading" ).style.display = "none";
-  
   homepage_light.visible = true;
   trailer_cube.visible = true;
-    for(f=0; f<trailers.length; f++) {
-      video_screens[f].visible = true;
-    };
+    
+  for(f=0; f<trailers.length; f++) {
+    video_screens[f].visible = true;
+  };
 };
 
 
