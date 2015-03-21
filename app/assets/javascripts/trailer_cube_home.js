@@ -24,6 +24,20 @@
       raycaster = new THREE.Raycaster(),
       mouse = { x: 0, y:0 };
 
+  var button_geometry = new THREE.PlaneBufferGeometry(.008, .0045, 4, 4),
+      play_button_material = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/play_button.png')} ),
+      pause_button_material = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/pause_button.png')} ),
+      fullscreen_button_material = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/fullscreen_button.png')} ),
+      exit_button_material = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/exit_button.png')} ),
+      play_button = new THREE.Mesh(button_geometry, play_button_material),
+      pause_button = new THREE.Mesh(button_geometry, pause_button_material),
+      fullscreen_button = new THREE.Mesh(button_geometry, fullscreen_button_material),
+      exit_button = new THREE.Mesh(button_geometry, exit_button_material);
+        
+      pause_button.visible = false;
+      scene.add(pause_button);
+      
+
 //listen for events
   window.addEventListener('mousedown', on_mouse_down, false);
   window.addEventListener('resize', on_window_resize, false);
@@ -51,20 +65,23 @@
     raycaster.set( camera.position, vector.sub( camera.position ).normalize() );
   
     var intersects = raycaster.intersectObjects(scene.children, true);  
-    
       
-
       if( intersects[0] == undefined || intersects[0].object == trailer_cube ) {
-        controls.target = new THREE.Vector3();
-        camera.position.set(0, 0, 2);
-      } 
-      else {
-        for( b=0; b<trailers.length; b++ ) {
-          if ( intersects[0].object == video_screens[b] ) {
-            click = true;
-            return b; 
-          };
-        };  
+        //controls.target = new THREE.Vector3();
+        //camera.position.set(0, 0, 2);
+        return;
+      };
+
+      if( intersects[0].object == pause_button) {
+        videos[b].pause();
+        return;    
+      };
+
+      for( b=0; b<trailers.length; b++ ) {
+        if ( intersects[0].object == video_screens[b] ) {
+          click = true;
+          return b; 
+        };
       };
   
     //console.log(intersects);
@@ -72,28 +89,36 @@
 
 
   function on_click() {
-    for(a=0; a<trailers.length; a++) {
-      videos[a].pause();
-      video_screen_materials[a].map = image_stills[a];
-    };
+    controls.enabled = false;
 
-    controls.target = video_screens[b].position;
-    camera.position.set( locations[b][0], locations[b][1], locations[b][2]+(.0993) );
-    
-    videos[b].src = sources[b];
-    videos[b].load();
-    videos[b].play();
+    if(pause_button.visible == false) {
+      for(a=0; a<trailers.length; a++) {
+        videos[a].pause();
+        video_screen_materials[a].map = image_stills[a];
+      };
 
-    video_images[b].width = dimensions[b][0];
-    video_images[b].height = dimensions[b][1];
+      controls.target = video_screens[b].position;
+      camera.position.set( locations[b][0], locations[b][1], locations[b][2]+(.0993) );
+
+      videos[b].src = sources[b];
+      videos[b].load();
+      videos[b].play();
+
+      video_images[b].width = dimensions[b][0];
+      video_images[b].height = dimensions[b][1];
   
-    video_image_contexts[b].fillStyle = '0#000000';
-    video_image_contexts[b].fillRect(0, 0, video_images[b].width, video_images[b].height);
+      video_image_contexts[b].fillStyle = '0#000000';
+      video_image_contexts[b].fillRect(0, 0, video_images[b].width, video_images[b].height);
 
-    video_textures[b].minFilter = THREE.LinearFilter;
-    video_textures[b].magFilter = THREE.LinearFilter;
+      video_textures[b].minFilter = THREE.LinearFilter;
+      video_textures[b].magFilter = THREE.LinearFilter;
 
-    video_screen_materials[b].map = video_textures[b];
+      video_screen_materials[b].map = video_textures[b];
+    };
+  
+    //video controls 
+      pause_button.position.set( locations[b][0]-(.025), locations[b][1]-(.036), locations[b][2]+(.0001) );
+      pause_button.visible = true;
 
     click = false;
   };
@@ -227,16 +252,17 @@ function loaded() {
     camera.position.setZ(cam_r*Math.cos(cam_theta));
 
   //camera rotation
-    //controls.autoRotate = true;
-    //controls.autoRotateSpeed = 0.125;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 0.5;
 
-  $( "loading" ).style.display = "none";
-  homepage_light.visible = true;
-  trailer_cube.visible = true;
+  //object visibility
+    $( "loading" ).style.display = "none";
+    homepage_light.visible = true;
+    trailer_cube.visible = true;
     
-  for(f=0; f<trailers.length; f++) {
-    video_screens[f].visible = true;
-  };
+    for(f=0; f<trailers.length; f++) {
+      video_screens[f].visible = true;
+    };
 };
 
 
