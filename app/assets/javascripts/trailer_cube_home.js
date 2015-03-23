@@ -23,8 +23,9 @@
   var projector = new THREE.Projector(),
       raycaster = new THREE.Raycaster(),
       mouse = { x: 0, y:0 };
-
-  var button_geometry = new THREE.PlaneBufferGeometry(.008, .0045, 4, 4),
+      
+  var video_controls = new THREE.Object3D(),
+      button_geometry = new THREE.PlaneBufferGeometry(.0072, .00405, 4, 4),
       play_button_material = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/play_button.png')} ),
       pause_button_material = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/pause_button.png')} ),
       fullscreen_button_material = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/fullscreen_button.png')} ),
@@ -33,10 +34,10 @@
       pause_button = new THREE.Mesh(button_geometry, pause_button_material),
       fullscreen_button = new THREE.Mesh(button_geometry, fullscreen_button_material),
       exit_button = new THREE.Mesh(button_geometry, exit_button_material);
-        
-      pause_button.visible = false;
-      scene.add(pause_button);
-      
+ 
+      video_controls.visible = false;
+      video_controls.add(play_button);
+      scene.add(video_controls);
 
 //listen for events
   window.addEventListener('mousedown', on_mouse_down, false);
@@ -72,7 +73,7 @@
         return;
       };
 
-      if( intersects[0].object == pause_button) {
+      if( intersects[0].object == play_button) {
         videos[b].pause();
         return;    
       };
@@ -91,7 +92,7 @@
   function on_click() {
     controls.enabled = false;
 
-    if(pause_button.visible == false) {
+    if(video_controls.visible == false) {
       for(a=0; a<trailers.length; a++) {
         videos[a].pause();
         video_screen_materials[a].map = image_stills[a];
@@ -115,10 +116,9 @@
 
       video_screen_materials[b].map = video_textures[b];
     };
-  
-    //video controls 
-      pause_button.position.set( locations[b][0]-(.025), locations[b][1]-(.036), locations[b][2]+(.0001) );
-      pause_button.visible = true;
+    
+    play_button.position.set( locations[b][0]+(.05), locations[b][1]-(.036), locations[b][2]+(.0001) );
+    video_controls.visible = true;
 
     click = false;
   };
@@ -243,16 +243,16 @@ function loaded() {
   scene.remove(load_mesh); 
 
   //the camera's spherical coordinates parameters
-    var cam_r = 2;
-    var cam_theta = 0;
-    var cam_phi = 0;
+    var cam_r = 2.5;
+    var cam_theta = Math.PI/4;
+    var cam_phi = Math.PI/6;
   //set the camera's position at page load
     camera.position.setX(cam_r*Math.sin(cam_theta)*Math.cos(cam_phi));
     camera.position.setY(cam_r*Math.sin(cam_theta)*Math.sin(cam_phi));
     camera.position.setZ(cam_r*Math.cos(cam_theta));
 
   //camera rotation
-    controls.autoRotate = true;
+    //controls.autoRotate = true;
     controls.autoRotateSpeed = 0.5;
 
   //object visibility
