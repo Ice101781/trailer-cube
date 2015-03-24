@@ -26,17 +26,20 @@
       
   var video_controls = new THREE.Object3D(),
       button_geometry = new THREE.PlaneBufferGeometry(.0072, .00405, 4, 4),
+      
       play_button_material = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/play_button.png')} ),
       pause_button_material = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/pause_button.png')} ),
-      fullscreen_button_material = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/fullscreen_button.png')} ),
+      enter_fullscreen_button_material = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/enter_fullscreen_button.png')} ),
+      exit_fullscreen_button_material = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/exit_fullscreen_button.png')} ),
       exit_button_material = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/exit_button.png')} ),
+      
       play_button = new THREE.Mesh(button_geometry, play_button_material),
       pause_button = new THREE.Mesh(button_geometry, pause_button_material),
-      fullscreen_button = new THREE.Mesh(button_geometry, fullscreen_button_material),
+      enter_fullscreen_button = new THREE.Mesh(button_geometry, enter_fullscreen_button_material),
+      exit_fullscreen_button = new THREE.Mesh(button_geometry, exit_fullscreen_button_material),
       exit_button = new THREE.Mesh(button_geometry, exit_button_material);
  
       video_controls.visible = false;
-      video_controls.add(play_button);
       scene.add(video_controls);
 
 //listen for events
@@ -73,9 +76,38 @@
         return;
       };
 
-      if( intersects[0].object == play_button) {
-        videos[b].pause();
+      if( intersects[0].object == play_button ) {
+        videos[b].play();
+        video_controls.remove(play_button);
+        video_controls.add(pause_button);
+        pause_button.position.set( locations[b][0]+(.057), locations[b][1]-(.036), locations[b][2]+(.0001) );
         return;    
+      };
+
+      if( intersects[0].object == pause_button ) {
+        videos[b].pause();
+        video_controls.remove(pause_button);
+        video_controls.add(play_button);
+        play_button.position.set( locations[b][0]+(.057), locations[b][1]-(.036), locations[b][2]+(.0001) );
+        return;
+      };
+
+      if( intersects[0].object == enter_fullscreen_button ) {
+        container.webkitRequestFullscreen();
+        on_window_resize();
+        video_controls.remove(enter_fullscreen_button);
+        video_controls.add(exit_fullscreen_button);
+        exit_fullscreen_button.position.set( locations[b][0]+(.065), locations[b][1]-(.036), locations[b][2]+(.0001) );
+        return;
+      };
+
+      if( intersects[0].object == exit_fullscreen_button ) {
+        document.webkitExitFullscreen();
+        on_window_resize();
+        video_controls.remove(exit_fullscreen_button);
+        video_controls.add(enter_fullscreen_button);
+        enter_fullscreen_button.position.set( locations[b][0]+(.065), locations[b][1]-(.036), locations[b][2]+(.0001) );
+        return;
       };
 
       for( b=0; b<trailers.length; b++ ) {
@@ -93,33 +125,44 @@
     controls.enabled = false;
 
     if(video_controls.visible == false) {
-      for(a=0; a<trailers.length; a++) {
-        videos[a].pause();
-        video_screen_materials[a].map = image_stills[a];
-      };
+      //pause any videos that are currently playing
+        for(a=0; a<trailers.length; a++) {
+          videos[a].pause();
+          video_screen_materials[a].map = image_stills[a];
+        };
 
-      controls.target = video_screens[b].position;
-      camera.position.set( locations[b][0], locations[b][1], locations[b][2]+(.0993) );
+      //position the camera in front of the video screen that's been clicked
+        controls.target = video_screens[b].position;
+        camera.position.set( locations[b][0], locations[b][1], locations[b][2]+(.0994) );
 
-      videos[b].src = sources[b];
-      videos[b].load();
-      videos[b].play();
+      //load and play the video
+        videos[b].src = sources[b];
+        videos[b].load();
+        videos[b].play();
 
-      video_images[b].width = dimensions[b][0];
-      video_images[b].height = dimensions[b][1];
+        video_images[b].width = dimensions[b][0];
+        video_images[b].height = dimensions[b][1];
   
-      video_image_contexts[b].fillStyle = '0#000000';
-      video_image_contexts[b].fillRect(0, 0, video_images[b].width, video_images[b].height);
+        video_image_contexts[b].fillStyle = '0#000000';
+        video_image_contexts[b].fillRect(0, 0, video_images[b].width, video_images[b].height);
 
-      video_textures[b].minFilter = THREE.LinearFilter;
-      video_textures[b].magFilter = THREE.LinearFilter;
+        video_textures[b].minFilter = THREE.LinearFilter;
+        video_textures[b].magFilter = THREE.LinearFilter;
 
-      video_screen_materials[b].map = video_textures[b];
+        video_screen_materials[b].map = video_textures[b];
+     
+      //display video controls
+        video_controls.add(pause_button);
+        video_controls.add(enter_fullscreen_button);
+        //video_controls.add(exit_button);
+      
+        pause_button.position.set( locations[b][0]+(.057), locations[b][1]-(.036), locations[b][2]+(.0001) );
+        enter_fullscreen_button.position.set( locations[b][0]+(.065), locations[b][1]-(.036), locations[b][2]+(.0001) );
+        //exit_button.position.set( locations[b][0]+(.073), locations[b][1]-(.036), locations[b][2]+(.0001) );  
+
+        video_controls.visible = true;
     };
     
-    play_button.position.set( locations[b][0]+(.05), locations[b][1]-(.036), locations[b][2]+(.0001) );
-    video_controls.visible = true;
-
     click = false;
   };
 
@@ -128,7 +171,7 @@
   var delta, elapsed,
       load_mesh, load_light,
       trailer_cube, 
-      load_time = 5, first_load = true,
+      load_time = 2, first_load = true,
       click = false, b = 0;
 
 
