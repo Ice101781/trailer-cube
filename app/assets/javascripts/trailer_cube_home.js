@@ -1,18 +1,22 @@
 //some global vars, append verifications
-  var clock = new THREE.Clock(),
-      width = window.innerWidth,
-      height = window.innerHeight,
+  var clock     = new THREE.Clock(),
+      width     = window.innerWidth,
+      height    = window.innerHeight,
       container = $("container");
     
   if(document.body != null) {
     append( container, document.body );
   };
 
-  var scene = new THREE.Scene(), 
-      camera = new THREE.PerspectiveCamera(45, (width/height), 0.01, 100),
+  var scene    = new THREE.Scene(), 
+      camera   = new THREE.PerspectiveCamera(45, (width/height), 0.01, 100),
       controls = new THREE.OrbitControls(camera, container),
       renderer = new THREE.WebGLRenderer( { antialias: false, alpha: false } );
       
+      //camera positions
+        cam_home = new THREE.Vector3( 2.5*Math.sin(0)*Math.cos(0), 2.5*Math.sin(0)*Math.sin(0), 2.5*Math.cos(0) );
+        cam_load = new THREE.Vector3( 50*Math.sin(0)*Math.cos(0), 50*Math.sin(0)*Math.sin(0), 50*Math.cos(0) );
+
   if(container != null) {
     renderer.setSize(width, height);
     renderer.setClearColor(0x000000);
@@ -24,42 +28,43 @@
       raycaster = new THREE.Raycaster(),
       mouse = { x: 0, y:0 };
       
-  var video_controls = new THREE.Object3D(),
+  var video_controls  = new THREE.Object3D(),
       button_geometry = new THREE.PlaneBufferGeometry(.0072, .00405, 4, 4),
       
-      play_button_material = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/play_button.png')} ),
-      pause_button_material = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/pause_button.png')} ),
+      play_button_material             = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/play_button.png')} ),
+      pause_button_material            = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/pause_button.png')} ),
       enter_fullscreen_button_material = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/enter_fullscreen_button.png')} ),
-      exit_fullscreen_button_material = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/exit_fullscreen_button.png')} ),
-      exit_button_material = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/exit_button.png')} ),
+      exit_fullscreen_button_material  = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/exit_fullscreen_button.png')} ),
+      exit_button_material             = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/exit_button.png')} ),
       
-      play_button = new THREE.Mesh(button_geometry, play_button_material),
-      pause_button = new THREE.Mesh(button_geometry, pause_button_material),
+      play_button             = new THREE.Mesh(button_geometry, play_button_material),
+      pause_button            = new THREE.Mesh(button_geometry, pause_button_material),
       enter_fullscreen_button = new THREE.Mesh(button_geometry, enter_fullscreen_button_material),
-      exit_fullscreen_button = new THREE.Mesh(button_geometry, exit_fullscreen_button_material),
-      exit_button = new THREE.Mesh(button_geometry, exit_button_material);
- 
+      exit_fullscreen_button  = new THREE.Mesh(button_geometry, exit_fullscreen_button_material),
+      exit_button             = new THREE.Mesh(button_geometry, exit_button_material);
+
       video_controls.visible = false;
       scene.add(video_controls);
+        video_controls.add(pause_button);
+        video_controls.add(enter_fullscreen_button);
+        video_controls.add(exit_button);
+
 
 //listen for events
-  window.addEventListener('mousedown', on_mouse_down, false);
   window.addEventListener('resize', on_window_resize, false);
-
+  window.addEventListener('mousedown', on_mouse_down, false);
 
 //user functions
   function on_window_resize() {
-    width = window.innerWidth;
+    width  = window.innerWidth;
     height = window.innerHeight;
     renderer.setSize(width, height);
     camera.aspect = (width/height);
   };
 
- 
-  function on_mouse_down(event) {  
-    //prevent simultaneous OrbitControls functionality
-      event.preventDefault();
 
+  function on_mouse_down(event) {  
+    event.preventDefault();
     mouse.x = ( event.clientX / width ) * 2 - 1;
     mouse.y = - ( event.clientY / height ) * 2 + 1;
 
@@ -68,11 +73,10 @@
   
     raycaster.set( camera.position, vector.sub( camera.position ).normalize() );
   
-    var intersects = raycaster.intersectObjects(scene.children, true);  
-      
+    var intersects = raycaster.intersectObjects(scene.children, true);
+
       if( intersects[0] == undefined || intersects[0].object == trailer_cube ) {
-        //controls.target = new THREE.Vector3();
-        //camera.position.set(0, 0, 2);
+        //do nothing
         return;
       };
 
@@ -80,7 +84,6 @@
         videos[b].play();
         video_controls.remove(play_button);
         video_controls.add(pause_button);
-        pause_button.position.set( locations[b][0]+(.057), locations[b][1]-(.036), locations[b][2]+(.0001) );
         return;    
       };
 
@@ -88,43 +91,55 @@
         videos[b].pause();
         video_controls.remove(pause_button);
         video_controls.add(play_button);
-        play_button.position.set( locations[b][0]+(.057), locations[b][1]-(.036), locations[b][2]+(.0001) );
         return;
       };
 
       if( intersects[0].object == enter_fullscreen_button ) {
         container.webkitRequestFullscreen();
         on_window_resize();
-        video_controls.remove(enter_fullscreen_button);
-        video_controls.add(exit_fullscreen_button);
-        exit_fullscreen_button.position.set( locations[b][0]+(.065), locations[b][1]-(.036), locations[b][2]+(.0001) );
         return;
       };
 
       if( intersects[0].object == exit_fullscreen_button ) {
         document.webkitExitFullscreen();
         on_window_resize();
-        video_controls.remove(exit_fullscreen_button);
-        video_controls.add(enter_fullscreen_button);
-        enter_fullscreen_button.position.set( locations[b][0]+(.065), locations[b][1]-(.036), locations[b][2]+(.0001) );
         return;
       };
 
-      for( b=0; b<trailers.length; b++ ) {
+      if( intersects[0].object == exit_button ) {
+        videos[b].pause();        
+        videos[b].currentTime = 0;
+        video_screen_materials[b].map = image_stills[b];
+      
+        if( play_button.visible == true ) {
+          video_controls.remove(play_button);
+          video_controls.add(pause_button);
+        };
+      
+        video_controls.visible = false;      
+        controls.target = new THREE.Vector3();
+        camera.position.set( locations[b][0], locations[b][1], locations[b][2]+(1) );
+        controls.enabled = true;
+        return;
+      };
+
+      for( b=0; b<trailers.length; b++ ) {    
         if ( intersects[0].object == video_screens[b] ) {
           click = true;
           return b; 
         };
       };
-  
+      
     //console.log(intersects);
   };
 
 
   function on_click() {
-    controls.enabled = false;
+    if ( controls.enabled == true ) {
+      controls.enabled = false;
+    };
 
-    if(video_controls.visible == false) {
+    if( video_controls.visible == false ) {
       //pause any videos that are currently playing
         for(a=0; a<trailers.length; a++) {
           videos[a].pause();
@@ -140,7 +155,7 @@
         videos[b].load();
         videos[b].play();
 
-        video_images[b].width = dimensions[b][0];
+        video_images[b].width  = dimensions[b][0];
         video_images[b].height = dimensions[b][1];
   
         video_image_contexts[b].fillStyle = '0#000000';
@@ -152,18 +167,18 @@
         video_screen_materials[b].map = video_textures[b];
      
       //display video controls
-        video_controls.add(pause_button);
-        video_controls.add(enter_fullscreen_button);
-        //video_controls.add(exit_button);
-      
-        pause_button.position.set( locations[b][0]+(.057), locations[b][1]-(.036), locations[b][2]+(.0001) );
-        enter_fullscreen_button.position.set( locations[b][0]+(.065), locations[b][1]-(.036), locations[b][2]+(.0001) );
-        //exit_button.position.set( locations[b][0]+(.073), locations[b][1]-(.036), locations[b][2]+(.0001) );  
+        pause_button.position.set(            locations[b][0]+(.059), locations[b][1]-(.036), locations[b][2]+(.0001) );
+        enter_fullscreen_button.position.set( locations[b][0]+(.067), locations[b][1]-(.036), locations[b][2]+(.0001) );
+        exit_button.position.set(             locations[b][0]+(.075), locations[b][1]-(.036), locations[b][2]+(.0001) );
+        play_button.position.copy(pause_button.position);
+        exit_fullscreen_button.position.copy(enter_fullscreen_button.position);
 
-        video_controls.visible = true;
+        video_controls.visible = true;  
     };
     
-    click = false;
+    if( click == true ) {
+      click = false;
+    };  
   };
 
 
@@ -175,7 +190,9 @@
       click = false, b = 0;
 
 
-function load_screen_mesh() {
+function load_screen() {
+  camera.position.copy(cam_load);
+
   //the golden ratio
     var g_phi = (1+Math.sqrt(5))/2;
      
@@ -205,7 +222,6 @@ function load_screen_mesh() {
       
   //create the geometry 
     var load_geo = new THREE.Geometry();
-
       for(c=0; c<faces.length; c++) {
         var triangle_geo = new THREE.Geometry();
       
@@ -224,83 +240,40 @@ function load_screen_mesh() {
 };
 
 
-function load_screen() {
-  //add a light to the load scene
-    load_light = new THREE.AmbientLight(0xFFFFFF);
-      scene.add(load_light);
-  
-  camera.position.z = 50;
-  load_screen_mesh();
-};
-
-
 function init() {
-  load_screen();
+  //add light
+    light = new THREE.AmbientLight(0xFFFFFF);
+      scene.add(light);
 
-  //add a light to the home page
-    homepage_light = new THREE.PointLight(0xFFFFFF);
-      homepage_light.visible = false;
-      scene.add(homepage_light);
-      //the homepage light's spherical coordinates parameters
-        var homepage_light_r = 10;
-        var homepage_light_theta = Math.PI/4;
-        var homepage_light_phi = Math.PI/2;
-      //set the homepage light's position at page load
-        homepage_light.position.setX(homepage_light_r*Math.sin(homepage_light_theta)*Math.cos(homepage_light_phi));
-        homepage_light.position.setY(homepage_light_r*Math.sin(homepage_light_theta)*Math.sin(homepage_light_phi));
-        homepage_light.position.setZ(homepage_light_r*Math.cos(homepage_light_theta));
+  //initialize load screen
+    load_screen();
 
   //add the cube
     var trailer_cube_geo = new THREE.BoxGeometry(1, 1, 1, 5, 5, 5);
-           
-    var trailer_cube_mat = new THREE.MeshBasicMaterial(
-      {
-        color: 0x4B32AF,
-        wireframe: true,          
-      }
-    );
-
-    trailer_cube = new THREE.Mesh(trailer_cube_geo, trailer_cube_mat); 
-      trailer_cube.visible = false;
-      scene.add(trailer_cube);        
-      //the cube's spherical coordinates parameters
-        var trailer_cube_r = 0;
-        var trailer_cube_theta = 0;
-        var trailer_cube_phi = 0;
-      //set the cube's position at page load
-        trailer_cube.position.setX(trailer_cube_r*Math.sin(trailer_cube_theta)*Math.cos(trailer_cube_phi));
-        trailer_cube.position.setY(trailer_cube_r*Math.sin(trailer_cube_theta)*Math.sin(trailer_cube_phi));
-        trailer_cube.position.setZ(trailer_cube_r*Math.cos(trailer_cube_theta));
-
-  //add video screens to the scene
-    for(e=0; e<trailers.length; e++) {
-      video_screens[e].visible = false;
-      scene.add(video_screens[e]);
-      video_screens[e].position.set( locations[e][0], locations[e][1], locations[e][2] );
-    };
+    var trailer_cube_mat = new THREE.MeshBasicMaterial( {color: 0x4B32AF, wireframe: true} );
+        trailer_cube     = new THREE.Mesh(trailer_cube_geo, trailer_cube_mat); 
+          trailer_cube.visible = false;
+          scene.add(trailer_cube);        
+          trailer_cube.position.set(0, 0, 0);
+    
+    //add video screens to the cube
+      for(e=0; e<trailers.length; e++) {
+        video_screens[e].visible = false;
+        scene.add(video_screens[e]);
+        video_screens[e].position.set( locations[e][0], locations[e][1], locations[e][2] );
+      };
 };
 
 
 function loaded() {
-  scene.remove(load_light);
   scene.remove(load_mesh); 
 
-  //the camera's spherical coordinates parameters
-    var cam_r = 2.5;
-    var cam_theta = Math.PI/4;
-    var cam_phi = Math.PI/6;
-  //set the camera's position at page load
-    camera.position.setX(cam_r*Math.sin(cam_theta)*Math.cos(cam_phi));
-    camera.position.setY(cam_r*Math.sin(cam_theta)*Math.sin(cam_phi));
-    camera.position.setZ(cam_r*Math.cos(cam_theta));
-
-  //camera rotation
-    //controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.5;
+  camera.position.copy(cam_home);
+  //controls.autoRotate = true;
+  controls.autoRotateSpeed = 0.5;
 
   //object visibility
     $( "loading" ).style.display = "none";
-    homepage_light.visible = true;
     trailer_cube.visible = true;
     
     for(f=0; f<trailers.length; f++) {
@@ -347,7 +320,17 @@ function animate() {
     }  
     else { 
       on_click();
-    };  
+    };
+
+  //fullscreen button check
+    if( document.webkitIsFullScreen ) {
+      video_controls.remove(enter_fullscreen_button);
+      video_controls.add(exit_fullscreen_button);
+    }
+    else {
+      video_controls.remove(exit_fullscreen_button);
+      video_controls.add(enter_fullscreen_button);
+    };
 
   requestAnimationFrame(animate);
   render();   

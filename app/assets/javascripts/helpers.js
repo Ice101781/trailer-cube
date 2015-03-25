@@ -3,7 +3,6 @@
     Detector.addGetWebGLMessage();
   };
 
-
 //HTML tag function(s)
   function $( id ) {
     return document.getElementById( id );
@@ -17,4 +16,3 @@
     return document.createElement( id );
   };
 
-  

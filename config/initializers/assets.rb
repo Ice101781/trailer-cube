@@ -10,7 +10,6 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w( three_r69.js )
 Rails.application.config.assets.precompile += %w( detector.js )
 Rails.application.config.assets.precompile += %w( orbitcontrols.js )
-Rails.application.config.assets.precompile += %w( curve.js )
 Rails.application.config.assets.precompile += %w( helpers.js )
 Rails.application.config.assets.precompile += %w( trailers.js )
 Rails.application.config.assets.precompile += %w( trailer_cube_home.js )
