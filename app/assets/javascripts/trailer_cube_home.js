@@ -11,7 +11,7 @@ window.onload = function() {
   var scene                        = new THREE.Scene(), 
       camera                       = new THREE.PerspectiveCamera(45, (width/height), 0.01, 100),
         cam_home                   = new THREE.Vector3( 2.5*Math.sin(0)*Math.cos(0), 2.5*Math.sin(0)*Math.sin(0), 2.5*Math.cos(0) ),
-        cam_load                   = new THREE.Vector3(  75*Math.sin(0)*Math.cos(0),  75*Math.sin(0)*Math.sin(0),  75*Math.cos(0) ),
+        cam_load                   = new THREE.Vector3(  50*Math.sin(0)*Math.cos(0),  50*Math.sin(0)*Math.sin(0),  50*Math.cos(0) ),
       controls                     = new THREE.OrbitControls(camera, container),
       renderer                     = new THREE.WebGLRenderer( { antialias: false, alpha: false } );
 
@@ -29,12 +29,14 @@ window.onload = function() {
   var video_controls  = new THREE.Object3D(),
       button_geometry = new THREE.PlaneBufferGeometry(.0072, .00405, 1, 1),
       
+      restart_button_material          = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/restart_button.png')} ),
       play_button_material             = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/play_button.png')} ),
       pause_button_material            = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/pause_button.png')} ),
       enter_fullscreen_button_material = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/enter_fullscreen_button.png')} ),
       exit_fullscreen_button_material  = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/exit_fullscreen_button.png')} ),
       exit_button_material             = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture('public_assets/exit_button.png')} ),
       
+      restart_button          = new THREE.Mesh(button_geometry, restart_button_material),
       play_button             = new THREE.Mesh(button_geometry, play_button_material),
       pause_button            = new THREE.Mesh(button_geometry, pause_button_material),
       enter_fullscreen_button = new THREE.Mesh(button_geometry, enter_fullscreen_button_material),
@@ -43,6 +45,7 @@ window.onload = function() {
 
       video_controls.visible = false;
       scene.add(video_controls);
+        video_controls.add(restart_button);
         video_controls.add(pause_button);
         video_controls.add(enter_fullscreen_button);
         video_controls.add(exit_button);
@@ -74,6 +77,17 @@ window.onload = function() {
     var intersects = mousedown_raycaster.intersectObjects(scene.children, true);
 
       if( intersects[0] == undefined || intersects[0].object == trailer_cube ) { return }
+      else if( intersects[0].object == restart_button ) {
+        videos[a].pause();
+        videos[a].currentTime = 0;
+        videos[a].play();
+
+        if( play_button.visible == true ) {
+          video_controls.remove(play_button);
+          video_controls.add(pause_button);
+        };
+        return;
+      }
       else if( intersects[0].object == play_button ) {
         videos[a].play();
         video_controls.remove(play_button);
@@ -103,8 +117,7 @@ window.onload = function() {
         if( play_button.visible == true ) {
           video_controls.remove(play_button);
           video_controls.add(pause_button);
-        };
-      
+        };      
         video_controls.visible = false;      
         controls.target = new THREE.Vector3();
         camera.position.set( locations[a][0], locations[a][1], locations[a][2]+(.75) );
@@ -124,12 +137,12 @@ window.onload = function() {
 
 
   function on_click() {
-    controls.enabled = true ? false : null;
-  
     if( video_controls.visible == false ) {
+      controls.enabled = true ? false : null;
+  
       //position the camera in front of the video screen that's been clicked
         controls.target = video_screens[a].position;
-        camera.position.set( locations[a][0], locations[a][1], locations[a][2]+(.099485) );
+        camera.position.set( locations[a][0], locations[a][1], locations[a][2]+(.09945) );
 
       //load and play the video
         videos[a].src = video_sources[a];
@@ -145,9 +158,10 @@ window.onload = function() {
         video_screen_materials[a].map = video_textures[a];
      
       //display video controls
-        pause_button.position.set(            locations[a][0]-(0.0080), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
-        enter_fullscreen_button.position.set( locations[a][0]+(0.0000), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
-        exit_button.position.set(             locations[a][0]+(0.0080), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
+        restart_button.position.set(          locations[a][0]+(0.0510), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
+        pause_button.position.set(            locations[a][0]+(0.0590), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
+        enter_fullscreen_button.position.set( locations[a][0]+(0.0670), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
+        exit_button.position.set(             locations[a][0]+(0.0750), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
         play_button.position.copy(pause_button.position);
         exit_fullscreen_button.position.copy(enter_fullscreen_button.position);
 
@@ -237,14 +251,15 @@ function init() {
     
     //add video screens to the cube
       for(b=0; b<trailers.length; b++) {
-        video_screens[b].visible = false;
-        video_screens[b].position.set( locations[b][0], locations[b][1], locations[b][2] );
-        scene.add(video_screens[b]);
+          video_screens[b].visible = false;
+          video_screens[b].position.set( locations[b][0], locations[b][1], locations[b][2] );
+          scene.add(video_screens[b]);
       };
 
   //load the image stills
     for(c=0; c<image_still_sources.length; c++) { 
-      image_stills[c] = THREE.ImageUtils.loadTexture( image_still_sources[c], undefined, function(){ loaded_images++ } ) 
+      image_stills[c] = THREE.ImageUtils.loadTexture( image_still_sources[c], undefined, function(){ loaded_images++ } )
+      video_screen_materials[c].map = image_stills[c];  
     };
 };
 
@@ -255,12 +270,7 @@ function loaded() {
       
   //object visibility
     if( $("rhombic-info") != null ) { $("rhombic-info").remove() };
-    
-    for(d=0; d<trailers.length; d++) { 
-      video_screen_materials[d].map = image_stills[d];
-      video_screens[d].visible = true;
-    };
-    
+    for(d=0; d<trailers.length; d++) { video_screens[d].visible = true };
     trailer_cube.visible = true;
 };
 
