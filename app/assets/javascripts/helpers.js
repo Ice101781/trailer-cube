@@ -3,6 +3,7 @@
     Detector.addGetWebGLMessage();
   };
 
+
 //HTML tag function(s)
   function $( id ) {
     return document.getElementById( id );
@@ -16,10 +17,10 @@
     return document.createElement( id );
   };
 
+
 //convert number of seconds to a 'minutes-seconds' string
   function sec_to_string(seconds) {
-    var seconds = Math.round(seconds),
-        mins_decimal = seconds/60,
+    var mins_decimal = seconds/60,
         seconds_only_base60 = Math.round( (mins_decimal-Math.floor(mins_decimal))*60 );
         
     if(seconds % 60 == 0) { return (mins_decimal) + ':00' }
