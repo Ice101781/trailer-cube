@@ -10,23 +10,22 @@ window.onload = function() {
 
   var scene    = new THREE.Scene(), 
       camera   = new THREE.PerspectiveCamera(48.5, 16/9, 0.01, 100),
-      cam_home = new THREE.Vector3(-0.33, 0.78, 1.01),
+      cam_home = new THREE.Vector3(-0.55, 0.55, 1),
       cam_load = new THREE.Vector3(50*Math.sin(0)*Math.cos(0), 50*Math.sin(0)*Math.sin(0), 50*Math.cos(0)),
       controls = new THREE.OrbitControls(camera, container),
       renderer = new THREE.WebGLRenderer({antialias: false, alpha: false});
 
   if(container != null) { renderer.setSize(width, height); renderer.setClearColor(0x000000); append(renderer.domElement, container) };
-
-  var projector = new THREE.Projector(), mousemove_raycaster = new THREE.Raycaster(), mousedown_raycaster = new THREE.Raycaster(),
-      mouse = {x: 0, y:0};
       
-  var video_controls             = new THREE.Object3D(), 
-      button_geometry            = new THREE.PlaneBufferGeometry(.0072, .00405, 1, 1),
-      timeline_bkgnd_geometry    = new THREE.PlaneBufferGeometry(.0920, .00050, 1, 1),
-      timeline_progress_geometry = new THREE.PlaneBufferGeometry(.0001, .00050, 1, 1),
-      buffer_progress_geometry   = new THREE.PlaneBufferGeometry(.0001, .00050, 1, 1),
-      trailer_time_length        = new THREEx.DynamicTexture(1280, 720),
-      trailer_time_progress      = new THREEx.DynamicTexture(1280, 720),
+  var mouse                         = {x: 0, y:0},
+      video_controls                = new THREE.Object3D(),
+      video_controls_bkgnd_geometry = new THREE.PlaneBufferGeometry(.1575, .00500, 1, 1), 
+      button_geometry               = new THREE.PlaneBufferGeometry(.0072, .00405, 1, 1),
+      timeline_bkgnd_geometry       = new THREE.PlaneBufferGeometry(.0920, .00050, 1, 1),
+      timeline_progress_geometry    = new THREE.PlaneBufferGeometry(.0001, .00050, 1, 1),
+      buffer_progress_geometry      = new THREE.PlaneBufferGeometry(.0001, .00050, 1, 1),
+      trailer_time_length           = new THREEx.DynamicTexture(1280, 720),
+      trailer_time_progress         = new THREEx.DynamicTexture(1280, 720),
       
       restart_button_material          = new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/restart_button.png')}),
       rewind_button_material           = new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/rewind_button.png')}),
@@ -36,63 +35,58 @@ window.onload = function() {
       enter_fullscreen_button_material = new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/enter_fullscreen_button.png')}),
       exit_fullscreen_button_material  = new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/exit_fullscreen_button.png')}),
       exit_button_material             = new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/exit_button.png')}),
+      video_controls_bkgnd_material    = new THREE.MeshBasicMaterial({color: 0x000000}),
       timeline_bkgnd_material          = new THREE.MeshBasicMaterial({color: 0x261958}),
       timeline_progress_material       = new THREE.MeshBasicMaterial({color: 0x4B32AF}),
       buffer_progress_material         = new THREE.MeshBasicMaterial({color: 0x9999CC}),
       trailer_time_length_material     = new THREE.MeshBasicMaterial({map: trailer_time_length.texture, color: 0x4B32AF}),
       trailer_time_progress_material   = new THREE.MeshBasicMaterial({map: trailer_time_progress.texture, color: 0x4B32AF}),
       
-      restart_button             = new THREE.Mesh(button_geometry, restart_button_material),
-      rewind_button              = new THREE.Mesh(button_geometry, rewind_button_material),
-      play_button                = new THREE.Mesh(button_geometry, play_button_material),
-      pause_button               = new THREE.Mesh(button_geometry, pause_button_material),
-      fastforward_button         = new THREE.Mesh(button_geometry, fastforward_button_material),
-      enter_fullscreen_button    = new THREE.Mesh(button_geometry, enter_fullscreen_button_material),
-      exit_fullscreen_button     = new THREE.Mesh(button_geometry, exit_fullscreen_button_material),
-      exit_button                = new THREE.Mesh(button_geometry, exit_button_material),
-      timeline_bkgnd             = new THREE.Mesh(timeline_bkgnd_geometry, timeline_bkgnd_material),
-      timeline_progress          = new THREE.Mesh(timeline_progress_geometry, timeline_progress_material),
-      buffer_progress            = new THREE.Mesh(buffer_progress_geometry, buffer_progress_material),
-      trailer_time_length_mesh   = new THREE.Mesh(button_geometry, trailer_time_length_material),
-      trailer_time_progress_mesh = new THREE.Mesh(button_geometry, trailer_time_progress_material);
+      video_controls_meshmatrix = [ restart_button             = new THREE.Mesh(button_geometry, restart_button_material),
+                                    rewind_button              = new THREE.Mesh(button_geometry, rewind_button_material),
+                                    play_button                = new THREE.Mesh(button_geometry, play_button_material),
+                                    pause_button               = new THREE.Mesh(button_geometry, pause_button_material),
+                                    fastforward_button         = new THREE.Mesh(button_geometry, fastforward_button_material),
+                                    enter_fullscreen_button    = new THREE.Mesh(button_geometry, enter_fullscreen_button_material),
+                                    exit_fullscreen_button     = new THREE.Mesh(button_geometry, exit_fullscreen_button_material),
+                                    exit_button                = new THREE.Mesh(button_geometry, exit_button_material),
+                                    video_controls_bkgnd       = new THREE.Mesh(video_controls_bkgnd_geometry, video_controls_bkgnd_material),
+                                    timeline_bkgnd             = new THREE.Mesh(timeline_bkgnd_geometry, timeline_bkgnd_material),
+                                    timeline_progress          = new THREE.Mesh(timeline_progress_geometry, timeline_progress_material),
+                                    buffer_progress            = new THREE.Mesh(buffer_progress_geometry, buffer_progress_material),
+                                    trailer_time_length_mesh   = new THREE.Mesh(button_geometry, trailer_time_length_material),
+                                    trailer_time_progress_mesh = new THREE.Mesh(button_geometry, trailer_time_progress_material) ];
+
+      for(i=0; i<video_controls_meshmatrix.length; i++) { video_controls.add(video_controls_meshmatrix[i]) };
 
       trailer_time_length.context.font   = "500px Corbel";
       trailer_time_progress.context.font = "500px Corbel";
 
-      video_controls.add(restart_button);
-      video_controls.add(rewind_button);
-      video_controls.add(pause_button);
-      video_controls.add(fastforward_button);
-      video_controls.add(enter_fullscreen_button);
-      video_controls.add(exit_button);
-      video_controls.add(timeline_bkgnd);
-      video_controls.add(timeline_progress);
-      video_controls.add(buffer_progress);
-      video_controls.add(trailer_time_length_mesh);
-      video_controls.add(trailer_time_progress_mesh);
 
 //listen for events
-  window.addEventListener('mousemove', mouse_move, false);
+  window.addEventListener('resize',    on_resize,     false);
+  window.addEventListener('mousemove', on_mouse_move, false);
   window.addEventListener('mousedown', on_mouse_down, false);
-  window.addEventListener('resize', function() {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      renderer.setSize(width, height);
-      camera.aspect = 16/9;
-    }, false);
-
 
 //user functions
-  function mouse_move(event) { 
-    event.preventDefault(); 
-    mouse.x = (event.clientX/width)*2-1, mouse.y = -(event.clientY/height)*2+1;
+  function on_resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    renderer.setSize(width, height);
+    camera.aspect = 16/9;
   };
 
 
-  function on_mouse_down(event) {  
-    mouse_move(event);
+  function on_mouse_move(event) { 
+    event.preventDefault(); 
+    mouse.x = (event.clientX/width)*2-1; 
+    mouse.y = -(event.clientY/height)*2+1;
+  };
 
-    var mousedown_vector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
+
+  function on_mouse_down() {
+    var mousedown_raycaster = new THREE.Raycaster(),
+        mousedown_vector    = new THREE.Vector3(mouse.x, mouse.y, 0.5);
     mousedown_vector.unproject(camera);    
     mousedown_raycaster.set( camera.position, mousedown_vector.sub(camera.position).normalize() );
   
@@ -101,14 +95,9 @@ window.onload = function() {
 
     if(intersects[0] == undefined) {return};
     
-    var no_click_effect = [ trailer_cube,
-                            timeline_bkgnd,
-                            timeline_progress,
-                            buffer_progress,  
-                            trailer_time_length_mesh, 
-                            trailer_time_progress_mesh ];
-
-    for(i=0; i<no_click_effect.length; i++) { if(intersects[0].object == no_click_effect[i]) {return} };
+    var no_click_effect = [trailer_cube, video_controls_bkgnd, timeline_bkgnd, timeline_progress, buffer_progress, trailer_time_length_mesh, trailer_time_progress_mesh];
+                            
+      for(i=0; i<no_click_effect.length; i++) { if(intersects[0].object == no_click_effect[i]) {return} };
       
     if(intersects[0].object == restart_button) {
       videos[a].pause();
@@ -157,9 +146,12 @@ window.onload = function() {
       videos[a].pause();        
       videos[a].currentTime = 0;
       video_screen_materials[a].map = image_stills[a];      
+      //remove this code once the cube has been tiled // // // // // // // // // // // // // // // // // // // // // // // // //
+      trailer_cube.visible = true;
+      // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
+      camera.position.set(locations[a][0], locations[a][1]+.25, locations[a][2]+controls.minDistance+.5);
       controls.target = new THREE.Vector3();
       controls.minDistance = 1;
-      camera.position.set(locations[a][0], locations[a][1], locations[a][2]+(controls.minDistance));
       controls.enabled = true;
       return;
     };
@@ -168,11 +160,37 @@ window.onload = function() {
   };
 
 
+  function on_mouse_over() {
+    var mouseover_raycaster = new THREE.Raycaster(),
+        mouseover_vector    = new THREE.Vector3(mouse.x, mouse.y, 0.5);
+    mouseover_vector.unproject(camera);    
+    mouseover_raycaster.set( camera.position, mouseover_vector.sub(camera.position).normalize() );
+  
+    var intersects = mouseover_raycaster.intersectObjects(scene.children, true);
+    //console.log(intersects);
+
+    if(intersects[0] != undefined) {
+      for(i=0; i<video_controls_meshmatrix.length; i++) { 
+        if(intersects[0].object == video_controls_meshmatrix[i]) {
+          video_controls.visible = true;
+          return; 
+        }
+        else {
+          video_controls.visible = false;
+        };
+      };  
+    };
+  };
+
+
   function on_click() {
     if(video_controls.parent != scene) {
       //adjust minimum camera distance to target and toggle controls
         controls.minDistance = .1;
         controls.enabled = true ? false : null;
+        //remove this code once the cube has been tiled // // // // // // // // // // // // // // // // // // // // // // // //  
+        trailer_cube.visible = false;
+        // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
   
       //position the camera in front of the video screen that's been clicked
         controls.target = video_screens[a].position;
@@ -195,21 +213,22 @@ window.onload = function() {
         fastforward_button.position.set         (locations[a][0]+(0.0590), locations[a][1]-(0.0360), locations[a][2]+(0.0001));
         enter_fullscreen_button.position.set    (locations[a][0]+(0.0670), locations[a][1]-(0.0360), locations[a][2]+(0.0001));
         exit_button.position.set                (locations[a][0]+(0.0750), locations[a][1]-(0.0360), locations[a][2]+(0.0001));
-        timeline_bkgnd.position.set             (locations[a][0]-(0.0250), locations[a][1]-(0.0360), locations[a][2]+(0.00010));
-        timeline_progress.position.set          (locations[a][0]-(0.0710), locations[a][1]-(0.0360), locations[a][2]+(0.00012));
-        buffer_progress.position.set            (locations[a][0]-(0.0710), locations[a][1]-(0.0360), locations[a][2]+(0.00011));
+        video_controls_bkgnd.position.set       (locations[a][0]-(0.0000), locations[a][1]-(0.0360), locations[a][2]+(0.00005));  
+        timeline_bkgnd.position.set             (locations[a][0]-(0.0500)+.025, locations[a][1]-(0.0360), locations[a][2]+(0.00010));
+        timeline_progress.position.set          (locations[a][0]-(0.0710)+.025, locations[a][1]-(0.0360), locations[a][2]+(0.00012));
+        buffer_progress.position.set            (locations[a][0]-(0.0710)+.025, locations[a][1]-(0.0360), locations[a][2]+(0.00011));
         trailer_time_length_mesh.position.set   (locations[a][0]+(0.0250), locations[a][1]-(0.0360), locations[a][2]+(0.0001));
         trailer_time_progress_mesh.position.set (locations[a][0]-(0.0750), locations[a][1]-(0.0360), locations[a][2]+(0.0001));
         play_button.position.copy               (pause_button.position);
         exit_fullscreen_button.position.copy    (enter_fullscreen_button.position);
-        video_controls.visible = false;
         scene.add(video_controls);
 
       //listen for the end of the video
         videos[a].addEventListener('ended', function(event) { 
-            video_controls.remove(pause_button);
-            video_controls.add(play_button);
-          }, false);
+          video_controls.remove(pause_button); 
+          video_controls.add(play_button);
+          }, false
+        );
     };    
     click = true ? false : null;
   };
@@ -220,7 +239,6 @@ window.onload = function() {
       rhombic_dodecahedron, trailer_cube,
       image_stills = [], loaded_images = 0,
       click = false, a = 0;
-
 
 function init() {
   camera.position.copy(cam_load);
@@ -318,7 +336,9 @@ function render() {
       //toggle object visibility
         if( $("rhombic-info") != null ) { $("rhombic-info").remove() };
         for(d=0; d<trailers.length; d++) {video_screens[d].visible = true};
+        //comment-out this code once the cube has been tiled // // // // // // // // // // // // // // // // // // // // // // /
         trailer_cube.visible = true;
+        // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
       //reset count of loaded images
         loaded_images = null;
@@ -333,13 +353,15 @@ function render() {
       if(videos[a].readyState > 0) {
         trailer_time_length.clear('black');
         trailer_time_length.drawText(sec_to_string(Math.round(videos[a].duration)-Math.round(videos[a].currentTime)), undefined, 475, 'white');
+        
         trailer_time_progress.clear('black');
         trailer_time_progress.drawText(sec_to_string(Math.round(videos[a].currentTime)), undefined, 475, 'white');
+        
         timeline_progress.scale.x = ((timeline_bkgnd.geometry.parameters.width*(Math.round(videos[a].currentTime)/Math.round(videos[a].duration)))-timeline_progress.geometry.parameters.width)/(timeline_progress.geometry.parameters.width);
         timeline_progress.position.x = locations[a][0]-(0.0710)+((timeline_progress.scale.x*timeline_progress.geometry.parameters.width)/2);
+        
         buffer_progress.scale.x = ((timeline_bkgnd.geometry.parameters.width*(Math.round(videos[a].buffered.end(0))/Math.round(videos[a].duration)))-buffer_progress.geometry.parameters.width)/(buffer_progress.geometry.parameters.width);
         buffer_progress.position.x = locations[a][0]-(0.0710)+((buffer_progress.scale.x*buffer_progress.geometry.parameters.width)/2);
-        video_controls.visible = true;
       };
       if(video_textures[a]) {video_textures[a].needsUpdate = true};
     };
@@ -353,8 +375,9 @@ function render() {
       video_controls.remove(exit_fullscreen_button);
       video_controls.add(enter_fullscreen_button);
     };
-  
-  //listen for mouse-over of video controls
+
+  //check for mouse_over events
+    on_mouse_over();
 
   controls.update(delta);
   renderer.render(scene, camera);
