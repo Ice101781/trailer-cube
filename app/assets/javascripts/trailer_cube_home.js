@@ -308,8 +308,10 @@ function init() {
           scene.add(video_screens[b]);
       };
 
-  //load the image stills
-    for(c=0; c<image_still_sources.length; c++) { 
+  //allow CORS and load the image stills
+    THREE.ImageUtils.crossOrigin = '';
+
+    for(c=0; c<image_still_sources.length; c++) {
       image_stills[c] = THREE.ImageUtils.loadTexture(image_still_sources[c], undefined, function() {loaded_images++})
       video_screen_materials[c].map = image_stills[c];  
     };
