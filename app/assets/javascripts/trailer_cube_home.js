@@ -1,3 +1,13 @@
+/*KNOWN BUGS:
+   
+  1) this web app is optimized for the Google Chrome(c) browser, so some functionality/features may be lost when
+     using other browsers.
+
+  2) when playing the first video of a given user session, the pause button will need to be pressed twice 
+     in order to function correctly, unless another playback button is initially pressed.  
+
+*/
+
 window.onload = function() {
 
 //some global vars, append verifications
@@ -196,7 +206,8 @@ window.onload = function() {
         controls.target = video_screens[a].position;
         camera.position.set(locations[a][0], locations[a][1], locations[a][2]+(controls.minDistance));
 
-      //prepare and play the video
+      //allow CORS, prepare and play the video
+        videos[a].crossOrigin = '';
         video_images[a].width  = dimensions[a][0];
         video_images[a].height = dimensions[a][1];  
         video_image_contexts[a].fillStyle = '0#000000';
@@ -241,6 +252,8 @@ window.onload = function() {
       click = false, a = 0;
 
 function init() {
+  controls.minDistance = 30;
+  controls.maxDistance = 90;
   camera.position.copy(cam_load);
 
   //loading screen mesh - a rhombic dodecahedron
