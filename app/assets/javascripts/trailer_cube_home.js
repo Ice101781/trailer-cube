@@ -3,8 +3,13 @@
   1) this web app is optimized for the Google Chrome(c) browser, so some functionality/features may be lost when
      using other browsers.
 
+  ***FIXED 07/18/15 @ 1:00am*****************************************************************************
   2) when playing the first video of a given user session, the pause button will need to be pressed twice 
-     in order to function correctly, unless another playback button is initially pressed.  
+     in order to function correctly, unless another playback button is initially pressed.
+  *******************************************************************************************************
+
+  3) sometimes when exiting a video the camera will position itself above the cube, shooting downward. 
+     this behavior seems to occur randomly.
 
 */
 
@@ -221,8 +226,10 @@ window.onload = function() {
         restart_button.position.set             (locations[a][0]+(0.0350), locations[a][1]-(0.0360), locations[a][2]+(0.0001));
         rewind_button.position.set              (locations[a][0]+(0.0430), locations[a][1]-(0.0360), locations[a][2]+(0.0001));
         pause_button.position.set               (locations[a][0]+(0.0510), locations[a][1]-(0.0360), locations[a][2]+(0.0001));
+        play_button.position.set                (locations[a][0]+(0.0510), locations[a][1]-(0.0360), locations[a][2]+(0.00009));
         fastforward_button.position.set         (locations[a][0]+(0.0590), locations[a][1]-(0.0360), locations[a][2]+(0.0001));
         enter_fullscreen_button.position.set    (locations[a][0]+(0.0670), locations[a][1]-(0.0360), locations[a][2]+(0.0001));
+        exit_fullscreen_button.position.set     (locations[a][0]+(0.0670), locations[a][1]-(0.0360), locations[a][2]+(0.00009));
         exit_button.position.set                (locations[a][0]+(0.0750), locations[a][1]-(0.0360), locations[a][2]+(0.0001));
         video_controls_bkgnd.position.set       (locations[a][0]-(0.0000), locations[a][1]-(0.0360), locations[a][2]+(0.00005));  
         timeline_bkgnd.position.set             (locations[a][0]-(0.0500)+.025, locations[a][1]-(0.0360), locations[a][2]+(0.00010));
@@ -230,17 +237,15 @@ window.onload = function() {
         buffer_progress.position.set            (locations[a][0]-(0.0710)+.025, locations[a][1]-(0.0360), locations[a][2]+(0.00011));
         trailer_time_length_mesh.position.set   (locations[a][0]+(0.0250), locations[a][1]-(0.0360), locations[a][2]+(0.0001));
         trailer_time_progress_mesh.position.set (locations[a][0]-(0.0750), locations[a][1]-(0.0360), locations[a][2]+(0.0001));
-        play_button.position.copy               (pause_button.position);
-        exit_fullscreen_button.position.copy    (enter_fullscreen_button.position);
         scene.add(video_controls);
 
       //listen for the end of the video
-        videos[a].addEventListener('ended', function(event) { 
-          video_controls.remove(pause_button); 
+        videos[a].addEventListener('ended', function(event) {
+          video_controls.remove(pause_button);
           video_controls.add(play_button);
           }, false
         );
-    };    
+    };
     click = true ? false : null;
   };
 
