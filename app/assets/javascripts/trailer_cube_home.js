@@ -1,21 +1,19 @@
 /*KNOWN BUGS:
-   
   1) this web app is optimized for the Google Chrome(c) browser, so some functionality/features may be lost when
      using other browsers.
 
-  ***FIXED 07/18/15 @ 1:00am*****************************************************************************
+  ***FIXED 07/18/15 @ 1:00am************************************************************************************
   2) when playing the first video of a given user session, the pause button will need to be pressed twice 
      in order to function correctly, unless another playback button is initially pressed.
-  *******************************************************************************************************
+  **************************************************************************************************************
 
   3) sometimes when exiting a video the camera will position itself above the cube, shooting downward. 
      this behavior seems to occur randomly.
-
 */
 
 window.onload = function() {
 
-//some global vars, append verifications
+//some global vars, append verifications, etc.
   var clock     = new THREE.Clock(),
       container = $("container"),
       width     = window.innerWidth,
@@ -25,24 +23,28 @@ window.onload = function() {
 
   var scene    = new THREE.Scene(), 
       camera   = new THREE.PerspectiveCamera(48.5, 16/9, 0.01, 100),
-      cam_home = new THREE.Vector3(-0.55, 0.55, 1),
-      cam_load = new THREE.Vector3(50*Math.sin(0)*Math.cos(0), 50*Math.sin(0)*Math.sin(0), 50*Math.cos(0)),
+      cam_home = new THREE.Vector3(-0.45, 0.60, .75),
+      cam_load = new THREE.Vector3(60*Math.sin(0)*Math.cos(0), 60*Math.sin(0)*Math.sin(0), 60*Math.cos(0)),
       controls = new THREE.OrbitControls(camera, container),
       renderer = new THREE.WebGLRenderer({antialias: false, alpha: false});
 
   if(container != null) { renderer.setSize(width, height); renderer.setClearColor(0x000000); append(renderer.domElement, container) };
       
-  var mouse                         = {x: 0, y:0},
-      video_controls                = new THREE.Object3D(),
+  var mouse      = {x: 0, y:0},
+      dimensions = [1280, 720],
+      video_screen_geometry         = new THREE.PlaneBufferGeometry(.16, .09, 4, 4),
       video_controls_bkgnd_geometry = new THREE.PlaneBufferGeometry(.1575, .00500, 1, 1), 
       button_geometry               = new THREE.PlaneBufferGeometry(.0072, .00405, 1, 1),
       timeline_bkgnd_geometry       = new THREE.PlaneBufferGeometry(.0920, .00050, 1, 1),
       timeline_progress_geometry    = new THREE.PlaneBufferGeometry(.0001, .00050, 1, 1),
       buffer_progress_geometry      = new THREE.PlaneBufferGeometry(.0001, .00050, 1, 1),
       trailer_time_length           = new THREEx.DynamicTexture(1280, 720),
-      trailer_time_progress         = new THREEx.DynamicTexture(1280, 720),
+      trailer_time_progress         = new THREEx.DynamicTexture(1280, 720);
+
+      trailer_time_length.context.font   = "500px Corbel";
+      trailer_time_progress.context.font = "500px Corbel";
       
-      restart_button_material          = new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/restart_button.png')}),
+  var restart_button_material          = new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/restart_button.png')}),
       rewind_button_material           = new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/rewind_button.png')}),
       play_button_material             = new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/play_button.png')}),
       pause_button_material            = new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/pause_button.png')}),
@@ -70,12 +72,30 @@ window.onload = function() {
                                     timeline_progress          = new THREE.Mesh(timeline_progress_geometry, timeline_progress_material),
                                     buffer_progress            = new THREE.Mesh(buffer_progress_geometry, buffer_progress_material),
                                     trailer_time_length_mesh   = new THREE.Mesh(button_geometry, trailer_time_length_material),
-                                    trailer_time_progress_mesh = new THREE.Mesh(button_geometry, trailer_time_progress_material) ];
+                                    trailer_time_progress_mesh = new THREE.Mesh(button_geometry, trailer_time_progress_material) ],
 
+      video_controls = new THREE.Object3D();
+      
       for(i=0; i<video_controls_meshmatrix.length; i++) { video_controls.add(video_controls_meshmatrix[i]) };
 
-      trailer_time_length.context.font   = "500px Corbel";
-      trailer_time_progress.context.font = "500px Corbel";
+
+  var videos = [], video_images = [], video_image_contexts = [], video_textures = [],
+      video_screen_materials = [], video_screens = [];
+
+  for(h=0; h<titles.length; h++) {
+      videos[h] = create( "video" );
+      video_images[h] = create( "canvas" );
+      video_image_contexts[h] = video_images[h].getContext( '2d' );
+      video_textures[h] = new THREE.Texture( video_images[h] );
+      video_screen_materials[h] = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture("/public_assets/t_c.png"), overdraw: true} );
+      video_screens[h] = new THREE.Mesh( video_screen_geometry, video_screen_materials[h] );
+  };
+    
+  //generate positions for the video screens
+    var locations = [];
+
+    //this bound for 'i' is temporary for testing purposes // // // // // // // // // // // // // // // // // // // // // //
+    for(i=0; i<titles.length; i++) { locations[i] = [(-.42+(i*.17)), .455, .51] };
 
 
 //listen for events
@@ -161,9 +181,9 @@ window.onload = function() {
       videos[a].pause();        
       videos[a].currentTime = 0;
       video_screen_materials[a].map = image_stills[a];      
-      //remove this code once the cube has been tiled // // // // // // // // // // // // // // // // // // // // // // // // //
+      //remove this code once the cube has been tiled // // // // // // // // // // // // // // // // // // // // // // // //
       trailer_cube.visible = true;
-      // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
+      // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
       camera.position.set(locations[a][0], locations[a][1]+.25, locations[a][2]+controls.minDistance+.5);
       controls.target = new THREE.Vector3();
       controls.minDistance = 1;
@@ -171,7 +191,7 @@ window.onload = function() {
       return;
     };
 
-    for(a=0; a<trailers.length; a++) { if(intersects[0].object == video_screens[a]) { click = true; return a } };
+    for(a=0; a<titles.length; a++) { if(intersects[0].object == video_screens[a]) { click = true; return a } };
   };
 
 
@@ -203,9 +223,9 @@ window.onload = function() {
       //adjust minimum camera distance to target and toggle controls
         controls.minDistance = .1;
         controls.enabled = true ? false : null;
-        //remove this code once the cube has been tiled // // // // // // // // // // // // // // // // // // // // // // // //  
+        //remove this code once the cube has been tiled // // // // // // // // // // // // // // // // // // // // // // //  
         trailer_cube.visible = false;
-        // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
+        // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
   
       //position the camera in front of the video screen that's been clicked
         controls.target = video_screens[a].position;
@@ -213,12 +233,12 @@ window.onload = function() {
 
       //allow CORS, prepare and play the video
         videos[a].crossOrigin = '';
-        video_images[a].width  = dimensions[a][0];
-        video_images[a].height = dimensions[a][1];  
+        video_images[a].width  = dimensions[0];
+        video_images[a].height = dimensions[1];  
         video_image_contexts[a].fillStyle = '0#000000';
         video_image_contexts[a].fillRect(0, 0, video_images[a].width, video_images[a].height);
         video_screen_materials[a].map = video_textures[a];
-        videos[a].src = video_sources[a];
+        videos[a].src = media_sources[a][1];
         videos[a].load();
         videos[a].play();
      
@@ -320,7 +340,7 @@ function init() {
           trailer_cube.position.set(0, 0, 0);
           scene.add(trailer_cube);            
     //add video screens to the cube
-      for(b=0; b<trailers.length; b++) {
+      for(b=0; b<titles.length; b++) {
           video_screens[b].visible = false;
           video_screens[b].position.set( locations[b][0], locations[b][1], locations[b][2] );
           scene.add(video_screens[b]);
@@ -329,8 +349,8 @@ function init() {
   //allow CORS and load the image stills
     THREE.ImageUtils.crossOrigin = '';
 
-    for(c=0; c<image_still_sources.length; c++) {
-      image_stills[c] = THREE.ImageUtils.loadTexture(image_still_sources[c], undefined, function() {loaded_images++})
+    for(c=0; c<media_sources.length; c++) {
+      image_stills[c] = THREE.ImageUtils.loadTexture(media_sources[c][0], undefined, function() {loaded_images++});
       video_screen_materials[c].map = image_stills[c];  
     };
 };
@@ -346,7 +366,7 @@ function render() {
     };
 
   //view homepage if all images have been loaded
-    if(loaded_images == image_still_sources.length) { 
+    if(loaded_images == media_sources.length) { 
       //remove the loading screen mesh and go to home camera position
         scene.remove(rhombic_dodecahedron); 
         camera.position.copy(cam_home);
@@ -355,10 +375,10 @@ function render() {
       
       //toggle object visibility
         if( $("rhombic-info") != null ) { $("rhombic-info").remove() };
-        for(d=0; d<trailers.length; d++) {video_screens[d].visible = true};
-        //comment-out this code once the cube has been tiled // // // // // // // // // // // // // // // // // // // // // // /
+        for(d=0; d<titles.length; d++) {video_screens[d].visible = true};
+        //comment-out the following code when cube is fully tiled // // // // // // // // // // // // // // // // // // // //
         trailer_cube.visible = true;
-        // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
+        // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
       //reset count of loaded images
         loaded_images = null;
