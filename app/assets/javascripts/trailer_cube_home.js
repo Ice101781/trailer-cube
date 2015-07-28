@@ -9,6 +9,10 @@
 
   3) sometimes when exiting a video the camera will position itself above the cube, shooting downward. 
      this behavior seems to occur randomly.
+
+  4) sometimes when playing a video the following console error will appear: "Uncaught IndexSizeError: Failed to execute
+     'end' on 'TimeRanges': The index provided (0) is greater than or equal to the maximum bound (0)". the error doesn't 
+     seem to affect playback much.
 */
 
 window.onload = function() {
@@ -19,16 +23,16 @@ window.onload = function() {
       width     = window.innerWidth,
       height    = window.innerHeight;
     
-  if(document.body != null) { append(container, document.body) };
+  if(document.body != null) {append(container, document.body)};
 
   var scene    = new THREE.Scene(), 
       camera   = new THREE.PerspectiveCamera(48.5, 16/9, 0.01, 100),
-      cam_home = new THREE.Vector3(-0.45, 0.60, .75),
+      cam_home = new THREE.Vector3(-0.45, 0.60, .85),
       cam_load = new THREE.Vector3(60*Math.sin(0)*Math.cos(0), 60*Math.sin(0)*Math.sin(0), 60*Math.cos(0)),
       controls = new THREE.OrbitControls(camera, container),
       renderer = new THREE.WebGLRenderer({antialias: false, alpha: false});
 
-  if(container != null) { renderer.setSize(width, height); renderer.setClearColor(0x000000); append(renderer.domElement, container) };
+  if(container != null) {renderer.setSize(width, height); renderer.setClearColor(0x000000); append(renderer.domElement, container)};
       
   var mouse      = {x: 0, y:0},
       dimensions = [1280, 720],
@@ -36,8 +40,8 @@ window.onload = function() {
       video_controls_bkgnd_geometry = new THREE.PlaneBufferGeometry(.1575, .00500, 1, 1), 
       button_geometry               = new THREE.PlaneBufferGeometry(.0072, .00405, 1, 1),
       timeline_bkgnd_geometry       = new THREE.PlaneBufferGeometry(.0920, .00050, 1, 1),
-      timeline_progress_geometry    = new THREE.PlaneBufferGeometry(.0001, .00050, 1, 1),
-      buffer_progress_geometry      = new THREE.PlaneBufferGeometry(.0001, .00050, 1, 1),
+      load_progress_geometry        = new THREE.PlaneBufferGeometry(.0001, .35000, 1, 1),
+      video_progress_geometry       = new THREE.PlaneBufferGeometry(.0001, .00050, 1, 1),
       trailer_time_length           = new THREEx.DynamicTexture(1280, 720),
       trailer_time_progress         = new THREEx.DynamicTexture(1280, 720);
 
@@ -54,49 +58,51 @@ window.onload = function() {
       exit_button_material             = new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/exit_button.png')}),
       video_controls_bkgnd_material    = new THREE.MeshBasicMaterial({color: 0x000000}),
       timeline_bkgnd_material          = new THREE.MeshBasicMaterial({color: 0x261958}),
+      load_progress_material           = new THREE.MeshBasicMaterial({color: 0x00FF00}),
       timeline_progress_material       = new THREE.MeshBasicMaterial({color: 0x4B32AF}),
       buffer_progress_material         = new THREE.MeshBasicMaterial({color: 0x9999CC}),
       trailer_time_length_material     = new THREE.MeshBasicMaterial({map: trailer_time_length.texture, color: 0x4B32AF}),
       trailer_time_progress_material   = new THREE.MeshBasicMaterial({map: trailer_time_progress.texture, color: 0x4B32AF}),
-      
-      video_controls_meshmatrix = [ restart_button             = new THREE.Mesh(button_geometry, restart_button_material),
-                                    rewind_button              = new THREE.Mesh(button_geometry, rewind_button_material),
-                                    play_button                = new THREE.Mesh(button_geometry, play_button_material),
-                                    pause_button               = new THREE.Mesh(button_geometry, pause_button_material),
-                                    fastforward_button         = new THREE.Mesh(button_geometry, fastforward_button_material),
-                                    enter_fullscreen_button    = new THREE.Mesh(button_geometry, enter_fullscreen_button_material),
-                                    exit_fullscreen_button     = new THREE.Mesh(button_geometry, exit_fullscreen_button_material),
-                                    exit_button                = new THREE.Mesh(button_geometry, exit_button_material),
-                                    video_controls_bkgnd       = new THREE.Mesh(video_controls_bkgnd_geometry, video_controls_bkgnd_material),
-                                    timeline_bkgnd             = new THREE.Mesh(timeline_bkgnd_geometry, timeline_bkgnd_material),
-                                    timeline_progress          = new THREE.Mesh(timeline_progress_geometry, timeline_progress_material),
-                                    buffer_progress            = new THREE.Mesh(buffer_progress_geometry, buffer_progress_material),
-                                    trailer_time_length_mesh   = new THREE.Mesh(button_geometry, trailer_time_length_material),
-                                    trailer_time_progress_mesh = new THREE.Mesh(button_geometry, trailer_time_progress_material) ],
+   
+      load_progress                                            = new THREE.Mesh(load_progress_geometry, load_progress_material),
+    
+      video_controls_meshes = [ restart_button             = new THREE.Mesh(button_geometry, restart_button_material),
+                                rewind_button              = new THREE.Mesh(button_geometry, rewind_button_material),
+                                play_button                = new THREE.Mesh(button_geometry, play_button_material),
+                                pause_button               = new THREE.Mesh(button_geometry, pause_button_material),
+                                fastforward_button         = new THREE.Mesh(button_geometry, fastforward_button_material),
+                                enter_fullscreen_button    = new THREE.Mesh(button_geometry, enter_fullscreen_button_material),
+                                exit_fullscreen_button     = new THREE.Mesh(button_geometry, exit_fullscreen_button_material),
+                                exit_button                = new THREE.Mesh(button_geometry, exit_button_material),
+                                video_controls_bkgnd       = new THREE.Mesh(video_controls_bkgnd_geometry, video_controls_bkgnd_material),
+                                timeline_bkgnd             = new THREE.Mesh(timeline_bkgnd_geometry, timeline_bkgnd_material),
+                                timeline_progress          = new THREE.Mesh(video_progress_geometry, timeline_progress_material),
+                                buffer_progress            = new THREE.Mesh(video_progress_geometry, buffer_progress_material),
+                                trailer_time_length_mesh   = new THREE.Mesh(button_geometry, trailer_time_length_material),
+                                trailer_time_progress_mesh = new THREE.Mesh(button_geometry, trailer_time_progress_material) ],
 
       video_controls = new THREE.Object3D();
       
-      for(i=0; i<video_controls_meshmatrix.length; i++) { video_controls.add(video_controls_meshmatrix[i]) };
+      for(i=0; i<video_controls_meshes.length; i++) {video_controls.add(video_controls_meshes[i])};
 
 
   var videos = [], video_images = [], video_image_contexts = [], video_textures = [],
       video_screen_materials = [], video_screens = [];
 
   for(h=0; h<titles.length; h++) {
-      videos[h] = create( "video" );
-      video_images[h] = create( "canvas" );
-      video_image_contexts[h] = video_images[h].getContext( '2d' );
-      video_textures[h] = new THREE.Texture( video_images[h] );
-      video_screen_materials[h] = new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture("/public_assets/t_c.png"), overdraw: true} );
-      video_screens[h] = new THREE.Mesh( video_screen_geometry, video_screen_materials[h] );
+      videos[h] = create("video");
+      video_images[h] = create("canvas");
+      video_image_contexts[h] = video_images[h].getContext('2d');
+      video_textures[h] = new THREE.Texture(video_images[h]);
+      video_screen_materials[h] = new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture("/public_assets/t_c.png"), overdraw: true});
+      video_screens[h] = new THREE.Mesh(video_screen_geometry, video_screen_materials[h]);
   };
     
-  //generate positions for the video screens
+  //generate positions for the video screens - NEED TO FIX THIS! // // // // // // // // // // // // // // // // // // // //
     var locations = [];
 
-    //this bound for 'i' is temporary for testing purposes // // // // // // // // // // // // // // // // // // // // // //
-    for(i=0; i<titles.length; i++) { locations[i] = [(-.42+(i*.17)), .455, .51] };
-
+    for(i=0; i<titles.length; i++) {locations[i] = [(-.42+(i*.17)), .455, .51]};
+  // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 //listen for events
   window.addEventListener('resize',    on_resize,     false);
@@ -123,16 +129,22 @@ window.onload = function() {
     var mousedown_raycaster = new THREE.Raycaster(),
         mousedown_vector    = new THREE.Vector3(mouse.x, mouse.y, 0.5);
     mousedown_vector.unproject(camera);    
-    mousedown_raycaster.set( camera.position, mousedown_vector.sub(camera.position).normalize() );
+    mousedown_raycaster.set(camera.position, mousedown_vector.sub(camera.position).normalize());
   
     var intersects = mousedown_raycaster.intersectObjects(scene.children, true);
     //console.log(intersects);
 
     if(intersects[0] == undefined) {return};
     
-    var no_click_effect = [trailer_cube, video_controls_bkgnd, timeline_bkgnd, timeline_progress, buffer_progress, trailer_time_length_mesh, trailer_time_progress_mesh];
+    var no_click_effect = [trailer_cube, 
+                           video_controls_bkgnd, 
+                           timeline_bkgnd, 
+                           timeline_progress, 
+                           buffer_progress, 
+                           trailer_time_length_mesh, 
+                           trailer_time_progress_mesh];
                             
-      for(i=0; i<no_click_effect.length; i++) { if(intersects[0].object == no_click_effect[i]) {return} };
+      for(i=0; i<no_click_effect.length; i++) {if(intersects[0].object == no_click_effect[i]) {return}};
       
     if(intersects[0].object == restart_button) {
       videos[a].pause();
@@ -184,14 +196,14 @@ window.onload = function() {
       //remove this code once the cube has been tiled // // // // // // // // // // // // // // // // // // // // // // // //
       trailer_cube.visible = true;
       // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
-      camera.position.set(locations[a][0], locations[a][1]+.25, locations[a][2]+controls.minDistance+.5);
+      camera.position.set(locations[a][0], locations[a][1]+.1, locations[a][2]+controls.minDistance+.4);
       controls.target = new THREE.Vector3();
       controls.minDistance = 1;
       controls.enabled = true;
       return;
     };
 
-    for(a=0; a<titles.length; a++) { if(intersects[0].object == video_screens[a]) { click = true; return a } };
+    for(a=0; a<titles.length; a++) {if(intersects[0].object == video_screens[a]) {click = true; return a}};
   };
 
 
@@ -199,14 +211,14 @@ window.onload = function() {
     var mouseover_raycaster = new THREE.Raycaster(),
         mouseover_vector    = new THREE.Vector3(mouse.x, mouse.y, 0.5);
     mouseover_vector.unproject(camera);    
-    mouseover_raycaster.set( camera.position, mouseover_vector.sub(camera.position).normalize() );
+    mouseover_raycaster.set(camera.position, mouseover_vector.sub(camera.position).normalize());
   
     var intersects = mouseover_raycaster.intersectObjects(scene.children, true);
     //console.log(intersects);
 
     if(intersects[0] != undefined) {
-      for(i=0; i<video_controls_meshmatrix.length; i++) { 
-        if(intersects[0].object == video_controls_meshmatrix[i]) {
+      for(i=0; i<video_controls_meshes.length; i++) { 
+        if(intersects[0].object == video_controls_meshes[i]) {
           video_controls.visible = true;
           return; 
         }
@@ -261,8 +273,8 @@ window.onload = function() {
 
       //listen for the end of the video
         videos[a].addEventListener('ended', function(event) {
-          video_controls.remove(pause_button);
-          video_controls.add(play_button);
+          video_controls.remove(pause_button); 
+          video_controls.add(play_button); 
           }, false
         );
     };
@@ -280,6 +292,7 @@ function init() {
   controls.minDistance = 30;
   controls.maxDistance = 90;
   camera.position.copy(cam_load);
+  controls.enabled = false;
 
   //loading screen mesh - a rhombic dodecahedron
     //geometry
@@ -316,7 +329,7 @@ function init() {
         rhom_dodec_geo.computeVertexNormals();
         rhom_dodec_geo.computeFaceNormals();
       //material and mesh
-        var rhom_dodec_mat   = new THREE.MeshLambertMaterial( {color: 0x4B32AF, wireframe: false, shading: THREE.FlatShading} );
+        var rhom_dodec_mat   = new THREE.MeshLambertMaterial({color: 0x4B32AF, wireframe: false, shading: THREE.FlatShading});
         rhombic_dodecahedron = new THREE.Mesh(rhom_dodec_geo, rhom_dodec_mat);
           rhombic_dodecahedron.position.set(0, 0, 0);
           scene.add(rhombic_dodecahedron);
@@ -334,7 +347,7 @@ function init() {
 
   //add the cube
     var trailer_cube_geo = new THREE.BoxGeometry(1, 1, 1, 50, 50, 50);
-    var trailer_cube_mat = new THREE.MeshBasicMaterial( {color: 0x4B32AF, wireframe: true} );
+    var trailer_cube_mat = new THREE.MeshBasicMaterial({color: 0x4B32AF, wireframe: true});
         trailer_cube     = new THREE.Mesh(trailer_cube_geo, trailer_cube_mat); 
           trailer_cube.visible = false;
           trailer_cube.position.set(0, 0, 0);
@@ -342,7 +355,7 @@ function init() {
     //add video screens to the cube
       for(b=0; b<titles.length; b++) {
           video_screens[b].visible = false;
-          video_screens[b].position.set( locations[b][0], locations[b][1], locations[b][2] );
+          video_screens[b].position.set(locations[b][0], locations[b][1], locations[b][2]);
           scene.add(video_screens[b]);
       };
 
@@ -353,25 +366,35 @@ function init() {
       image_stills[c] = THREE.ImageUtils.loadTexture(media_sources[c][0], undefined, function() {loaded_images++});
       video_screen_materials[c].map = image_stills[c];  
     };
+    
+    load_progress.position.set(-10, -25, 0);
+    scene.add(load_progress);
 };
 
 
 function render() {
   delta = clock.getDelta();
   
-  //loading screen mesh's rotation
+  //loading screen: mesh rotation and image load progress 
     if(rhombic_dodecahedron.parent == scene) { 
       rhombic_dodecahedron.rotation.x += 2*Math.PI/600;
       rhombic_dodecahedron.rotation.z -= 2*Math.PI/600;
     };
 
+    if(load_progress.parent == scene) {
+      load_progress.scale.x = (95.5*(loaded_images/media_sources.length)-load_progress.geometry.parameters.width)/(load_progress.geometry.parameters.width);
+      load_progress.position.x = (-47.75)+(load_progress.scale.x*load_progress.geometry.parameters.width)/2;
+    };
+
   //view homepage if all images have been loaded
     if(loaded_images == media_sources.length) { 
-      //remove the loading screen mesh and go to home camera position
-        scene.remove(rhombic_dodecahedron); 
-        camera.position.copy(cam_home);
+      //remove the loading screen and go to home camera position
+        scene.remove(rhombic_dodecahedron);
+        scene.remove(load_progress); 
         controls.minDistance = 1;
         controls.maxDistance = 3;
+        camera.position.copy(cam_home);
+        controls.enabled = true;
       
       //toggle object visibility
         if( $("rhombic-info") != null ) { $("rhombic-info").remove() };
@@ -390,6 +413,7 @@ function render() {
   //update the video
     if(videos[a] != undefined) {
       if(videos[a].readyState === videos[a].HAVE_ENOUGH_DATA) {video_image_contexts[a].drawImage(videos[a], 0, 0)};
+    
       if(videos[a].readyState > 0) {
         trailer_time_length.clear('black');
         trailer_time_length.drawText(sec_to_string(Math.round(videos[a].duration)-Math.round(videos[a].currentTime)), undefined, 475, 'white');
@@ -403,6 +427,7 @@ function render() {
         buffer_progress.scale.x = ((timeline_bkgnd.geometry.parameters.width*(Math.round(videos[a].buffered.end(0))/Math.round(videos[a].duration)))-buffer_progress.geometry.parameters.width)/(buffer_progress.geometry.parameters.width);
         buffer_progress.position.x = locations[a][0]-(0.0710)+((buffer_progress.scale.x*buffer_progress.geometry.parameters.width)/2);
       };
+    
       if(video_textures[a]) {video_textures[a].needsUpdate = true};
     };
 

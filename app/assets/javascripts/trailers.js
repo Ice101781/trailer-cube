@@ -1,19 +1,19 @@
 //trailer-specific data
-var titles = [ 
+  var titles = [ 
                  
-    "Avengers 2: Age of Ultron",
-    
-    "Furious 7" 
+      "Avengers 2: Age of Ultron",    
+      "Furious 7" 
                
-    ];
+      ];
 
     
-var media_sources = [ 
+  var media_sources = [ 
                         
-    [ "https://files9.s3-us-west-2.amazonaws.com/hd_trailers/avengers2/avengers2.jpg", 
-      "https://files9.s3-us-west-2.amazonaws.com/hd_trailers/avengers2/avengers2.mp4" ],
+      [ media("avengers2", "jpg"), 
+        media("avengers2", "mp4") ],
 
-    [ "https://files9.s3-us-west-2.amazonaws.com/hd_trailers/furious7/furious7.jpg",
-      "https://files9.s3-us-west-2.amazonaws.com/hd_trailers/furious7/furious7.mp4" ]
+      [ media("furious7", "jpg"),
+        media("furious7", "mp4") ]
                       
-    ];
+      ];
+
