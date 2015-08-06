@@ -14,4 +14,3 @@ Rails.application.config.assets.precompile += %w( orbitcontrols.js )
 Rails.application.config.assets.precompile += %w( helpers.js )
 Rails.application.config.assets.precompile += %w( trailers.js )
 Rails.application.config.assets.precompile += %w( trailer_cube_home.js )
-
