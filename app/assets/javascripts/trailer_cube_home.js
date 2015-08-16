@@ -7,11 +7,11 @@
      in order to function correctly, unless another playback button is initially pressed.
   *******************************************************************************************************
 
-  3) sometimes when exiting a video the camera will position itself above the cube, shooting downward. 
+  3) sometimes when exiting a video the camera will position itself above the cube, shooting downward.
      this behavior seems to occur randomly.
 
   4) sometimes when playing a video the following console error will appear: "Uncaught IndexSizeError: Failed to execute
-     'end' on 'TimeRanges': The index provided (0) is greater than or equal to the maximum bound (0)". the error doesn't 
+     'end' on 'TimeRanges': The index provided (0) is greater than or equal to the maximum bound (0)". the error doesn't
      seem to affect playback much.
 */
 
@@ -29,28 +29,32 @@ window.onload = function() {
       controls = new THREE.OrbitControls(camera, container),
       renderer = new THREE.WebGLRenderer({antialias: false, alpha: false});
 
-  //enable rendering of camera's children
-    scene.add(camera);
+  //add the camera to the scene to enable rendering of any children
+  scene.add(camera);
 
   if(container != null) {renderer.setSize(width, height); renderer.setClearColor(0x000000); append(renderer.domElement, container)};
 
   var mouse      = {x: 0, y:0},
-      dimensions = [1280, 720],
-      geoms_and_texts = [ load_progress_geometry        = new THREE.PlaneBufferGeometry(.0001, .35000, 1, 1),
-                          video_screen_geometry         = new THREE.PlaneBufferGeometry(.1600, .09000, 1, 1),
-                          video_controls_bkgnd_geometry = new THREE.PlaneBufferGeometry(.1575, .00500, 1, 1), 
-                          button_geometry               = new THREE.PlaneBufferGeometry(.0072, .00405, 1, 1),
-                          timeline_bkgnd_geometry       = new THREE.PlaneBufferGeometry(.0920, .00050, 1, 1),
-                          video_progress_geometry       = new THREE.PlaneBufferGeometry(.0001, .00050, 1, 1),
-                          trailer_title_geometry        = new THREE.PlaneBufferGeometry(.0288, .00405, 1, 1),
-                          trailer_time_length           = new THREEx.DynamicTexture(dimensions[0], dimensions[1]),
-                          trailer_time_progress         = new THREEx.DynamicTexture(dimensions[0], dimensions[1]),
-                          trailer_title                 = new THREEx.DynamicTexture(1280, 180) ];
+      dimensions = [[1280, 720], [1280, 128], [1280, 256]],
+      click = false,
+      a=0,
 
-      for(i=7; i<9; i++) {geoms_and_texts[i].context.font = "500px Corbel"};
-      for(j=9; j<geoms_and_texts.length; j++) {geoms_and_texts[j].context.font = "100px Corbel"};
-      
-  var load_progress_material           = new THREE.MeshBasicMaterial({color: 0x00FF00}),
+      load_progress_geometry        = new THREE.PlaneBufferGeometry(.00010, .35000, 1, 1),
+      video_screen_geometry         = new THREE.PlaneBufferGeometry(.16000, .09000, 1, 1),
+      trailer_title_geometry        = new THREE.PlaneBufferGeometry(.02880, .00280, 1, 1),
+      trailer_plot_geometry         = new THREE.PlaneBufferGeometry(.05750, .01150, 1, 1),
+      video_controls_bkgnd_geometry = new THREE.PlaneBufferGeometry(.15750, .00500, 1, 1),
+      button_geometry               = new THREE.PlaneBufferGeometry(.00720, .00405, 1, 1),
+      timeline_bkgnd_geometry       = new THREE.PlaneBufferGeometry(.09200, .00050, 1, 1),
+      video_progress_geometry       = new THREE.PlaneBufferGeometry(.00010, .00050, 1, 1),
+      trailer_title                 = new THREEx.DynamicTexture(dimensions[1][0], dimensions[1][1]),
+      trailer_plot                  = new THREEx.DynamicTexture(dimensions[2][0], dimensions[2][1]),
+      trailer_time_length           = new THREEx.DynamicTexture(dimensions[0][0], dimensions[0][1]),
+      trailer_time_progress         = new THREEx.DynamicTexture(dimensions[0][0], dimensions[0][1]),
+ 
+      load_progress_material           = new THREE.MeshBasicMaterial({color: 0x00FF00}),
+      trailer_title_material           = new THREE.MeshBasicMaterial({map: trailer_title.texture, transparent: true}),
+      trailer_plot_material            = new THREE.MeshBasicMaterial({map: trailer_plot.texture, transparent: true}),
       video_controls_bkgnd_material    = new THREE.MeshBasicMaterial({color: 0x000000}),
       restart_button_material          = new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/restart_button.png')}),
       rewind_button_material           = new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/rewind_button.png')}),
@@ -65,12 +69,10 @@ window.onload = function() {
       buffer_progress_material         = new THREE.MeshBasicMaterial({color: 0x9999CC}),
       trailer_time_length_material     = new THREE.MeshBasicMaterial({map: trailer_time_length.texture, color: 0x4B32AF}),
       trailer_time_progress_material   = new THREE.MeshBasicMaterial({map: trailer_time_progress.texture, color: 0x4B32AF}),
-      trailer_title_material           = new THREE.MeshBasicMaterial({map: trailer_title.texture, transparent: false});
    
-  var load_progress = new THREE.Mesh(load_progress_geometry, load_progress_material);
-      load_progress.position.set(-10, -25, 0);
-
-  var trailer_title_mesh = new THREE.Mesh(trailer_title_geometry, trailer_title_material),
+      load_progress      = new THREE.Mesh(load_progress_geometry, load_progress_material),
+      trailer_title_mesh = new THREE.Mesh(trailer_title_geometry, trailer_title_material),
+      trailer_plot_mesh  = new THREE.Mesh(trailer_plot_geometry, trailer_plot_material),
 
       video_controls = new THREE.Object3D(),
       video_controls_meshes = [ restart_button             = new THREE.Mesh(button_geometry, restart_button_material),
@@ -90,28 +92,40 @@ window.onload = function() {
       
       for(i=0; i<video_controls_meshes.length; i++) {video_controls.add(video_controls_meshes[i])};
       video_controls.visible = false;
+  
 
-  trailer_title_mesh.position.set(camera.position.x-.0425, camera.position.y-.025, camera.position.z-.075);
+  //LOAD AND TRAILER INFO STUFF - MOVE // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
+  load_progress.position.set(-10, -24.25, 0);
+  trailer_title_mesh.position.set(camera.position.x-.04485, camera.position.y-.02625, camera.position.z-.075);
+  trailer_plot_mesh.position.set(camera.position.x-.03050, camera.position.y-.03375, camera.position.z-.075);
   trailer_title.clear('red');
-  camera.add(trailer_title_mesh);
-
-  var videos = [], video_images = [], video_image_contexts = [], video_textures = [], video_screen_materials = [], 
-      video_screens = [];
-
-  for(h=0; h<titles.length; h++) {
-    videos[h] = create("video");
-    video_images[h] = create("canvas");
-    video_image_contexts[h] = video_images[h].getContext('2d');
-    video_textures[h] = new THREE.Texture(video_images[h]);
-    video_screen_materials[h] = new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture("/public_assets/t_c.png"), overdraw: true});
-    video_screens[h] = new THREE.Mesh(video_screen_geometry, video_screen_materials[h]);
-  };
-    
-  //generate positions for the video screens - NEED TO FIX THIS! // // // // // // // // // // // // // // // // // // // //
-    var locations = [];
-
-    for(i=0; i<titles.length; i++) {locations[i] = [(-.42+(i*.17)), .455, .51]};
+  trailer_plot.clear('red');
+  camera.add(trailer_title_mesh, trailer_plot_mesh);
   // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
+
+  //generate positions for the video screens - NEED TO FIX THIS! // // // // // // // // // // // // // // // // // // // //
+  var locations = [];
+
+  for(i=0; i<titles.length; i++) {locations[i] = [(-.42+(i*.17)), .455, .51]};
+  // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
+
+
+  var videos = [], video_images = [], video_image_contexts = [], video_textures = [], 
+      video_screen_materials = [], video_screens = [], video_cube = new THREE.Object3D();
+
+  video_cube.visible = false;
+  scene.add(video_cube);
+
+  for(i=0; i<titles.length; i++) {
+    videos[i] = create("video");
+    video_images[i] = create("canvas");
+    video_image_contexts[i] = video_images[i].getContext('2d');
+    video_textures[i] = new THREE.Texture(video_images[i]);
+    video_screen_materials[i] = new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture("/public_assets/t_c.png"), overdraw: true});
+    video_screens[i] = new THREE.Mesh(video_screen_geometry, video_screen_materials[i]);
+    video_screens[i].position.set(locations[i][0], locations[i][1], locations[i][2]);
+    video_cube.add(video_screens[i]);
+  };
 
 
 //listen for events
@@ -133,6 +147,49 @@ window.onload = function() {
     mouse.x = (event.clientX/width)*2-1; 
     mouse.y = -(event.clientY/height)*2+1;
   };
+
+
+  function on_mouse_over() {
+    var mouseover_raycaster = new THREE.Raycaster(),
+        mouseover_vector    = new THREE.Vector3(mouse.x, mouse.y, 0.5);
+        
+    mouseover_vector.unproject(camera);    
+    mouseover_raycaster.set(camera.position, mouseover_vector.sub(camera.position).normalize());
+  
+    var intersects = mouseover_raycaster.intersectObjects(scene.children, true);
+    //console.log(intersects);
+
+    //logic for trailer info and video controls
+    if(intersects[0] != undefined && video_controls.parent != scene) {       
+      for(i=0; i<video_screens.length; i++) {
+        if(intersects[0].object == video_screens[i]) {
+          trailer_title.clear('red');
+          trailer_plot.clear('red');
+          trailer_title.drawText(titles[i], 10, 90, 'white', '100px Corbel');
+          trailer_plot.drawText(plots[i][0], 10, 40, 'white', '35px Corbel') //method chain
+                      .drawText(plots[i][1], 10, 80, 'white', '35px Corbel')
+                      .drawText(plots[i][2], 10, 120, 'white', '35px Corbel')
+                      .drawText(plots[i][3], 10, 160, 'white', '35px Corbel')
+                      .drawText(plots[i][4], 10, 200, 'white', '35px Corbel')
+                      .drawText(plots[i][5], 10, 240, 'white', '35px Corbel');
+        };
+      };
+    }
+    else {
+      trailer_title.clear('red');
+      trailer_plot.clear('red');
+    };
+
+    if(intersects[0] != undefined && videos[a].readyState > 0) {
+      if(intersects[0].object.parent == video_controls) {
+        video_controls.visible = true;
+        return; 
+      }
+      else {
+        video_controls.visible = false;
+      };
+    };
+  };  
 
 
   function on_mouse_down() {
@@ -192,7 +249,7 @@ window.onload = function() {
     }
     else if(intersects[0].object == enter_fullscreen_button) {
       container.webkitRequestFullscreen();
-      return;        
+      return;
     }
     else if(intersects[0].object == exit_fullscreen_button) {
       document.webkitExitFullscreen();
@@ -200,10 +257,10 @@ window.onload = function() {
     }
     else if(intersects[0].object == exit_button) {
       if(play_button.visible == true) {video_controls.remove(play_button); video_controls.add(pause_button)};
-      scene.remove(video_controls);    
+      scene.remove(video_controls);
       videos[a].pause();        
       videos[a].currentTime = 0;
-      video_screen_materials[a].map = image_stills[a];      
+      video_screen_materials[a].map = image_stills[a];
       //remove this code once the cube has been tiled // // // // // // // // // // // // // // // // // // // // // // // //
       trailer_cube.visible = true;
       // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
@@ -213,8 +270,14 @@ window.onload = function() {
       controls.enabled = true;
       return;
     };
-
-    for(a=0; a<titles.length; a++) {if(intersects[0].object == video_screens[a]) {click = true; return a}};
+    
+    //determine which screen has been selected
+    for(a=0; a<video_screens.length; a++) {
+      if(intersects[0].object == video_screens[a]) {
+        click = true; 
+        return a;
+      };
+    };
   };
 
 
@@ -233,8 +296,8 @@ window.onload = function() {
 
       //allow CORS, prepare and play the video
         videos[a].crossOrigin = '';
-        video_images[a].width  = dimensions[0];
-        video_images[a].height = dimensions[1];  
+        video_images[a].width  = dimensions[0][0];
+        video_images[a].height = dimensions[0][1];  
         video_image_contexts[a].fillStyle = '0#000000';
         video_image_contexts[a].fillRect(0, 0, video_images[a].width, video_images[a].height);
         video_screen_materials[a].map = video_textures[a];
@@ -242,7 +305,7 @@ window.onload = function() {
         videos[a].load();
         videos[a].play();
      
-      //set button, etc. locations and display video controls
+      //set button, etc. locations and add video controls to the scene
         restart_button.position.set             (locations[a][0]+(0.0350), locations[a][1]-(0.0360), locations[a][2]+(0.0001));
         rewind_button.position.set              (locations[a][0]+(0.0430), locations[a][1]-(0.0360), locations[a][2]+(0.0001));
         pause_button.position.set               (locations[a][0]+(0.0510), locations[a][1]-(0.0360), locations[a][2]+(0.0001));
@@ -257,55 +320,15 @@ window.onload = function() {
         buffer_progress.position.set            (locations[a][0]-(0.0710)+.025, locations[a][1]-(0.0360), locations[a][2]+(0.00011));
         trailer_time_length_mesh.position.set   (locations[a][0]+(0.0250), locations[a][1]-(0.0360), locations[a][2]+(0.0001));
         trailer_time_progress_mesh.position.set (locations[a][0]-(0.0750), locations[a][1]-(0.0360), locations[a][2]+(0.0001));
+        
         scene.add(video_controls);
 
       //listen for the end of the video
-        videos[a].addEventListener('ended', function(event) {
-          video_controls.remove(pause_button);
-          video_controls.add(play_button);
-          }, false
-        );
+        videos[a].addEventListener('ended', function(event){video_controls.remove(pause_button); video_controls.add(play_button)}, false);
     };
     
     //reset boolean value of 'click' variable
       click = false;
-  };
-
-
-  function on_mouse_over() {
-    var mouseover_raycaster = new THREE.Raycaster(),
-        mouseover_vector    = new THREE.Vector3(mouse.x, mouse.y, 0.5);
-        
-    mouseover_vector.unproject(camera);    
-    mouseover_raycaster.set(camera.position, mouseover_vector.sub(camera.position).normalize());
-  
-    var intersects = mouseover_raycaster.intersectObjects(scene.children, true);
-    //console.log(intersects);
-
-    //logic for trailer info and video controls
-      if(intersects[0] != undefined && video_controls.parent != scene) {       
-        for(i=0; i<titles.length; i++) {
-          if(intersects[0].object == video_screens[i]) {
-            trailer_title.clear('red');
-            trailer_title.drawText(titles[i], undefined, 125, 'white');              
-          };
-        };
-      }
-      else {
-        trailer_title.clear('red');
-      };
-        
-      if(intersects[0] != undefined && videos[a].readyState > 0) {
-        for(j=0; j<video_controls_meshes.length; j++) { 
-          if(intersects[0].object == video_controls_meshes[j]) {
-            video_controls.visible = true;
-            return; 
-          }
-          else {
-            video_controls.visible = false;
-          };
-        };  
-      };
   };
 
 
@@ -331,10 +354,10 @@ window.onload = function() {
       
     //toggle object visibility
       if($("rhombic-info") != null) {$("rhombic-info").remove()};
-      for(d=0; d<titles.length; d++) {video_screens[d].visible = true};
       //comment-out the following code when cube is fully tiled // // // // // // // // // // // // // // // // // // // //
       trailer_cube.visible = true;
       // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
+      video_cube.visible = true;
 
     //reset count of loaded images
       loaded_images = null;
@@ -346,11 +369,11 @@ window.onload = function() {
     
     if(videos[a].readyState > 0) {
       trailer_time_length.clear('black');
-      trailer_time_length.drawText(sec_to_string(Math.round(videos[a].duration)-Math.round(videos[a].currentTime)), undefined, 475, 'white');
+      trailer_time_length.drawText(sec_to_string(Math.round(videos[a].duration)-Math.round(videos[a].currentTime)), undefined, 475, 'white', '500px Corbel');
         
       trailer_time_progress.clear('black');
-      trailer_time_progress.drawText(sec_to_string(Math.round(videos[a].currentTime)), undefined, 475, 'white');
-        
+      trailer_time_progress.drawText(sec_to_string(Math.round(videos[a].currentTime)), undefined, 475, 'white', '500px Corbel');
+
       timeline_progress.scale.x = ((timeline_bkgnd.geometry.parameters.width*(Math.round(videos[a].currentTime)/Math.round(videos[a].duration)))-timeline_progress.geometry.parameters.width)/(timeline_progress.geometry.parameters.width);
       timeline_progress.position.x = locations[a][0]-(0.0710)+((timeline_progress.scale.x*timeline_progress.geometry.parameters.width)/2);
         
@@ -375,7 +398,7 @@ window.onload = function() {
 
 
 //global vars needed for the scene
-  var delta, elapsed, rhombic_dodecahedron, trailer_cube, image_stills = [], loaded_images = 0, click = false, a = 0;
+var rhombic_dodecahedron, trailer_cube, image_stills = [], loaded_images = 0;
 
 function init() {
   controls.minDistance = 30;
@@ -443,25 +466,18 @@ function init() {
   //add objects to the scene
     scene.add(point_light_1, point_light_2, point_light_3, rhombic_dodecahedron, load_progress, trailer_cube);
 
-  //add video screens to the cube
-    for(b=0; b<titles.length; b++) {
-      video_screens[b].visible = false;
-      video_screens[b].position.set(locations[b][0], locations[b][1], locations[b][2]);
-      scene.add(video_screens[b]);
-    };
-
   //allow CORS, load the image stills
     THREE.ImageUtils.crossOrigin = '';
 
-    for(c=0; c<media_sources.length; c++) {
-      image_stills[c] = THREE.ImageUtils.loadTexture(media_sources[c][0], undefined, function() {loaded_images++});
-      video_screen_materials[c].map = image_stills[c];  
+    for(i=0; i<media_sources.length; i++) {
+      image_stills[i] = THREE.ImageUtils.loadTexture(media_sources[i][0], undefined, function() {loaded_images++});
+      video_screen_materials[i].map = image_stills[i];
     };
 };
 
 
 function render() {
-  delta = clock.getDelta();
+  var delta = clock.getDelta();
   
   //loading screen animation and image load progress
     if(rhombic_dodecahedron.parent == scene) {loadmesh_animation()};

@@ -1,5 +1,5 @@
 //check for browser support of WebGL
-  if (!Detector.webgl) {
+  if(!Detector.webgl) {
     Detector.addGetWebGLMessage();
   };
 
