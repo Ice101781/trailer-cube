@@ -7,10 +7,11 @@ Rails.application.config.assets.version = '1.0'
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
 
-Rails.application.config.assets.precompile += %w( three_r69.js )
-Rails.application.config.assets.precompile += %w( dynamic_textures.js )
 Rails.application.config.assets.precompile += %w( detector.js )
+Rails.application.config.assets.precompile += %w( three_r69.js )
 Rails.application.config.assets.precompile += %w( orbitcontrols.js )
+Rails.application.config.assets.precompile += %w( dynamic_textures.js )
 Rails.application.config.assets.precompile += %w( helpers.js )
 Rails.application.config.assets.precompile += %w( trailers.js )
-Rails.application.config.assets.precompile += %w( trailer_cube_home.js )
+Rails.application.config.assets.precompile += %w( objects.js )
+Rails.application.config.assets.precompile += %w( init.js )

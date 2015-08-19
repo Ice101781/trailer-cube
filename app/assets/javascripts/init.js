@@ -17,25 +17,41 @@
 
 window.onload = function() {
 
-//some global vars, append verifications, etc.
-  var clock = new THREE.Clock(), container = $("container"), width = window.innerWidth, height = window.innerHeight;
-    
-  if(document.body != null) {append(container, document.body)};
+//some global vars
+var clock       = new THREE.Clock(), 
+    innerWidth  = window.innerWidth, 
+    innerHeight = window.innerHeight,
+    fov         = 48.5,
+    aspect      = 16/9,
+    near        = 0.01,
+    far         = 100,
+    mouse       = {x: 0, y:0},
+    cam_home    = new THREE.Vector3(  2*Math.sin(0)*Math.cos(0),  2*Math.sin(0)*Math.sin(0),  2*Math.cos(0) ),
+    cam_load    = new THREE.Vector3( 60*Math.sin(0)*Math.cos(0), 60*Math.sin(0)*Math.sin(0), 60*Math.cos(0) ),
+    spin_box;
+  
+var scene    = new THREE.Scene(), 
+    camera   = new THREE.PerspectiveCamera(fov, aspect, near, far),
+    renderer = new THREE.WebGLRenderer({antialias: false, alpha: false}),
+    controls = new THREE.OrbitControls( camera, $("container") );
 
-  var scene    = new THREE.Scene(), 
-      camera   = new THREE.PerspectiveCamera(48.5, 16/9, 0.01, 100),
-      cam_home = new THREE.Vector3(-0.45, 0.60, .85),
-      cam_load = new THREE.Vector3(60*Math.sin(0)*Math.cos(0), 60*Math.sin(0)*Math.sin(0), 60*Math.cos(0)),
-      controls = new THREE.OrbitControls(camera, container),
-      renderer = new THREE.WebGLRenderer({antialias: false, alpha: false});
+//add the camera to the scene to enable rendering of any children of the camera
+scene.add(camera);
 
-  //add the camera to the scene to enable rendering of any children
-  scene.add(camera);
+//append the container to the document, then the renderer to the container
+if(document.body != null) { 
+  append( $("container"), document.body );
+};
 
-  if(container != null) {renderer.setSize(width, height); renderer.setClearColor(0x000000); append(renderer.domElement, container)};
+if($("container") != null) {
+  renderer.setSize(innerWidth, innerHeight); 
+  renderer.setClearColor(0x000000); 
+  append( renderer.domElement, $("container") );
+};
 
-  var mouse      = {x: 0, y:0},
-      dimensions = [[1280, 720], [1280, 128], [1280, 256]],
+
+
+  var dimensions = [[1280, 720], [1280, 128], [1280, 256]],
       click = false,
       a=0,
 
@@ -135,17 +151,17 @@ window.onload = function() {
 
 //user functions
   function on_resize() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    renderer.setSize(width, height);
+    innerWidth = window.innerWidth;
+    innerHeight = window.innerHeight;
+    renderer.setSize(innerWidth, innerHeight);
     camera.aspect = 16/9;
   };
 
 
   function on_mouse_move(event) { 
     event.preventDefault(); 
-    mouse.x = (event.clientX/width)*2-1; 
-    mouse.y = -(event.clientY/height)*2+1;
+    mouse.x = (event.clientX/innerWidth)*2-1; 
+    mouse.y = -(event.clientY/innerHeight)*2+1;
   };
 
 
@@ -295,7 +311,7 @@ window.onload = function() {
         controls.target = video_screens[a].position;
 
       //allow CORS, prepare and play the video
-        videos[a].crossOrigin = '';
+        videos[a].crossOrigin = 'anonymous';
         video_images[a].width  = dimensions[0][0];
         video_images[a].height = dimensions[0][1];  
         video_image_contexts[a].fillStyle = '0#000000';
@@ -332,12 +348,6 @@ window.onload = function() {
   };
 
 
-  function loadmesh_animation() {
-    rhombic_dodecahedron.rotation.x += 2*Math.PI/600;
-    rhombic_dodecahedron.rotation.z -= 2*Math.PI/600;
-  };
-
-
   function loadbar_progress() {
     load_progress.scale.x = (95.5*(loaded_images/media_sources.length)-load_progress.geometry.parameters.width)/(load_progress.geometry.parameters.width);
     load_progress.position.x = (-47.75)+(load_progress.scale.x*load_progress.geometry.parameters.width)/2;
@@ -346,7 +356,7 @@ window.onload = function() {
 
   function images_loaded() {
     //remove the loading screen and go to home camera position
-      scene.remove(rhombic_dodecahedron, load_progress);
+      scene.remove(spin_box.mesh, load_progress);
       controls.minDistance = 1;
       controls.maxDistance = 3;
       camera.position.copy(cam_home);
@@ -398,7 +408,7 @@ window.onload = function() {
 
 
 //global vars needed for the scene
-var rhombic_dodecahedron, trailer_cube, image_stills = [], loaded_images = 0;
+var trailer_cube, image_stills = [], loaded_images = 0;
 
 function init() {
   controls.minDistance = 30;
@@ -416,45 +426,8 @@ function init() {
     var point_light_3 = new THREE.PointLight(0x0000FF);
         point_light_3.position.set(0, 0, 175);
 
-  //loading screen mesh, a rhombic dodecahedron
-    //geometry
-      var rhom_dodec_geo = new THREE.Geometry();
-      //vertices
-        rhom_dodec_geo.vertices = [ new THREE.Vector3( 2.04772293123743050, -4.09327412386437040, -5.74908146957292670),
-                                    new THREE.Vector3( 7.02732984841516030,  1.40331541320251810, -1.62706516545639390),
-                                    new THREE.Vector3( 4.22549114271519950, -1.62031854283173550,  5.78962800381778210),
-                                    new THREE.Vector3( 0.75411577446253997,  7.11690807989861880, -1.66761169970125600),
-                                    new THREE.Vector3(-0.75411577446252998, -7.11690807989862510,  1.66761169970125020),
-                                    new THREE.Vector3(-4.22549114271518980,  1.62031854283173260, -5.78962800381778920),
-                                    new THREE.Vector3( -2.0477229312374288,  4.09327412386436950,  5.74908146957292670),
-                                    new THREE.Vector3(-7.02732984841515230, -1.40331541320252740,  1.62706516545639970),
-                                    new THREE.Vector3( 6.27321407395262300, -5.71359266669610030,  0.04054653424485652),
-                                    new THREE.Vector3( 2.80183870569996340,  3.02363395603425690, -7.41669316927418000),
-                                    new THREE.Vector3( 4.97960691717773150,  5.49658953706689160,  4.12201630411653590),
-                                    new THREE.Vector3(-2.80183870569996340, -3.02363395603425690,  7.41669316927418000),
-                                    new THREE.Vector3(-4.97960691717773150, -5.49658953706689160, -4.12201630411653590),
-                                    new THREE.Vector3(-6.27321407395262480,  5.71359266669610210, -0.04054653424485653) ];
-      //faces 
-        rhom_dodec_geo.faces.push(  new THREE.Face3( 8, 0, 9 ),     new THREE.Face3( 9, 1, 8 ),
-                                    new THREE.Face3( 8, 1, 10 ),    new THREE.Face3( 10, 2, 8 ),  
-                                    new THREE.Face3( 8, 2, 11 ),    new THREE.Face3( 11, 4, 8 ),
-                                    new THREE.Face3( 8, 4, 12 ),    new THREE.Face3( 12, 0, 8 ),
-                                    new THREE.Face3( 12, 5, 9 ),    new THREE.Face3( 9, 0, 12 ),
-                                    new THREE.Face3( 13, 3, 9 ),    new THREE.Face3( 9, 5, 13 ),
-                                    new THREE.Face3( 10, 1, 9 ),    new THREE.Face3( 9, 3, 10 ),
-                                    new THREE.Face3( 10, 3, 13 ),   new THREE.Face3( 13, 6, 10 ),
-                                    new THREE.Face3( 11, 2, 10 ),   new THREE.Face3( 10, 6, 11 ),
-                                    new THREE.Face3( 11, 7, 12 ),   new THREE.Face3( 12, 4, 11 ),
-                                    new THREE.Face3( 12, 7, 13 ),   new THREE.Face3( 13, 5, 12 ),
-                                    new THREE.Face3( 13, 7, 11 ),   new THREE.Face3( 11, 6, 13 ) );
-      //compute normals 
-        rhom_dodec_geo.computeVertexNormals();
-        rhom_dodec_geo.computeFaceNormals();
-      
-    //material and mesh
-      var rhom_dodec_mat       = new THREE.MeshLambertMaterial({color: 0x4B32AF, wireframe: false, shading: THREE.FlatShading});
-          rhombic_dodecahedron = new THREE.Mesh(rhom_dodec_geo, rhom_dodec_mat);
-          //rhombic_dodecahedron.position.set(0, 0, 0);
+  //add the loading screen's animation
+  spin_box = new rhombicDodecahedron();
 
   //the cube
     var trailer_cube_geo     = new THREE.BoxGeometry(1, 1, 1, 100, 100, 100),
@@ -464,7 +437,7 @@ function init() {
         //trailer_cube.position.set(0, 0, 0);            
     
   //add objects to the scene
-    scene.add(point_light_1, point_light_2, point_light_3, rhombic_dodecahedron, load_progress, trailer_cube);
+    scene.add(point_light_1, point_light_2, point_light_3, spin_box.mesh, load_progress, trailer_cube);
 
   //allow CORS, load the image stills
     THREE.ImageUtils.crossOrigin = '';
@@ -480,7 +453,10 @@ function render() {
   var delta = clock.getDelta();
   
   //loading screen animation and image load progress
-    if(rhombic_dodecahedron.parent == scene) {loadmesh_animation()};
+  if(spin_box.mesh.parent == scene) {spin_box.animation()};
+
+
+  
     if(load_progress.parent == scene) {loadbar_progress()};
 
   //view homepage if all images have been loaded
