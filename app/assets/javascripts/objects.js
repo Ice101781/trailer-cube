@@ -1,40 +1,22 @@
-//global vars
+//global vars/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 var dimensions = {
                    screenmesh:    {length: .16,  width: .09},
                    screenpixels:  {length: 1280, width: 720}
                  };
 
-//objects
-function trailer(identifiers, genre, plot, director, actors, release) {
-  
-  identifiers = typeof identifiers !== 'undefined' ? identifiers : {title:'', filename:''};
-  genre       = typeof genre       !== 'undefined' ? genre       : '';
-  plot        = typeof plot        !== 'undefined' ? plot        : {line1:'', line2:'', line3:'', line4:'', line5:'', line6:''};
-  director    = typeof director    !== 'undefined' ? director    : '';
-  actors      = typeof actors      !== 'undefined' ? actors      : {1:'', 2:'', 3:'', 4:'', 5:''};
-  release     = typeof release     !== 'undefined' ? release     : '';  
-  
-  this.identifiers = identifiers;
-  this.genre       = genre;
-  this.plot        = plot;
-  this.director    = director;
-  this.actors      = actors;
-  this.release     = release;
+//objects/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  this.filesource = "https://files9.s3-us-west-2.amazonaws.com/hd_trailers/"+this.identifiers.filename+"/"+this.identifiers.filename;
+//lights
+function pointLights() {
   
-  this.video  = create("video");
-    this.video.crossOrigin = 'anonymous';
+  this.one   = new THREE.PointLight(0xFF0000);
+    this.one.position.set(-175, 0, 0);
 
-  this.canvas = create("canvas");
-    this.canvas.getContext('2d');
-    this.canvas.length = dimensions.screenpixels.length;
-    this.canvas.width  = dimensions.screenpixels.width;
- 
-  this.videoScreen = new THREE.Mesh( new THREE.PlaneBufferGeometry(dimensions.screenmesh.length, dimensions.screenmesh.width, 1, 1), new THREE.MeshBasicMaterial({overdraw: true}) );
-    this.videoScreen.visible = false;
-    this.videoScreen.position.set(new THREE.Vector3());
-    //videoCube.add(this.videoScreen);
+  this.two   = new THREE.PointLight(0x00FF00);
+    this.two.position.set(175, 0, 0);
+
+  this.three = new THREE.PointLight(0x0000FF);
+    this.three.position.set(0, 0, 175); 
 };
 
 
@@ -94,4 +76,57 @@ rhombicDodecahedron.prototype = {
   }
 };
 
+
+//the cube
+function wireFrameCube(segments) {
+
+  segments = typeof segments !== 'undefined' ? segments : 100;
+
+  this.geometry = new THREE.BoxGeometry(1, 1, 1, segments, segments, segments);
+  
+  this.material = new THREE.MeshBasicMaterial({color: 0x4B32AF, wireframe: true});
+  
+  this.mesh     = new THREE.Mesh(this.geometry, this.material);
+    this.mesh.visible = false;
+    //this.mesh.position.set(0, 0, 0);
+};
+
+
+function loadingProgressBar() {
+
+  
+};
+
+
+function trailer(identifiers, genre, plot, director, actors, release) {
+  
+  identifiers = typeof identifiers !== 'undefined' ? identifiers : {title:'', filename:''};
+  genre       = typeof genre       !== 'undefined' ? genre       : '';
+  plot        = typeof plot        !== 'undefined' ? plot        : {line1:'', line2:'', line3:'', line4:'', line5:'', line6:''};
+  director    = typeof director    !== 'undefined' ? director    : '';
+  actors      = typeof actors      !== 'undefined' ? actors      : {1:'', 2:'', 3:'', 4:'', 5:''};
+  release     = typeof release     !== 'undefined' ? release     : '';  
+  
+  this.identifiers = identifiers;
+  this.genre       = genre;
+  this.plot        = plot;
+  this.director    = director;
+  this.actors      = actors;
+  this.release     = release;
+
+  this.filesource = "https://files9.s3-us-west-2.amazonaws.com/hd_trailers/"+this.identifiers.filename+"/"+this.identifiers.filename;
+  
+  this.video  = create("video");
+    this.video.crossOrigin = 'anonymous';
+
+  this.canvas = create("canvas");
+    this.canvas.getContext('2d');
+    this.canvas.length = dimensions.screenpixels.length;
+    this.canvas.width  = dimensions.screenpixels.width;
+ 
+  this.videoScreen = new THREE.Mesh( new THREE.PlaneBufferGeometry(dimensions.screenmesh.length, dimensions.screenmesh.width, 1, 1), new THREE.MeshBasicMaterial({overdraw: true}) );
+    this.videoScreen.visible = false;
+    this.videoScreen.position.set(new THREE.Vector3());
+    //videoCube.add(this.videoScreen);
+};
 

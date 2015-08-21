@@ -28,7 +28,8 @@ var clock       = new THREE.Clock(),
     mouse       = {x: 0, y:0},
     cam_home    = new THREE.Vector3(  2*Math.sin(0)*Math.cos(0),  2*Math.sin(0)*Math.sin(0),  2*Math.cos(0) ),
     cam_load    = new THREE.Vector3( 60*Math.sin(0)*Math.cos(0), 60*Math.sin(0)*Math.sin(0), 60*Math.cos(0) ),
-    spin_box;
+    spin_box,
+    cube;
   
 var scene    = new THREE.Scene(), 
     camera   = new THREE.PerspectiveCamera(fov, aspect, near, far),
@@ -220,7 +221,7 @@ if($("container") != null) {
 
     if(intersects[0] == undefined) {return};
     
-    var no_click_effect = [trailer_cube, 
+    var no_click_effect = [cube.mesh, 
                            video_controls_bkgnd, 
                            timeline_bkgnd, 
                            timeline_progress, 
@@ -278,7 +279,7 @@ if($("container") != null) {
       videos[a].currentTime = 0;
       video_screen_materials[a].map = image_stills[a];
       //remove this code once the cube has been tiled // // // // // // // // // // // // // // // // // // // // // // // //
-      trailer_cube.visible = true;
+      cube.mesh.visible = true;
       // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
       camera.position.set(locations[a][0], locations[a][1]+.25, locations[a][2]+controls.minDistance+.5);
       controls.target = new THREE.Vector3();
@@ -303,7 +304,7 @@ if($("container") != null) {
         controls.minDistance = .1;
         controls.enabled = false;
         //remove this code once the cube has been tiled // // // // // // // // // // // // // // // // // // // // // // //  
-        trailer_cube.visible = false;
+        cube.mesh.visible = false;
         // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
   
       //position the camera in front of the video screen that's been clicked, and target it
@@ -365,7 +366,7 @@ if($("container") != null) {
     //toggle object visibility
       if($("rhombic-info") != null) {$("rhombic-info").remove()};
       //comment-out the following code when cube is fully tiled // // // // // // // // // // // // // // // // // // // //
-      trailer_cube.visible = true;
+      cube.mesh.visible = true;
       // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
       video_cube.visible = true;
 
@@ -408,7 +409,7 @@ if($("container") != null) {
 
 
 //global vars needed for the scene
-var trailer_cube, image_stills = [], loaded_images = 0;
+var image_stills = [], loaded_images = 0;
 
 function init() {
   controls.minDistance = 30;
@@ -416,28 +417,17 @@ function init() {
   camera.position.copy(cam_load);
   controls.enabled = false;
 
-  //non-ambient light source(s) needed for Lambert material
-    var point_light_1 = new THREE.PointLight(0xFF0000);
-        point_light_1.position.set(-175, 0, 0);
-    
-    var point_light_2 = new THREE.PointLight(0x00FF00);
-        point_light_2.position.set(175, 0, 0);
-    
-    var point_light_3 = new THREE.PointLight(0x0000FF);
-        point_light_3.position.set(0, 0, 175);
+  //add the light sources
+  var light = new pointLights();
 
   //add the loading screen's animation
   spin_box = new rhombicDodecahedron();
 
-  //the cube
-    var trailer_cube_geo     = new THREE.BoxGeometry(1, 1, 1, 100, 100, 100),
-        trailer_cube_mat     = new THREE.MeshBasicMaterial({color: 0x4B32AF, wireframe: true});
-        trailer_cube         = new THREE.Mesh(trailer_cube_geo, trailer_cube_mat); 
-        trailer_cube.visible = false;
-        //trailer_cube.position.set(0, 0, 0);            
-    
+  //add the cube
+  cube = new wireFrameCube(10);
+  
   //add objects to the scene
-    scene.add(point_light_1, point_light_2, point_light_3, spin_box.mesh, load_progress, trailer_cube);
+  scene.add(light.one, light.two, light.three, spin_box.mesh, load_progress, cube.mesh);
 
   //allow CORS, load the image stills
     THREE.ImageUtils.crossOrigin = '';
