@@ -1,8 +1,16 @@
 //global vars/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 var dimensions = {
-                   screenmesh:    {length: .16,  width: .09},
-                   screenpixels:  {length: 1280, width: 720}
-                 };
+                   screenPixels:                {length: 1280,   width: 720},
+                   screenMesh:                  {length: .16,    width: .09},
+                   loadBarMesh:                 {length: .0001,  width: .35},
+                   videoControlsBackgroundMesh: {length: .1575,  width: .005},
+                   timelineBackgroundMesh:      {length: .092,   width: .0005},
+                   videoProgressMesh:           {length: .0001,  width: .0005},
+                   buttonMesh:                  {length: .0072,  width:.00405}
+                 },
+
+    loaded_images = 0;
+
 
 //objects/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -10,17 +18,20 @@ var dimensions = {
 function pointLights() {
   
   this.one   = new THREE.PointLight(0xFF0000);
+    this.one.visible = true;
     this.one.position.set(-175, 0, 0);
 
   this.two   = new THREE.PointLight(0x00FF00);
+    this.two.visible = true;
     this.two.position.set(175, 0, 0);
 
   this.three = new THREE.PointLight(0x0000FF);
-    this.three.position.set(0, 0, 175); 
+    this.three.visible = true;
+    this.three.position.set(0, 0, 175);
 };
 
 
-//loading screen animation
+//the loading screen animation
 function rhombicDodecahedron() {
 
   this.geometry = new THREE.Geometry();
@@ -58,9 +69,9 @@ function rhombicDodecahedron() {
   this.material = new THREE.MeshLambertMaterial({color: 0x4B32AF, wireframe: false, shading: THREE.FlatShading});
 
   this.mesh = new THREE.Mesh(this.geometry, this.material);
-
-  this.position = this.mesh.position;
-  //this.position.set(0, 0, 0);
+    
+    this.mesh.visible = true;
+    //this.mesh.position.set(0, 0, 0);
 };
 
 rhombicDodecahedron.prototype = {
@@ -77,24 +88,44 @@ rhombicDodecahedron.prototype = {
 };
 
 
+//the loading screen progress bar
+function loadBar() {
+
+  this.mesh = new THREE.Mesh(
+
+    new THREE.PlaneBufferGeometry(dimensions.loadBarMesh.length, dimensions.loadBarMesh.width, 1, 1), 
+    new THREE.MeshBasicMaterial({color: 0x00FF00})
+  );
+  
+    this.mesh.visible = true;
+    this.mesh.position.set(-10, -24.25, 0);  
+};
+
+loadBar.prototype = {
+
+  constructor: loadBar,
+
+  progress: function() {
+
+    this.mesh.scale.x    = (95.5*(loaded_images/media_sources.length)-this.mesh.geometry.parameters.width)/(this.mesh.geometry.parameters.width);
+    this.mesh.position.x = (-47.75)+(this.mesh.scale.x*this.mesh.geometry.parameters.width)/2;
+  }
+};
+
+
 //the cube
 function wireFrameCube(segments) {
 
   segments = typeof segments !== 'undefined' ? segments : 100;
+  
+  this.mesh = new THREE.Mesh(
 
-  this.geometry = new THREE.BoxGeometry(1, 1, 1, segments, segments, segments);
-  
-  this.material = new THREE.MeshBasicMaterial({color: 0x4B32AF, wireframe: true});
-  
-  this.mesh     = new THREE.Mesh(this.geometry, this.material);
+    new THREE.BoxGeometry(1, 1, 1, segments, segments, segments), 
+    new THREE.MeshBasicMaterial({color: 0x4B32AF, wireframe: true})
+  );
+
     this.mesh.visible = false;
     //this.mesh.position.set(0, 0, 0);
-};
-
-
-function loadingProgressBar() {
-
-  
 };
 
 
@@ -121,12 +152,106 @@ function trailer(identifiers, genre, plot, director, actors, release) {
 
   this.canvas = create("canvas");
     this.canvas.getContext('2d');
-    this.canvas.length = dimensions.screenpixels.length;
-    this.canvas.width  = dimensions.screenpixels.width;
+    this.canvas.length = dimensions.screenPixels.length;
+    this.canvas.width  = dimensions.screenPixels.width;
  
-  this.videoScreen = new THREE.Mesh( new THREE.PlaneBufferGeometry(dimensions.screenmesh.length, dimensions.screenmesh.width, 1, 1), new THREE.MeshBasicMaterial({overdraw: true}) );
+  this.videoScreen = new THREE.Mesh( new THREE.PlaneBufferGeometry(dimensions.screenMesh.length, dimensions.screenMesh.width, 1, 1), new THREE.MeshBasicMaterial({overdraw: true}) );
     this.videoScreen.visible = false;
     this.videoScreen.position.set(new THREE.Vector3());
     //videoCube.add(this.videoScreen);
 };
+
+
+function videoPlaybackControls() {
+
+  THREE.Object3D.call(this);
+
+  this.visible = false;
+
+  this.videoControlsBackground.mesh = new THREE.Mesh(
+
+    new THREE.PlaneBufferGeometry(dimensions.videoControlsBackgroundMesh.length, dimensions.videoControlsBackgroundMesh.width, 1, 1),
+    new THREE.MeshBasicMaterial({color: 0x000000})  
+  );
+
+    this.videoControlsBackground.mesh.position.set( locations[a][0]-(0.0000), locations[a][1]-(0.0360), locations[a][2]+(0.00005) );
+    //this.add(videoControlsBackground.mesh);
+
+
+  this.timelineBackground.mesh = new THREE.Mesh(
+
+    new THREE.PlaneBufferGeometry(dimensions.timelineBackgroundMesh.length, dimensions.timelineBackgroundMesh.width, 1, 1),
+    new THREE.MeshBasicMaterial({color: 0x261958})
+  );
+
+    this.timelineBackground.mesh.position.set( locations[a][0]-(0.0500)+.025, locations[a][1]-(0.0360), locations[a][2]+(0.00010) );
+    //this.add(timelineBackground.mesh);
+
+
+  this.bufferProgress.mesh = new THREE.Mesh(
+
+    new THREE.PlaneBufferGeometry(dimensions.videoProgressMesh.length, dimensions.videoProgressMesh.width, 1, 1),
+    new THREE.MeshBasicMaterial({color: 0x9999CC})    
+  );
+
+    this.bufferProgress.mesh.position.set( locations[a][0]-(0.0710)+.025, locations[a][1]-(0.0360), locations[a][2]+(0.00011) );
+    //this.add(bufferProgress.mesh);
+
+
+  this.timelineProgress.mesh = new THREE.Mesh(
+
+    new THREE.PlaneBufferGeometry(dimensions.videoProgressMesh.length, dimensions.videoProgressMesh.width, 1, 1),
+    new THREE.MeshBasicMaterial({color: 0x4B32AF})
+  );
+  
+    this.timelineProgress.position.set( locations[a][0]-(0.0710)+.025, locations[a][1]-(0.0360), locations[a][2]+(0.00012) );
+    //this.add(timelineProgress.mesh);
+
+
+  this.restartButton.mesh = new THREE.Mesh(
+
+    new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
+    new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/restart_button.png')})
+  );
+
+    this.restartButton.mesh.position.set( locations[a][0]+(0.0350), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
+    //this.add(restartButton.mesh);
+
+
+  this.rewindButton.mesh = new THREE.Mesh(
+
+    new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
+    new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/rewind_button.png')})
+  );
+
+    this.rewindButton.mesh.position.set( locations[a][0]+(0.0430), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
+    //this.add(rewindButton.mesh);
+
+
+  this.playButton.mesh = new THREE.Mesh(
+
+    new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
+    new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/play_button.png')})
+  );
+
+    this.playButton.mesh.position.set( locations[a][0]+(0.0510), locations[a][1]-(0.0360), locations[a][2]+(0.00009) );
+    //this.add(playButton.mesh);
+
+
+  this.pauseButton.mesh = new THREE.Mesh(
+
+    new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
+    new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/pause_button.png')})
+  );
+
+    this.pauseButton.mesh.position.set( locations[a][0]+(0.0510), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
+    //this.add(pauseButton.mesh);
+
+
+  
+};
+
+videoPlaybackControls.prototype = new THREE.Object3D();
+
+videoPlaybackControls.prototype.constructor = videoPlaybackControls;
 
