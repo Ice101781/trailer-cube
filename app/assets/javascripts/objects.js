@@ -1,18 +1,40 @@
-//global vars/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-var dimensions = {
-                   screenPixels:                {length: 1280,   width: 720},
-                   screenMesh:                  {length: .16,    width: .09},
-                   loadBarMesh:                 {length: .0001,  width: .35},
-                   videoControlsBackgroundMesh: {length: .1575,  width: .005},
-                   timelineBackgroundMesh:      {length: .092,   width: .0005},
-                   videoProgressMesh:           {length: .0001,  width: .0005},
-                   buttonMesh:                  {length: .0072,  width:.00405}
-                 },
+//global vars//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+var innerWidth  = window.innerWidth,
+    innerHeight = window.innerHeight,
 
-    loaded_images = 0;
+    scene    = new THREE.Scene(),
+    renderer = new THREE.WebGLRenderer({antialias: false, alpha: false}),
+    camera   = new THREE.PerspectiveCamera(48.5, (16/9), 0.01, 100),
+    camHome  = new THREE.Vector3(  2*Math.sin(0)*Math.cos(0),  2*Math.sin(0)*Math.sin(0),  2*Math.cos(0) ),
+    camLoad  = new THREE.Vector3( 60*Math.sin(0)*Math.cos(0), 60*Math.sin(0)*Math.sin(0), 60*Math.cos(0) ),
+
+    clock    = new THREE.Clock(),
+
+    mouse    = {x: 0, y: 0},
+    controls = new THREE.OrbitControls( camera, $("container") ),
+
+    dimensions = {  screenMeshPixels:            { length: 1280,   width: 720    },
+                    titleMeshPixels:             { length: 1280,   width: 128    },
+                    plotMeshPixels:              { length: 1280,   width: 256    },
+                    loadBarMesh:                 { length: .0001,  width: .35    },
+                    screenMesh:                  { length: .16,    width: .09    },
+                    titleMesh:                   { length: .0288,  width: .00288 },
+                    plotMesh:                    { length: .0575,  width: .0115  },
+                    videoControlsBackgroundMesh: { length: .1575,  width: .005   },
+                    timelineBackgroundMesh:      { length: .092,   width: .0005  },
+                    videoProgressMesh:           { length: .0001,  width: .0005  },
+                    buttonMesh:                  { length: .0072,  width: .00405 }  },
+    
+    locations = [ [-.42, .455, .51], [-.25, .455, .51] ],
+
+    
 
 
-//objects/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    loaded_images = 0,
+    a = 0,
+    videos = [];
+
+//scene objects////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //lights
 function pointLights() {
@@ -61,7 +83,7 @@ function rhombicDodecahedron() {
                                new THREE.Face3( 11, 2, 10 ),   new THREE.Face3( 10, 6, 11 ),
                                new THREE.Face3( 11, 7, 12 ),   new THREE.Face3( 12, 4, 11 ),
                                new THREE.Face3( 12, 7, 13 ),   new THREE.Face3( 13, 5, 12 ),
-                               new THREE.Face3( 13, 7, 11 ),   new THREE.Face3( 11, 6, 13 ) );
+                               new THREE.Face3( 13, 7, 11 ),   new THREE.Face3( 11, 6, 13 )  );
 
     this.geometry.computeVertexNormals();
     this.geometry.computeFaceNormals();
@@ -92,7 +114,6 @@ rhombicDodecahedron.prototype = {
 function loadBar() {
 
   this.mesh = new THREE.Mesh(
-
     new THREE.PlaneBufferGeometry(dimensions.loadBarMesh.length, dimensions.loadBarMesh.width, 1, 1), 
     new THREE.MeshBasicMaterial({color: 0x00FF00})
   );
@@ -107,7 +128,7 @@ loadBar.prototype = {
 
   progress: function() {
 
-    this.mesh.scale.x    = (95.5*(loaded_images/media_sources.length)-this.mesh.geometry.parameters.width)/(this.mesh.geometry.parameters.width);
+    this.mesh.scale.x = (95.5*(loaded_images/media_sources.length)-this.mesh.geometry.parameters.width)/(this.mesh.geometry.parameters.width);
     this.mesh.position.x = (-47.75)+(this.mesh.scale.x*this.mesh.geometry.parameters.width)/2;
   }
 };
@@ -119,7 +140,6 @@ function wireFrameCube(segments) {
   segments = typeof segments !== 'undefined' ? segments : 100;
   
   this.mesh = new THREE.Mesh(
-
     new THREE.BoxGeometry(1, 1, 1, segments, segments, segments), 
     new THREE.MeshBasicMaterial({color: 0x4B32AF, wireframe: true})
   );
@@ -152,106 +172,240 @@ function trailer(identifiers, genre, plot, director, actors, release) {
 
   this.canvas = create("canvas");
     this.canvas.getContext('2d');
-    this.canvas.length = dimensions.screenPixels.length;
-    this.canvas.width  = dimensions.screenPixels.width;
+    this.canvas.length = dimensions.screenMeshPixels.length;
+    this.canvas.width  = dimensions.screenMeshPixels.width;
  
-  this.videoScreen = new THREE.Mesh( new THREE.PlaneBufferGeometry(dimensions.screenMesh.length, dimensions.screenMesh.width, 1, 1), new THREE.MeshBasicMaterial({overdraw: true}) );
+  this.videoScreen = new THREE.Mesh( 
+    new THREE.PlaneBufferGeometry(dimensions.screenMesh.length, dimensions.screenMesh.width, 1, 1), 
+    new THREE.MeshBasicMaterial({overdraw: true}) 
+  );
+  
     this.videoScreen.visible = false;
     this.videoScreen.position.set(new THREE.Vector3());
     //videoCube.add(this.videoScreen);
 };
 
 
+function trailerInfo() {
+
+  this.object3D = new THREE.Object3D();
+
+    this.object3D.visible = true;
+
+
+  this.dynamicTextures = {
+    xTrailerTitle: new THREEx.DynamicTexture(dimensions.titleMeshPixels.length, dimensions.titleMeshPixels.width),
+    xTrailerPlot:  new THREEx.DynamicTexture(dimensions.plotMeshPixels.length, dimensions.plotMeshPixels.width)
+  };
+
+  infoDynamicTextures = this.dynamicTextures;
+
+  this.titleMesh = new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(dimensions.titleMesh.length, dimensions.titleMesh.width, 1, 1),
+    new THREE.MeshBasicMaterial({map: infoDynamicTextures.xTrailerTitle.texture, transparent: true})
+  );
+
+    titleMesh = this.titleMesh;
+    titleMesh.position.set(camera.position.x-.04485, camera.position.y-.02625, camera.position.z-.075);
+    this.object3D.add(titleMesh);
+
+  this.plotMesh = new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(dimensions.plotMesh.length, dimensions.plotMesh.width, 1, 1),
+    new THREE.MeshBasicMaterial({map: infoDynamicTextures.xTrailerPlot.texture, transparent: true})
+  );
+
+    plotMesh = this.plotMesh;
+    plotMesh.position.set(camera.position.x-.03050, camera.position.y-.03375, camera.position.z-.075);
+    this.object3D.add(plotMesh);
+
+  infoDynamicTextures.xTrailerTitle.clear('red');
+  infoDynamicTextures.xTrailerPlot.clear('red');
+};
+
+
 function videoPlaybackControls() {
 
-  THREE.Object3D.call(this);
+  this.object3D = new THREE.Object3D();
 
-  this.visible = false;
+    this.object3D.visible = false;
 
-  this.videoControlsBackground.mesh = new THREE.Mesh(
 
+  this.videoControlsBackground = new THREE.Mesh(
     new THREE.PlaneBufferGeometry(dimensions.videoControlsBackgroundMesh.length, dimensions.videoControlsBackgroundMesh.width, 1, 1),
     new THREE.MeshBasicMaterial({color: 0x000000})  
   );
 
-    this.videoControlsBackground.mesh.position.set( locations[a][0]-(0.0000), locations[a][1]-(0.0360), locations[a][2]+(0.00005) );
-    //this.add(videoControlsBackground.mesh);
+    videoControlsBackground = this.videoControlsBackground;
+    videoControlsBackground.position.set( locations[a][0]-(0.0000), locations[a][1]-(0.0360), locations[a][2]+(0.00005) );
+    this.object3D.add(videoControlsBackground);
 
 
-  this.timelineBackground.mesh = new THREE.Mesh(
-
+  this.timelineBackground = new THREE.Mesh(
     new THREE.PlaneBufferGeometry(dimensions.timelineBackgroundMesh.length, dimensions.timelineBackgroundMesh.width, 1, 1),
     new THREE.MeshBasicMaterial({color: 0x261958})
   );
 
-    this.timelineBackground.mesh.position.set( locations[a][0]-(0.0500)+.025, locations[a][1]-(0.0360), locations[a][2]+(0.00010) );
-    //this.add(timelineBackground.mesh);
+    timelineBackground = this.timelineBackground;
+    timelineBackground.position.set( locations[a][0]-(0.0500)+.025, locations[a][1]-(0.0360), locations[a][2]+(0.00010) );
+    this.object3D.add(timelineBackground);
 
 
-  this.bufferProgress.mesh = new THREE.Mesh(
-
+  this.bufferProgress = new THREE.Mesh(
     new THREE.PlaneBufferGeometry(dimensions.videoProgressMesh.length, dimensions.videoProgressMesh.width, 1, 1),
     new THREE.MeshBasicMaterial({color: 0x9999CC})    
   );
 
-    this.bufferProgress.mesh.position.set( locations[a][0]-(0.0710)+.025, locations[a][1]-(0.0360), locations[a][2]+(0.00011) );
-    //this.add(bufferProgress.mesh);
+    bufferProgress = this.bufferProgress;
+    bufferProgress.position.set( locations[a][0]-(0.0710)+.025, locations[a][1]-(0.0360), locations[a][2]+(0.00011) );
+    this.object3D.add(bufferProgress);
 
 
-  this.timelineProgress.mesh = new THREE.Mesh(
-
+  this.timelineProgress = new THREE.Mesh(
     new THREE.PlaneBufferGeometry(dimensions.videoProgressMesh.length, dimensions.videoProgressMesh.width, 1, 1),
     new THREE.MeshBasicMaterial({color: 0x4B32AF})
   );
   
-    this.timelineProgress.position.set( locations[a][0]-(0.0710)+.025, locations[a][1]-(0.0360), locations[a][2]+(0.00012) );
-    //this.add(timelineProgress.mesh);
+    timelineProgress = this.timelineProgress;
+    timelineProgress.position.set( locations[a][0]-(0.0710)+.025, locations[a][1]-(0.0360), locations[a][2]+(0.00012) );
+    this.object3D.add(timelineProgress);
 
 
-  this.restartButton.mesh = new THREE.Mesh(
-
+  this.restartButton = new THREE.Mesh(
     new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
     new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/restart_button.png')})
   );
 
-    this.restartButton.mesh.position.set( locations[a][0]+(0.0350), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
-    //this.add(restartButton.mesh);
+    restartButton = this.restartButton;
+    restartButton.position.set( locations[a][0]+(0.0350), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
+    this.object3D.add(restartButton);
 
 
-  this.rewindButton.mesh = new THREE.Mesh(
-
+  this.rewindButton = new THREE.Mesh(
     new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
     new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/rewind_button.png')})
   );
 
-    this.rewindButton.mesh.position.set( locations[a][0]+(0.0430), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
-    //this.add(rewindButton.mesh);
+    rewindButton = this.rewindButton;
+    rewindButton.position.set( locations[a][0]+(0.0430), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
+    this.object3D.add(rewindButton);
 
 
-  this.playButton.mesh = new THREE.Mesh(
-
+  this.playButton = new THREE.Mesh(
     new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
     new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/play_button.png')})
   );
 
-    this.playButton.mesh.position.set( locations[a][0]+(0.0510), locations[a][1]-(0.0360), locations[a][2]+(0.00009) );
-    //this.add(playButton.mesh);
+    playButton = this.playButton;
+    playButton.position.set( locations[a][0]+(0.0510), locations[a][1]-(0.0360), locations[a][2]+(0.00009) );
+    this.object3D.add(playButton);
 
 
-  this.pauseButton.mesh = new THREE.Mesh(
-
+  this.pauseButton = new THREE.Mesh(
     new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
     new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/pause_button.png')})
   );
 
-    this.pauseButton.mesh.position.set( locations[a][0]+(0.0510), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
-    //this.add(pauseButton.mesh);
+    pauseButton = this.pauseButton;
+    pauseButton.position.set( locations[a][0]+(0.0510), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
+    this.object3D.add(pauseButton);
 
 
-  
+  this.fastForwardButton = new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
+    new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/fastforward_button.png')})
+  );    
+
+    fastForwardButton = this.fastForwardButton;
+    fastForwardButton.position.set( locations[a][0]+(0.0590), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
+    this.object3D.add(fastForwardButton);
+
+
+  this.exitFullscreenButton = new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
+    new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/exit_fullscreen_button.png')})
+  );
+    
+    exitFullscreenButton = this.exitFullscreenButton;
+    exitFullscreenButton.position.set( locations[a][0]+(0.0670), locations[a][1]-(0.0360), locations[a][2]+(0.00009) );
+    this.object3D.add(exitFullscreenButton);
+
+
+  this.enterFullscreenButton = new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
+    new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/enter_fullscreen_button.png')})
+  );
+
+    enterFullscreenButton = this.enterFullscreenButton;
+    enterFullscreenButton.position.set( locations[a][0]+(0.0670), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
+    this.object3D.add(enterFullscreenButton);
+
+
+  this.exitButton = new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
+    new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/exit_button.png')})
+  );
+
+    exitButton = this.exitButton;
+    exitButton.position.set( locations[a][0]+(0.0750), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
+    this.object3D.add(exitButton);
+
+
+  this.dynamicTextures = {
+    xTrailerProgress: new THREEx.DynamicTexture(dimensions.screenMeshPixels.length, dimensions.screenMeshPixels.width),
+    xTrailerLength:   new THREEx.DynamicTexture(dimensions.screenMeshPixels.length, dimensions.screenMeshPixels.width)
+  };
+
+  timeDynamicTextures = this.dynamicTextures;
+
+  this.trailerTimeProgress = new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
+    new THREE.MeshBasicMaterial({map: timeDynamicTextures.xTrailerProgress.texture, color: 0x4B32AF})
+  );
+
+    trailerTimeProgress = this.trailerTimeProgress; 
+    trailerTimeProgress.position.set( locations[a][0]-(0.0750), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
+    this.object3D.add(trailerTimeProgress);
+
+  this.trailerTimeLength = new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
+    new THREE.MeshBasicMaterial({map: timeDynamicTextures.xTrailerLength.texture, color: 0x4B32AF})
+  );
+
+    trailerTimeLength = this.trailerTimeLength;
+    trailerTimeLength.position.set( locations[a][0]+(0.0250), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
+    this.object3D.add(trailerTimeLength);
 };
 
-videoPlaybackControls.prototype = new THREE.Object3D();
+videoPlaybackControls.prototype = {
 
-videoPlaybackControls.prototype.constructor = videoPlaybackControls;
+  constructor: videoPlaybackControls,
+
+  trailerTimeUpdate: function() {
+        
+    timeDynamicTextures.xTrailerProgress.clear('black');
+    timeDynamicTextures.xTrailerProgress.drawText(sec_to_string(Math.round(videos[a].currentTime)), undefined, 475, 'white', '500px Corbel');
+
+    bufferProgress.scale.x = ((timelineBackground.geometry.parameters.width*(Math.round(videos[a].buffered.end(0))/Math.round(videos[a].duration)))-bufferProgress.geometry.parameters.width)/(bufferProgress.geometry.parameters.width);
+    bufferProgress.position.x = locations[a][0]-(0.0710)+((bufferProgress.scale.x*bufferProgress.geometry.parameters.width)/2);
+
+    timelineProgress.scale.x = ((timelineBackground.geometry.parameters.width*(Math.round(videos[a].currentTime)/Math.round(videos[a].duration)))-timelineProgress.geometry.parameters.width)/(timelineProgress.geometry.parameters.width);
+    timelineProgress.position.x = locations[a][0]-(0.0710)+((timelineProgress.scale.x*timelineProgress.geometry.parameters.width)/2);
+
+    timeDynamicTextures.xTrailerLength.clear('black');
+    timeDynamicTextures.xTrailerLength.drawText(sec_to_string(Math.round(videos[a].duration)-Math.round(videos[a].currentTime)), undefined, 475, 'white', '500px Corbel');
+  },
+
+  fullscreenButtonCheck: function() {
+  
+    if(document.webkitIsFullScreen) {
+      playbackControls.object3D.remove(enterFullscreenButton);
+      playbackControls.object3D.add(exitFullscreenButton);
+    }
+    else {
+      playbackControls.object3D.remove(exitFullscreenButton);
+      playbackControls.object3D.add(enterFullscreenButton);
+    };
+  }
+};
+
 
