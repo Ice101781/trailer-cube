@@ -1,4 +1,5 @@
-//global vars//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////global vars///////////////////////////////////////////////////////////////////////////////////////////////
+
 var innerWidth  = window.innerWidth,
     innerHeight = window.innerHeight,
 
@@ -14,42 +15,49 @@ var innerWidth  = window.innerWidth,
     controls = new THREE.OrbitControls( camera, $("container") ),
 
     dimensions = {  screenMeshPixels:            { length: 1280,   width: 720    },
-                    titleMeshPixels:             { length: 1280,   width: 128    },
-                    plotMeshPixels:              { length: 1280,   width: 256    },
+                    
+  
                     loadBarMesh:                 { length: .0001,  width: .35    },
                     screenMesh:                  { length: .16,    width: .09    },
-                    titleMesh:                   { length: .0288,  width: .00288 },
-                    plotMesh:                    { length: .0575,  width: .0115  },
+                    
                     videoControlsBackgroundMesh: { length: .1575,  width: .005   },
                     timelineBackgroundMesh:      { length: .092,   width: .0005  },
                     videoProgressMesh:           { length: .0001,  width: .0005  },
                     buttonMesh:                  { length: .0072,  width: .00405 }  },
     
-    locations = [ [-.42, .455, .51], [-.25, .455, .51] ],
+    locations = [ [-.42, .455, .51], [-.25, .455, .51] ];
 
     
 
 
-    loaded_images = 0,
+var loaded_images = 0,
     a = 0,
     videos = [];
 
-//scene objects////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////objects///////////////////////////////////////////////////////////////////////////////////////////////////
 
 //lights
 function pointLights() {
   
-  this.one   = new THREE.PointLight(0xFF0000);
-    this.one.visible = true;
-    this.one.position.set(-175, 0, 0);
+  this.object3D = new THREE.Object3D();
 
-  this.two   = new THREE.PointLight(0x00FF00);
-    this.two.visible = true;
-    this.two.position.set(175, 0, 0);
+  this.params = { one:   { hex: 0xFF0000, coords: { x: -175, y: 0, z:   0} }, 
+                  two:   { hex: 0x00FF00, coords: { x:  175, y: 0, z:   0} },
+                  three: { hex: 0x0000FF, coords: { x:    0, y: 0, z: 175} }  };
 
-  this.three = new THREE.PointLight(0x0000FF);
-    this.three.visible = true;
-    this.three.position.set(0, 0, 175);
+  params = this.params;
+
+  for(var num in params) {
+     
+    this[num] = new THREE.PointLight( params[num].hex );
+
+    this[num].position.set( params[num].coords.x, params[num].coords.y, params[num].coords.z );
+
+    this[num].visible = true;
+
+    this.object3D.add(this[num]);
+  };
 };
 
 
@@ -192,34 +200,35 @@ function trailerInfo() {
 
     this.object3D.visible = true;
 
+  this.fields = {  titleMesh: { pixelength:  1280, pixelwidth:   128, 
+                                meshlength: .0288, meshwidth: .00288, 
+                                posadjust:  { x: -.04485, y: -.02625, z: -.075 } },
+                   
+                    plotMesh: { pixelength:  1280, pixelwidth:   256, 
+                                meshlength: .0575, meshwidth:  .0115,
+                                posadjust:  { x: -.03050, y: -.03375, z: -.075 } }  };
 
-  this.dynamicTextures = {
-    xTrailerTitle: new THREEx.DynamicTexture(dimensions.titleMeshPixels.length, dimensions.titleMeshPixels.width),
-    xTrailerPlot:  new THREEx.DynamicTexture(dimensions.plotMeshPixels.length, dimensions.plotMeshPixels.width)
+  fields = this.fields;
+  
+  this.dynamicTextures = {};
+
+  for(var name in fields) {
+
+    this.dynamicTextures[name] = new THREEx.DynamicTexture( fields[name].pixelength,
+                                                            fields[name].pixelwidth );
+    this.dynamicTextures[name].clear();
+
+    this[name] = new THREE.Mesh(
+      new THREE.PlaneBufferGeometry(fields[name].meshlength, fields[name].meshwidth, 1, 1),
+      new THREE.MeshBasicMaterial( {map: this.dynamicTextures[name].texture, transparent: true} )
+    );
+    
+    this[name].position.set( camera.position.x + fields[name].posadjust.x,
+                             camera.position.y + fields[name].posadjust.y, 
+                             camera.position.z + fields[name].posadjust.z );
+    
+    this.object3D.add( this[name] );
   };
-
-  infoDynamicTextures = this.dynamicTextures;
-
-  this.titleMesh = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(dimensions.titleMesh.length, dimensions.titleMesh.width, 1, 1),
-    new THREE.MeshBasicMaterial({map: infoDynamicTextures.xTrailerTitle.texture, transparent: true})
-  );
-
-    titleMesh = this.titleMesh;
-    titleMesh.position.set(camera.position.x-.04485, camera.position.y-.02625, camera.position.z-.075);
-    this.object3D.add(titleMesh);
-
-  this.plotMesh = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(dimensions.plotMesh.length, dimensions.plotMesh.width, 1, 1),
-    new THREE.MeshBasicMaterial({map: infoDynamicTextures.xTrailerPlot.texture, transparent: true})
-  );
-
-    plotMesh = this.plotMesh;
-    plotMesh.position.set(camera.position.x-.03050, camera.position.y-.03375, camera.position.z-.075);
-    this.object3D.add(plotMesh);
-
-  infoDynamicTextures.xTrailerTitle.clear('red');
-  infoDynamicTextures.xTrailerPlot.clear('red');
 };
 
 

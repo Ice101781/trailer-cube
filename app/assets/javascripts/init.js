@@ -17,29 +17,48 @@
 
 window.onload = function() {
 
-//global vars, etc.////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-var spinBox,
-    loading,
-    cube,
-    info,
-    playbackControls;
-    
+/////////////////////////////////////////scene objects, global vars, etc.//////////////////////////////////////////////////////////////////////////
+
+       var light = new pointLights(),
+         spinBox = new rhombicDodecahedron(),
+         loading = new loadBar(),
+            cube = new wireFrameCube(10),
+            info = new trailerInfo(),
+playbackControls = new videoPlaybackControls(),
+
+   noClickEffect = [ undefined,
+                     spinBox.mesh,
+                     loading.mesh,
+                     cube.mesh,
+                     info.object3D,
+                     videoControlsBackground,
+                     timelineBackground,
+                     bufferProgress,
+                     timelineProgress,
+                     trailerTimeProgress,
+                     trailerTimeLength ];
+
+
 //append the container to the document, then the renderer to the container
-if( document.body != null ) { append( $("container"), document.body ) };
+  
+  if( document.body != null ) { 
+    append( $("container"), document.body );
+  };
 
-if( $("container") != null ) {
-  renderer.setSize(innerWidth, innerHeight); 
-  renderer.setClearColor(0x000000);
-  append( renderer.domElement, $("container") );
-};
+  if( $("container") != null ) {
+    renderer.setSize(innerWidth, innerHeight); 
+    renderer.setClearColor(0x000000);
+    append( renderer.domElement, $("container") );
+  };
 
 
-//user functions///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////user functions////////////////////////////////////////////////////////////////////////////////////////////
 
 //listen for events
 window.addEventListener('resize',    onWindowResize);
 window.addEventListener('mousemove', onMouseMove   );
 //window.addEventListener('mousedown',               );
+
 
 function onWindowResize() {
   innerWidth = window.innerWidth;
@@ -48,10 +67,83 @@ function onWindowResize() {
   camera.aspect = (16/9);
 };
 
+
 function onMouseMove(event) {
   event.preventDefault(); 
   mouse.x = (event.clientX/innerWidth)*2-1; 
   mouse.y = -(event.clientY/innerHeight)*2+1;
+};
+
+
+function init() {
+  controls.minDistance = 30;
+  controls.maxDistance = 90;
+  camera.position.copy(camLoad);
+  controls.enabled = false;
+  
+  //add objects to the scene;
+  scene.add(camera, light.object3D, spinBox.mesh, loading.mesh, cube.mesh);
+
+
+  //allow CORS, load the image stills
+  THREE.ImageUtils.crossOrigin = '';
+
+  for(i=0; i<media_sources.length; i++) {
+    video_screen_materials[i].map = THREE.ImageUtils.loadTexture( media_sources[i][0], undefined, function() { loaded_images++ } );
+  };
+};
+
+
+function onMouseHover() {
+  var hoverRaycaster = new THREE.Raycaster();
+
+  hoverRaycaster.vector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
+
+  hoverRaycaster.vector.unproject(camera);
+
+  hoverRaycaster.set( camera.position, hoverRaycaster.vector.sub(camera.position).normalize() );
+
+  var intersects = hoverRaycaster.intersectObjects(scene.children, true);
+  //console.log(intersects);
+
+  //logic for trailer info visibility
+  if(intersects[0] != undefined && playbackControls.object3D.parent != scene) {
+    
+    for(i=0; i<video_screens.length; i++) {
+      
+      if(intersects[0].object == video_screens[i]) {
+        info.dynamicTextures.titleMesh.clear();
+        info.dynamicTextures.plotMesh.clear();
+      
+        info.dynamicTextures.titleMesh.drawText(titles[i], 10, 90, 'white', '100px Corbel');
+      
+        info.dynamicTextures.plotMesh.drawText(plots[i][0], 10,  40, 'white', '35px Corbel') //chain
+                                     .drawText(plots[i][1], 10,  80, 'white', '35px Corbel')
+                                     .drawText(plots[i][2], 10, 120, 'white', '35px Corbel')
+                                     .drawText(plots[i][3], 10, 160, 'white', '35px Corbel')
+                                     .drawText(plots[i][4], 10, 200, 'white', '35px Corbel')
+                                     .drawText(plots[i][5], 10, 240, 'white', '35px Corbel');
+      };
+    };
+  }
+  //for debugging trailer info
+  else {
+    info.dynamicTextures.titleMesh.clear('red');
+    info.dynamicTextures.plotMesh.clear('red');
+  };
+
+
+  //logic for video controls visibility
+  if(intersects[0] != undefined && videos[a].readyState > 0) {
+      
+    if(intersects[0].object.parent == playbackControls.object3D) {
+      playbackControls.object3D.visible = true;
+      return; 
+    }
+    else {
+      playbackControls.object3D.visible = false;
+    };
+  };
 };
 
 
@@ -83,65 +175,10 @@ function raySelect() {
   //console.log(intersects);
   };
 
-  function onCursorHover() {
-    //logic for trailer info and video controls
-    if(intersects[0] != undefined && playbackControls.object3D.parent != scene) {
-      for(i=0; i<video_screens.length; i++) {
-        if(intersects[0].object == video_screens[i]) {
-          trailer_title.clear('red');
-          trailer_plot.clear('red');
-          trailer_title.drawText(titles[i], 10, 90, 'white', '100px Corbel');
-          trailer_plot.drawText(plots[i][0], 10, 40, 'white', '35px Corbel') //method chain
-                      .drawText(plots[i][1], 10, 80, 'white', '35px Corbel')
-                      .drawText(plots[i][2], 10, 120, 'white', '35px Corbel')
-                      .drawText(plots[i][3], 10, 160, 'white', '35px Corbel')
-                      .drawText(plots[i][4], 10, 200, 'white', '35px Corbel')
-                      .drawText(plots[i][5], 10, 240, 'white', '35px Corbel');
-        };
-      };
-    }
-    else {
-      trailer_title.clear('red');
-      trailer_plot.clear('red');
-    };
-
-    if(intersects[0] != undefined && videos[a].readyState > 0) {
-      if(intersects[0].object.parent == playbackControls.object3D) {
-        playbackControls.object3D.visible = true;
-        return; 
-      }
-      else {
-        playbackControls.object3D.visible = false;
-      };
-    };
-  };
-
 
   var click = false,
       
-      video_screen_geometry   = new THREE.PlaneBufferGeometry(.16000, .09000, 1, 1),
-      
-      //trailer_title_geometry  = new THREE.PlaneBufferGeometry(.02880, .00280, 1, 1),
-      //trailer_plot_geometry   = new THREE.PlaneBufferGeometry(.05750, .01150, 1, 1),
-      
-      //trailer_title           = new THREEx.DynamicTexture(1280, 128),
-      //trailer_plot            = new THREEx.DynamicTexture(1280, 256), 
-      
-      //trailer_title_material  = new THREE.MeshBasicMaterial({map: trailer_title.texture, transparent: true}),
-      //trailer_plot_material   = new THREE.MeshBasicMaterial({map: trailer_plot.texture, transparent: true}),
-        
-      //trailer_title_mesh = new THREE.Mesh(trailer_title_geometry, trailer_title_material),
-      //trailer_plot_mesh  = new THREE.Mesh(trailer_plot_geometry, trailer_plot_material);
-  
-
-  //LOAD AND TRAILER INFO STUFF - MOVE // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
-  //trailer_title_mesh.position.set(camera.position.x-.04485, camera.position.y-.02625, camera.position.z-.075);
-  //trailer_plot_mesh.position.set(camera.position.x-.03050, camera.position.y-.03375, camera.position.z-.075);
-  //trailer_title.clear('red');
-  //trailer_plot.clear('red');
-  //camera.add(trailer_title_mesh, trailer_plot_mesh);
-  // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
-
+  video_screen_geometry   = new THREE.PlaneBufferGeometry(.16000, .09000, 1, 1);
 
   var video_images = [], video_image_contexts = [], video_textures = [], 
       video_screen_materials = [], video_screens = [], video_cube = new THREE.Object3D();
@@ -161,17 +198,7 @@ function raySelect() {
   };
 
 
-  function onLeftClick() {  
-    var noClickEffect = [ undefined,
-                          spinBox.mesh,
-                          loading.mesh,
-                          cube.mesh,
-                          videoControlsBackground, 
-                          timelineBackground, 
-                          bufferProgress,
-                          timelineProgress, 
-                          trailerTimeProgress, 
-                          trailerTimeLength ];
+  function onLeftClick() {
                             
     for(i=0; i<noClickEffect.length; i++) { if(intersects[0].object == noClickEffect[i]) { return } };
       
@@ -254,8 +281,6 @@ function raySelect() {
   };
 
 
-
-
   function clicked() {
     if(playbackControls.object3D.parent != scene) {
       //adjust minimum camera distance to target and toggle controls
@@ -302,6 +327,7 @@ function raySelect() {
       controls.minDistance = 1;
       controls.maxDistance = 3;
       camera.position.copy(camHome);
+      camera.add(info.object3D);
       controls.enabled = true;
       
     //toggle object visibility
@@ -329,44 +355,7 @@ function raySelect() {
   };
 
 
-function init() {
-  controls.minDistance = 30;
-  controls.maxDistance = 90;
-  camera.position.copy(camLoad);
-  controls.enabled = false;
 
-  //light sources
-  var light = new pointLights();
-
-  //load screen animation
-  spinBox = new rhombicDodecahedron();
-
-  //load bar to monitor image load progress
-  loading = new loadBar();
-
-  //the cube
-  cube = new wireFrameCube(10);
-
-  //trailer info
-  info = new trailerInfo();
-
-  //video controls
-  playbackControls = new videoPlaybackControls();
-  
-  //add objects to the scene; add camera so that children of the camera (trailer info) will be rendered
-  scene.add(camera, light.one, light.two, light.three, spinBox.mesh, loading.mesh, cube.mesh, info.object3D);
-
-  
-
-
-
-  //allow CORS, load the image stills
-  THREE.ImageUtils.crossOrigin = '';
-
-  for(i=0; i<media_sources.length; i++) {
-    video_screen_materials[i].map = THREE.ImageUtils.loadTexture(media_sources[i][0], undefined, function() { loaded_images++ } );
-  };
-};
 
 
 function render() {
@@ -378,6 +367,7 @@ function render() {
   if(loading.mesh.parent == scene) { loading.progress() };
 
   //check for selected objects
+  onMouseHover();
 
   //if(click == true) { clicked() };
 
