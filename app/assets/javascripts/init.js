@@ -31,12 +31,12 @@ playbackControls = new videoPlaybackControls(),
                      loading.mesh,
                      cube.mesh,
                      info.object3D,
-                     videoControlsBackground,
-                     timelineBackground,
-                     bufferProgress,
-                     timelineProgress,
-                     trailerTimeProgress,
-                     trailerTimeLength ];
+                     playbackControls.backgroundMesh,
+                     playbackControls.timelineMesh,
+                     playbackControls.bufferedMesh,
+                     playbackControls.progressMesh,
+                     playbackControls.timeElapsedMesh,
+                     playbackControls.timeRemainingMesh ];
 
 
 //append the container to the document, then the renderer to the container

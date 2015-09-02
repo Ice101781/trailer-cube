@@ -13,17 +13,6 @@ var innerWidth  = window.innerWidth,
 
     mouse    = {x: 0, y: 0},
     controls = new THREE.OrbitControls( camera, $("container") ),
-
-    dimensions = {  screenMeshPixels:            { length: 1280,   width: 720    },
-                    
-  
-                    loadBarMesh:                 { length: .0001,  width: .35    },
-                    screenMesh:                  { length: .16,    width: .09    },
-                    
-                    videoControlsBackgroundMesh: { length: .1575,  width: .005   },
-                    timelineBackgroundMesh:      { length: .092,   width: .0005  },
-                    videoProgressMesh:           { length: .0001,  width: .0005  },
-                    buttonMesh:                  { length: .0072,  width: .00405 }  },
     
     locations = [ [-.42, .455, .51], [-.25, .455, .51] ];
 
@@ -122,7 +111,7 @@ rhombicDodecahedron.prototype = {
 function loadBar() {
 
   this.mesh = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(dimensions.loadBarMesh.length, dimensions.loadBarMesh.width, 1, 1), 
+    new THREE.PlaneBufferGeometry(.0001, .35, 1, 1), 
     new THREE.MeshBasicMaterial({color: 0x00FF00})
   );
   
@@ -180,11 +169,11 @@ function trailer(identifiers, genre, plot, director, actors, release) {
 
   this.canvas = create("canvas");
     this.canvas.getContext('2d');
-    this.canvas.length = dimensions.screenMeshPixels.length;
-    this.canvas.width  = dimensions.screenMeshPixels.width;
+    this.canvas.length = 1280;
+    this.canvas.width  = 720;
  
   this.videoScreen = new THREE.Mesh( 
-    new THREE.PlaneBufferGeometry(dimensions.screenMesh.length, dimensions.screenMesh.width, 1, 1), 
+    new THREE.PlaneBufferGeometry(.16, .09, 1, 1), 
     new THREE.MeshBasicMaterial({overdraw: true}) 
   );
   
@@ -200,32 +189,36 @@ function trailerInfo() {
 
     this.object3D.visible = true;
 
-  this.fields = {  titleMesh: { pixelength:  1280, pixelwidth:   128, 
-                                meshlength: .0288, meshwidth: .00288, 
-                                posadjust:  { x: -.04485, y: -.02625, z: -.075 } },
+  this.params = {  titleMesh: {  pixelength:    1280, 
+                                 pixelwidth:     128, 
+                                 meshlength:   .0288,  
+                                  meshwidth:  .00288, 
+                                  posadjust:  { x: -.04485, y: -.02625, z: -.075 }  },
                    
-                    plotMesh: { pixelength:  1280, pixelwidth:   256, 
-                                meshlength: .0575, meshwidth:  .0115,
-                                posadjust:  { x: -.03050, y: -.03375, z: -.075 } }  };
+                    plotMesh: {  pixelength:    1280, 
+                                 pixelwidth:     256, 
+                                 meshlength:   .0575,  
+                                  meshwidth:   .0115,
+                                  posadjust:  { x: -.0305, y: -.03375, z: -.075 }  }  };
 
-  fields = this.fields;
+  params = this.params;
   
   this.dynamicTextures = {};
 
-  for(var name in fields) {
+  for(var name in params) {
 
-    this.dynamicTextures[name] = new THREEx.DynamicTexture( fields[name].pixelength,
-                                                            fields[name].pixelwidth );
+    this.dynamicTextures[name] = new THREEx.DynamicTexture( params[name].pixelength,
+                                                            params[name].pixelwidth );
     this.dynamicTextures[name].clear();
 
     this[name] = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(fields[name].meshlength, fields[name].meshwidth, 1, 1),
+      new THREE.PlaneBufferGeometry(params[name].meshlength, params[name].meshwidth, 1, 1),
       new THREE.MeshBasicMaterial( {map: this.dynamicTextures[name].texture, transparent: true} )
     );
     
-    this[name].position.set( camera.position.x + fields[name].posadjust.x,
-                             camera.position.y + fields[name].posadjust.y, 
-                             camera.position.z + fields[name].posadjust.z );
+    this[name].position.set( camera.position.x + params[name].posadjust.x,
+                             camera.position.y + params[name].posadjust.y, 
+                             camera.position.z + params[name].posadjust.z );
     
     this.object3D.add( this[name] );
   };
@@ -238,151 +231,158 @@ function videoPlaybackControls() {
 
     this.object3D.visible = false;
 
+  this.params = {  backgroundMesh:  {  pixelength:      null,
+                                       pixelwidth:      null,
+                                       meshlength:     .1575, 
+                                        meshwidth:      .005,
+                                            color:  0x000000,
+                                       dynamicmap:     false,     
+                                       texturemap:      null, 
+                                        posadjust:  { x: 0.0, y: -0.036, z: 0.00005 }  },
 
-  this.videoControlsBackground = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(dimensions.videoControlsBackgroundMesh.length, dimensions.videoControlsBackgroundMesh.width, 1, 1),
-    new THREE.MeshBasicMaterial({color: 0x000000})  
-  );
+                     timelineMesh:  {  pixelength:      null,
+                                       pixelwidth:      null,
+                                       meshlength:      .092, 
+                                        meshwidth:     .0005,
+                                            color:  0x261958,
+                                       dynamicmap:     false,     
+                                       texturemap:      null, 
+                                        posadjust:  { x: -0.025, y: -0.036, z: 0.0001 }  },
 
-    videoControlsBackground = this.videoControlsBackground;
-    videoControlsBackground.position.set( locations[a][0]-(0.0000), locations[a][1]-(0.0360), locations[a][2]+(0.00005) );
-    this.object3D.add(videoControlsBackground);
+                     bufferedMesh:  {  pixelength:      null,
+                                       pixelwidth:      null,
+                                       meshlength:     .0001, 
+                                        meshwidth:     .0005,
+                                            color:  0x9999CC,
+                                       dynamicmap:     false,     
+                                       texturemap:      null, 
+                                        posadjust:  { x: -0.046, y: -0.036, z: 0.00011 }  },
 
+                     progressMesh:  {  pixelength:      null,
+                                       pixelwidth:      null,
+                                       meshlength:     .0001, 
+                                        meshwidth:     .0005,
+                                            color:  0x4B32AF,
+                                       dynamicmap:     false,     
+                                       texturemap:      null, 
+                                        posadjust:  { x: -0.046, y: -0.036, z: 0.00012 }  },
+                    
+                  timeElapsedMesh:  {  pixelength:      1280,
+                                       pixelwidth:       720,
+                                       meshlength:     .0072,
+                                        meshwidth:    .00405,
+                                            color:  0x4B32AF,
+                                       dynamicmap:      true,      
+                                        posadjust:  { x: -0.075, y: -0.036, z: 0.0001 }  },
 
-  this.timelineBackground = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(dimensions.timelineBackgroundMesh.length, dimensions.timelineBackgroundMesh.width, 1, 1),
-    new THREE.MeshBasicMaterial({color: 0x261958})
-  );
+                timeRemainingMesh:  {  pixelength:      1280,
+                                       pixelwidth:       720,
+                                       meshlength:     .0072, 
+                                        meshwidth:    .00405,
+                                            color:  0x4B32AF,
+                                       dynamicmap:      true,
+                                        posadjust:  { x: 0.025, y: -0.036, z: 0.0001 }  },
 
-    timelineBackground = this.timelineBackground;
-    timelineBackground.position.set( locations[a][0]-(0.0500)+.025, locations[a][1]-(0.0360), locations[a][2]+(0.00010) );
-    this.object3D.add(timelineBackground);
+                    restartButton:  {  pixelength:      null,
+                                       pixelwidth:      null,
+                                       meshlength:     .0072, 
+                                        meshwidth:    .00405,
+                                            color:  0x000000,
+                                       dynamicmap:     false,     
+                                       texturemap:  THREE.ImageUtils.loadTexture('public_assets/restart_button.png'),
+                                        posadjust:  { x: 0.035, y: -0.036, z: 0.0001 }  },
 
+                     rewindButton:  {  pixelength:      null,
+                                       pixelwidth:      null,
+                                       meshlength:     .0072, 
+                                        meshwidth:    .00405,
+                                            color:  0x000000,
+                                       dynamicmap:     false,
+                                       texturemap:  THREE.ImageUtils.loadTexture('public_assets/rewind_button.png'),
+                                        posadjust:  { x: 0.043, y: -0.036, z: 0.0001 }  },
 
-  this.bufferProgress = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(dimensions.videoProgressMesh.length, dimensions.videoProgressMesh.width, 1, 1),
-    new THREE.MeshBasicMaterial({color: 0x9999CC})    
-  );
+                       playButton:  {  pixelength:      null,
+                                       pixelwidth:      null,
+                                       meshlength:     .0072, 
+                                        meshwidth:    .00405,
+                                            color:  0x000000,
+                                       dynamicmap:     false,     
+                                       texturemap:  THREE.ImageUtils.loadTexture('public_assets/play_button.png'), 
+                                        posadjust:  { x: 0.051, y: -0.036, z: 0.00009 }  },
 
-    bufferProgress = this.bufferProgress;
-    bufferProgress.position.set( locations[a][0]-(0.0710)+.025, locations[a][1]-(0.0360), locations[a][2]+(0.00011) );
-    this.object3D.add(bufferProgress);
+                      pauseButton:  {  pixelength:      null,
+                                       pixelwidth:      null,
+                                       meshlength:     .0072, 
+                                        meshwidth:    .00405,
+                                            color:  0x000000,
+                                       dynamicmap:     false,     
+                                       texturemap:  THREE.ImageUtils.loadTexture('public_assets/pause_button.png'), 
+                                        posadjust:  { x: 0.051, y: -0.036, z: 0.0001 }  },
 
+                fastForwardButton:  {  pixelength:      null,
+                                       pixelwidth:      null,
+                                       meshlength:     .0072, 
+                                        meshwidth:    .00405,
+                                            color:  0x000000,
+                                       dynamicmap:     false,     
+                                       texturemap:  THREE.ImageUtils.loadTexture('public_assets/fastforward_button.png'), 
+                                        posadjust:  { x: 0.059, y: -0.036, z: 0.0001 }  },
 
-  this.timelineProgress = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(dimensions.videoProgressMesh.length, dimensions.videoProgressMesh.width, 1, 1),
-    new THREE.MeshBasicMaterial({color: 0x4B32AF})
-  );
+             exitFullscreenButton:  {  pixelength:      null,
+                                       pixelwidth:      null,
+                                       meshlength:     .0072, 
+                                        meshwidth:    .00405,
+                                            color:  0x000000,
+                                       dynamicmap:     false,     
+                                       texturemap:  THREE.ImageUtils.loadTexture('public_assets/exit_fullscreen_button.png'),
+                                        posadjust:  { x: 0.067, y: -0.036, z: 0.00009 }  },
+
+            enterFullscreenButton:  {  pixelength:      null,
+                                       pixelwidth:      null,
+                                       meshlength:     .0072,
+                                        meshwidth:    .00405,
+                                            color:  0x000000,
+                                       dynamicmap:     false,
+                                       texturemap:  THREE.ImageUtils.loadTexture('public_assets/enter_fullscreen_button.png'),
+                                        posadjust:  { x: 0.067, y: -0.036, z: 0.0001 }  },
+
+                       exitButton:  {  pixelength:      null,
+                                       pixelwidth:      null,
+                                       meshlength:     .0072, 
+                                        meshwidth:    .00405,
+                                            color:  0x000000,
+                                       dynamicmap:     false,
+                                       texturemap:  THREE.ImageUtils.loadTexture('public_assets/exit_button.png'),
+                                        posadjust:  { x: 0.075, y: -0.036, z: 0.0001 }  }  };
   
-    timelineProgress = this.timelineProgress;
-    timelineProgress.position.set( locations[a][0]-(0.0710)+.025, locations[a][1]-(0.0360), locations[a][2]+(0.00012) );
-    this.object3D.add(timelineProgress);
+  params = this.params;
 
+  this.dynamicTextures = {};
 
-  this.restartButton = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
-    new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/restart_button.png')})
-  );
-
-    restartButton = this.restartButton;
-    restartButton.position.set( locations[a][0]+(0.0350), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
-    this.object3D.add(restartButton);
-
-
-  this.rewindButton = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
-    new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/rewind_button.png')})
-  );
-
-    rewindButton = this.rewindButton;
-    rewindButton.position.set( locations[a][0]+(0.0430), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
-    this.object3D.add(rewindButton);
-
-
-  this.playButton = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
-    new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/play_button.png')})
-  );
-
-    playButton = this.playButton;
-    playButton.position.set( locations[a][0]+(0.0510), locations[a][1]-(0.0360), locations[a][2]+(0.00009) );
-    this.object3D.add(playButton);
-
-
-  this.pauseButton = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
-    new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/pause_button.png')})
-  );
-
-    pauseButton = this.pauseButton;
-    pauseButton.position.set( locations[a][0]+(0.0510), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
-    this.object3D.add(pauseButton);
-
-
-  this.fastForwardButton = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
-    new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/fastforward_button.png')})
-  );    
-
-    fastForwardButton = this.fastForwardButton;
-    fastForwardButton.position.set( locations[a][0]+(0.0590), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
-    this.object3D.add(fastForwardButton);
-
-
-  this.exitFullscreenButton = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
-    new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/exit_fullscreen_button.png')})
-  );
+  for(var name in params) {
+  
+    if( params[name].dynamicmap == true ) {
     
-    exitFullscreenButton = this.exitFullscreenButton;
-    exitFullscreenButton.position.set( locations[a][0]+(0.0670), locations[a][1]-(0.0360), locations[a][2]+(0.00009) );
-    this.object3D.add(exitFullscreenButton);
+      this.dynamicTextures[name] = new THREEx.DynamicTexture( params[name].pixelength,
+                                                              params[name].pixelwidth );
+      this.dynamicTextures[name].clear();
 
+      params[name].texturemap = this.dynamicTextures[name].texture;
+    };   
 
-  this.enterFullscreenButton = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
-    new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/enter_fullscreen_button.png')})
-  );
+    this[name] = new THREE.Mesh(
+      new THREE.PlaneBufferGeometry(params[name].meshlength, params[name].meshwidth, 1, 1),
+      new THREE.MeshBasicMaterial( {map: params[name].texturemap, color: params[name].color} )
+    );
 
-    enterFullscreenButton = this.enterFullscreenButton;
-    enterFullscreenButton.position.set( locations[a][0]+(0.0670), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
-    this.object3D.add(enterFullscreenButton);
+    this[name].position.set( locations[a][0] + params[name].posadjust.x,
+                             locations[a][1] + params[name].posadjust.y,
+                             locations[a][2] + params[name].posadjust.z );
+    
+    name = this[name];
 
-
-  this.exitButton = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
-    new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture('public_assets/exit_button.png')})
-  );
-
-    exitButton = this.exitButton;
-    exitButton.position.set( locations[a][0]+(0.0750), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
-    this.object3D.add(exitButton);
-
-
-  this.dynamicTextures = {
-    xTrailerProgress: new THREEx.DynamicTexture(dimensions.screenMeshPixels.length, dimensions.screenMeshPixels.width),
-    xTrailerLength:   new THREEx.DynamicTexture(dimensions.screenMeshPixels.length, dimensions.screenMeshPixels.width)
+    this.object3D.add( name );
   };
-
-  timeDynamicTextures = this.dynamicTextures;
-
-  this.trailerTimeProgress = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
-    new THREE.MeshBasicMaterial({map: timeDynamicTextures.xTrailerProgress.texture, color: 0x4B32AF})
-  );
-
-    trailerTimeProgress = this.trailerTimeProgress; 
-    trailerTimeProgress.position.set( locations[a][0]-(0.0750), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
-    this.object3D.add(trailerTimeProgress);
-
-  this.trailerTimeLength = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(dimensions.buttonMesh.length, dimensions.buttonMesh.width, 1, 1),
-    new THREE.MeshBasicMaterial({map: timeDynamicTextures.xTrailerLength.texture, color: 0x4B32AF})
-  );
-
-    trailerTimeLength = this.trailerTimeLength;
-    trailerTimeLength.position.set( locations[a][0]+(0.0250), locations[a][1]-(0.0360), locations[a][2]+(0.0001) );
-    this.object3D.add(trailerTimeLength);
 };
 
 videoPlaybackControls.prototype = {
@@ -391,28 +391,28 @@ videoPlaybackControls.prototype = {
 
   trailerTimeUpdate: function() {
         
-    timeDynamicTextures.xTrailerProgress.clear('black');
-    timeDynamicTextures.xTrailerProgress.drawText(sec_to_string(Math.round(videos[a].currentTime)), undefined, 475, 'white', '500px Corbel');
+    this.dynamicTextures.timeElapsedMesh.clear('black');
+    this.dynamicTextures.timeElapsedMesh.drawText(sec_to_string(Math.round(videos[a].currentTime)), undefined, 475, 'white', '500px Corbel');
 
-    bufferProgress.scale.x = ((timelineBackground.geometry.parameters.width*(Math.round(videos[a].buffered.end(0))/Math.round(videos[a].duration)))-bufferProgress.geometry.parameters.width)/(bufferProgress.geometry.parameters.width);
-    bufferProgress.position.x = locations[a][0]-(0.0710)+((bufferProgress.scale.x*bufferProgress.geometry.parameters.width)/2);
+    bufferedMesh.scale.x = ((backgroundMesh.geometry.parameters.width*(Math.round(videos[a].buffered.end(0))/Math.round(videos[a].duration)))-bufferedMesh.geometry.parameters.width)/(bufferedMesh.geometry.parameters.width);
+    bufferedMesh.position.x = locations[a][0]-(0.0710)+((bufferedMesh.scale.x*bufferedMesh.geometry.parameters.width)/2);
 
-    timelineProgress.scale.x = ((timelineBackground.geometry.parameters.width*(Math.round(videos[a].currentTime)/Math.round(videos[a].duration)))-timelineProgress.geometry.parameters.width)/(timelineProgress.geometry.parameters.width);
-    timelineProgress.position.x = locations[a][0]-(0.0710)+((timelineProgress.scale.x*timelineProgress.geometry.parameters.width)/2);
+    progressMesh.scale.x = ((backgroundMesh.geometry.parameters.width*(Math.round(videos[a].currentTime)/Math.round(videos[a].duration)))-progressMesh.geometry.parameters.width)/(progressMesh.geometry.parameters.width);
+    progressMesh.position.x = locations[a][0]-(0.0710)+((progressMesh.scale.x*progressMesh.geometry.parameters.width)/2);
 
-    timeDynamicTextures.xTrailerLength.clear('black');
-    timeDynamicTextures.xTrailerLength.drawText(sec_to_string(Math.round(videos[a].duration)-Math.round(videos[a].currentTime)), undefined, 475, 'white', '500px Corbel');
+    this.dynamicTextures.timeRemainingMesh.clear('black');
+    this.dynamicTextures.timeRemainingMesh.drawText(sec_to_string(Math.round(videos[a].duration)-Math.round(videos[a].currentTime)), undefined, 475, 'white', '500px Corbel');
   },
 
   fullscreenButtonCheck: function() {
   
     if(document.webkitIsFullScreen) {
-      playbackControls.object3D.remove(enterFullscreenButton);
-      playbackControls.object3D.add(exitFullscreenButton);
+      this.object3D.remove(enterFullscreenButton);
+      this.object3D.add(exitFullscreenButton);
     }
     else {
-      playbackControls.object3D.remove(exitFullscreenButton);
-      playbackControls.object3D.add(enterFullscreenButton);
+      this.object3D.remove(exitFullscreenButton);
+      this.object3D.add(enterFullscreenButton);
     };
   }
 };
