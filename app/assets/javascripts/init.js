@@ -111,7 +111,7 @@ function onMouseHover() {
   };
 
   //logic for video controls visibility
-  if(intersects[0] != undefined && videos[a].readyState > 0) {
+  if(intersects[0] != undefined && playbackControls.object3D.parent == scene) {
       
     if(intersects[0].object.parent == playbackControls.object3D) {
       playbackControls.object3D.visible = true;
@@ -143,28 +143,28 @@ function onMouseClick() {
       
   //logic for video playback controls
   if(intersects[0].object == playbackControls.restartButton) {
-    videos[a].currentTime = 0;
-    videos[a].play();
+    collection[preview].video.currentTime = 0;
+    collection[preview].video.play();
     if(playbackControls.playButton.visible == true) { playbackControls.pauseButtonSwap() };
     return;
   }
   else if(intersects[0].object == playbackControls.rewindButton) {
-    videos[a].currentTime -= 5;
+    collection[preview].video.currentTime -= 5;
     return;
   }
   else if(intersects[0].object == playbackControls.playButton) {
-    videos[a].play();
+    collection[preview].video.play();
     playbackControls.pauseButtonSwap();
     return;
   }
   else if(intersects[0].object == playbackControls.pauseButton) {
-    videos[a].pause();
+    collection[preview].video.pause();
     playbackControls.playButtonSwap();
     return;
   }
   else if(intersects[0].object == playbackControls.fastForwardButton) {
-    videos[a].currentTime += 5;
-    if(videos[a].currentTime == videos[a].duration) { return };
+    collection[preview].video.currentTime += 5;
+    if(collection[preview].video.currentTime == collection[preview].video.duration) { return };
     return;
   }
   else if(intersects[0].object == playbackControls.enterFullscreenButton) {
@@ -178,10 +178,12 @@ function onMouseClick() {
   else if(intersects[0].object == playbackControls.exitButton) {
     if(playbackControls.playButton.visible == true) { playbackControls.pauseButtonSwap() };
     scene.remove(playbackControls.object3D);
-    videos[a].pause();
-    videos[a].currentTime = 0;
-    video_screen_materials[a].map = image_stills[a];
+    collection[preview].video.pause();
+    collection[preview].video.currentTime = 0;
+    collection[preview].videoScreen.material.map = collection[preview].imageStill;
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
     camera.position.set(locations[a][0], locations[a][1]+.25, locations[a][2]+controls.minDistance+.5);
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
     controls.target = new THREE.Vector3();
     controls.minDistance = 1;
     controls.enabled = true;
@@ -189,10 +191,17 @@ function onMouseClick() {
   };
 
   //determine which screen has been selected
-  for(a=0; a<video_screens.length; a++) {
-    if(intersects[0].object == video_screens[a]) {
-      click = true; 
-      return a;
+  //for(a=0; a<video_screens.length; a++) {
+    //if(intersects[0].object == video_screens[a]) {
+      //click = true; 
+      //return a;
+    //};
+  //};
+
+  for(var preview in collection) {
+    if(intersects[0].object == preview.videoScreen) {
+      click = true;
+      return preview; 
     };
   };
 };
@@ -205,8 +214,10 @@ function clicked() {
     controls.enabled = false;
   
     //position the camera in front of the video screen that's been clicked, and target it
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
     camera.position.set( locations[a][0], locations[a][1], locations[a][2]+(controls.minDistance) );
-    controls.target = video_screens[a].position;
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    controls.target = collection[preview].videoScreen.position;
 
     //allow CORS, prepare and play the video
       //videos[a].crossOrigin = '';  
@@ -214,16 +225,17 @@ function clicked() {
       //video_images[a].width = 1280;
       //video_images[a].height = 720;
       //video_image_contexts[a].fillRect(0, 0, video_images[a].width, video_images[a].height);
-    video_screen_materials[a].map = video_textures[a];
       //videos[a].src = media_sources[a][1];
-    videos[a].load();
-    videos[a].play();
 
-    playbackControls.object3D.position.copy(video_screens[a].position);
+    collection[preview].videoScreen.material.map = collection[preview].texture;
+    collection[preview].video.load();
+    collection[preview].video.play();
+
+    playbackControls.object3D.position.copy(collection[preview].videoScreen.position);
     scene.add(playbackControls.object3D);
 
     //swap for play button at video end
-    videos[a].addEventListener('ended', function(event) { if(playbackControls.pauseButton.visible == true) { playbackControls.playButtonSwap() } } );
+    collection[preview].video.addEventListener('ended', function(event) {  if(playbackControls.pauseButton.visible == true) { playbackControls.playButtonSwap() }  } );
   };
     
   //reset boolean value of 'click' variable
@@ -244,7 +256,7 @@ function images_loaded() {
 
   //toggle object visibility
   cube.mesh.visible = true;
-  video_cube.visible = true;
+  //video_cube.visible = true;
 
   //reset count of loaded images
   loaded_images = 0;
@@ -256,15 +268,15 @@ function images_loaded() {
 
   //video_screen_geometry   = new THREE.PlaneBufferGeometry(.16, .09, 1, 1);
 
-  var //video_images = [], 
+  //var //video_images = [], 
       //video_image_contexts = [], 
       //video_textures = [], 
       //video_screen_materials = [], 
       //video_screens = [], 
-      video_cube = new THREE.Object3D();
+      //video_cube = new THREE.Object3D();
 
-  video_cube.visible = false;
-  scene.add(video_cube);
+  //video_cube.visible = false;
+  //scene.add(video_cube);
 
   for(i=0; i<titles.length; i++) {
     //videos[i] = create("video");
@@ -274,7 +286,8 @@ function images_loaded() {
     //video_screen_materials[i] = new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture("/public_assets/t_c.png"), overdraw: true});
     //video_screens[i] = new THREE.Mesh(video_screen_geometry, video_screen_materials[i]);
     video_screens[i].position.set(locations[i][0], locations[i][1], locations[i][2]);
-    video_cube.add(video_screens[i]);
+    scene.add(video_screens[i]);
+    //video_cube.add(video_screens[i]);
   };
 
 
@@ -303,15 +316,19 @@ function init() {
   //add objects to the scene;
   scene.add(camera, light.object3D, spinBox.mesh, loading.mesh, cube.mesh);
 
-
   //allow CORS, load the image stills
-  THREE.ImageUtils.crossOrigin = '';
+  //image_stills = [];
 
-  image_stills = [];
+  //for(i=0; i<media_sources.length; i++) {
+    //image_stills[i] = THREE.ImageUtils.loadTexture( media_sources[i][0], undefined, function() { loaded_images++ } );
+    //video_screen_materials[i].map = image_stills[i];
+  //};
 
-  for(i=0; i<media_sources.length; i++) {
-    image_stills[i] = THREE.ImageUtils.loadTexture( media_sources[i][0], undefined, function() { loaded_images++ } );
-    video_screen_materials[i].map = image_stills[i];
+  THREE.ImageUtils.crossOrigin = 'anonymous';
+  
+  for(var prevue in collection) {
+    prevue.imageStill = THREE.ImageUtils.loadTexture( prevue.filesource + ".jpg", undefined, function() { loaded_images++ } );
+    prevue.videoScreen.material.map = prevue.imageStill;    
   };
 };
 
@@ -325,7 +342,7 @@ function render() {
   if(loading.mesh.parent == scene) { loading.progress() };
 
   //view homepage if all images have been loaded
-  if(loaded_images == media_sources.length) { images_loaded() };
+  if(loaded_images == Object.keys(collection).length) { images_loaded() };
 
   //check for highlighted objects
   onMouseHover();
@@ -333,9 +350,14 @@ function render() {
   //play video if screen click detected
   if(click == true) { clicked() };
 
-  //update the video
-  if(videos[a] != undefined) { video_update() };
-  if(videos[a].readyState > 0) { playbackControls.trailerTimeUpdate() };
+  //update the video if it's playing
+  if(preview != undefined) { 
+    collection[preview].videoUpdate();
+    
+    if(collection[preview].video.readyState > 0) { 
+      playbackControls.trailerTimeUpdate() 
+    };
+  };
 
   //monitor fullscreen button during playback
   if(playbackControls.object3D.parent == scene) { playbackControls.fullscreenButtonCheck() };
