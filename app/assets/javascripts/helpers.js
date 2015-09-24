@@ -34,10 +34,3 @@
     };
   };
 
-
-//media source helper
-  //function media(title) {
-    //return [ "https://files9.s3-us-west-2.amazonaws.com/hd_trailers/"+title+"/"+title+".jpg",
-             //"https://files9.s3-us-west-2.amazonaws.com/hd_trailers/"+title+"/"+title+".mp4" ];
-  //};
-

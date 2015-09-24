@@ -9,17 +9,12 @@ var scene    = new THREE.Scene(),
     clock    = new THREE.Clock(),
 
     mouse    = {x: 0, y: 0},
-    controls = new THREE.OrbitControls( camera, $("container") ),
+    controls = new THREE.OrbitControls( camera, $("container") );
     
-    locations = [ [-.42, .455, .51], [-.25, .455, .51] ];
-
-
-
 var loaded_images = 0,
-    click = false,
-    a = 0,
-    videos = [];
-
+    click         = false,
+    hoverKey      = null,
+    clickKey      = null;
 
 /////////////////////////////////////////objects///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -125,7 +120,7 @@ loadBar.prototype = {
 
   progress: function() {
 
-    this.mesh.scale.x = (this.mesh.maxsize*(loaded_images/media_sources.length)-this.mesh.geometry.parameters.width)/this.mesh.geometry.parameters.width;
+    this.mesh.scale.x = (this.mesh.maxsize*(loaded_images/Object.keys(trailers).length)-this.mesh.geometry.parameters.width)/this.mesh.geometry.parameters.width;
     this.mesh.position.x = (-this.mesh.maxsize+this.mesh.scale.x*this.mesh.geometry.parameters.width)/2;
   }
 };
@@ -143,59 +138,6 @@ function wireFrameCube(segments) {
 
     this.mesh.visible = false;
     //this.mesh.position.set(0, 0, 0);
-};
-
-
-function trailer(identifiers, genre, plot, director, actors, release) {
-  
-  identifiers = typeof identifiers !== 'undefined' ? identifiers : {title:'', filename:''};
-  genre       = typeof genre       !== 'undefined' ? genre       : '';
-  plot        = typeof plot        !== 'undefined' ? plot        : {line1:'', line2:'', line3:'', line4:'', line5:'', line6:''};
-  director    = typeof director    !== 'undefined' ? director    : '';
-  actors      = typeof actors      !== 'undefined' ? actors      : {1:'', 2:'', 3:'', 4:'', 5:''};
-  release     = typeof release     !== 'undefined' ? release     : '';  
-  
-  this.identifiers = identifiers;
-  this.genre       = genre;
-  this.plot        = plot;
-  this.director    = director;
-  this.actors      = actors;
-  this.release     = release;
-
-  this.filesource = "https://files9.s3-us-west-2.amazonaws.com/hd_trailers/"+this.identifiers.filename+"/"+this.identifiers.filename;
-
-  this.video = create("video");
-    this.video.crossOrigin = 'anonymous';
-    this.video.src = this.filesource + ".mp4";
-
-  this.canvas = create("canvas");
-    this.canvas.width  = 1280;
-    this.canvas.height = 720;
-
-  this.context = this.canvas.getContext('2d');
-    this.context.fillStyle = '0#000000';
-    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-  this.texture = new THREE.Texture(this.canvas);
-
-  this.videoScreen = new THREE.Mesh( 
-    new THREE.PlaneBufferGeometry(.16, .09, 1, 1), 
-    new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture("/public_assets/t_c.png"), overdraw: true} )
-  );
-
-    this.videoScreen.visible = false;
-};
-
-trailer.prototype = {
-
-  constructor: trailer,
-
-  videoUpdate: function() {
-
-    if(this.video.readyState === this.video.HAVE_ENOUGH_DATA) { this.context.drawImage(this.video, 0, 0) };
-
-    this.texture.needsUpdate = true;
-  }
 };
 
 
@@ -406,16 +348,16 @@ videoPlaybackControls.prototype = {
   trailerTimeUpdate: function() {
         
     this.dynamicTextures.timeElapsedMesh.clear('black');
-    this.dynamicTextures.timeElapsedMesh.drawText(sec_to_string(Math.round(videos[a].currentTime)), undefined, 475, 'white', '500px Corbel');
+    this.dynamicTextures.timeElapsedMesh.drawText(sec_to_string(Math.round(trailers[clickKey].video.currentTime)), undefined, 475, 'white', '500px Corbel');
 
-    this.bufferedMesh.scale.x = (this.timelineMesh.geometry.parameters.width*(Math.round(videos[a].buffered.end(0))/Math.round(videos[a].duration))-this.bufferedMesh.geometry.parameters.width)/this.bufferedMesh.geometry.parameters.width;
+    this.bufferedMesh.scale.x = (this.timelineMesh.geometry.parameters.width*(Math.round(trailers[clickKey].video.buffered.end(0))/Math.round(trailers[clickKey].video.duration))-this.bufferedMesh.geometry.parameters.width)/this.bufferedMesh.geometry.parameters.width;
     this.bufferedMesh.position.x = (2*this.timelineMesh.position.x-params.timelineMesh.meshlength+this.bufferedMesh.scale.x*this.bufferedMesh.geometry.parameters.width)/2;
 
-    this.progressMesh.scale.x = (this.timelineMesh.geometry.parameters.width*(Math.round(videos[a].currentTime)/Math.round(videos[a].duration))-this.progressMesh.geometry.parameters.width)/this.progressMesh.geometry.parameters.width;
+    this.progressMesh.scale.x = (this.timelineMesh.geometry.parameters.width*(Math.round(trailers[clickKey].video.currentTime)/Math.round(trailers[clickKey].video.duration))-this.progressMesh.geometry.parameters.width)/this.progressMesh.geometry.parameters.width;
     this.progressMesh.position.x = (2*this.timelineMesh.position.x-params.timelineMesh.meshlength+this.progressMesh.scale.x*this.progressMesh.geometry.parameters.width)/2;
 
     this.dynamicTextures.timeRemainingMesh.clear('black');
-    this.dynamicTextures.timeRemainingMesh.drawText(sec_to_string(Math.round(videos[a].duration)-Math.round(videos[a].currentTime)), undefined, 475, 'white', '500px Corbel');
+    this.dynamicTextures.timeRemainingMesh.drawText(sec_to_string(Math.round(trailers[clickKey].video.duration)-Math.round(trailers[clickKey].video.currentTime)), undefined, 475, 'white', '500px Corbel');
   },
 
   pauseButtonSwap: function() {
