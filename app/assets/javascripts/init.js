@@ -28,8 +28,7 @@ var light            = new pointLights(),
     info             = new trailerInfo(),
     playbackControls = new videoPlaybackControls(),
 
-    noClickEffect    = [ spinBox.mesh,
-                         loading.mesh,
+    noClickEffect    = [ loading.mesh,
                          cube.mesh,
                          info.object3D,
                          playbackControls.backgroundMesh,
@@ -130,8 +129,12 @@ function onMouseClick() {
   if(intersects[0] == undefined) { return };
   for(i=0; i<noClickEffect.length; i++) { if(intersects[0].object == noClickEffect[i]) { return } };
 
-  //logic for clicked video screens
+  //logic for clicked objects if no video is playing
   if(playbackControls.object3D.parent != scene) {
+    if(intersects[0].object == spinBox.mesh) {
+        spinBox.clicked();
+    };
+
     for(var key in trailers) {
       if(intersects[0].object == trailers[key].videoScreen) {
         //retrieve a global-scope key
@@ -162,7 +165,7 @@ function onMouseClick() {
     };
   };
 
-  //logic for playback controls functionality
+  //logic for clicked objects if video is playing
   if(playbackControls.object3D.parent == scene) {
     if(intersects[0].object == trailers[clickKey].videoScreen) {
       return;
@@ -251,7 +254,6 @@ function init() {
 function images_loaded() {
   //remove the loading screen
   scene.remove(spinBox.mesh, loading.mesh);
-  if( $("rhombic-info") != null ) { $("rhombic-info").remove() };
 
   //adjust and enable controls, then move camera to home position and add to it the trailer info object
   controls.minDistance = 1;

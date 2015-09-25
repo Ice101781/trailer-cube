@@ -1,15 +1,16 @@
 /////////////////////////////////////////global vars///////////////////////////////////////////////////////////////////////////////////////////////
 
-var scene    = new THREE.Scene(),
-    renderer = new THREE.WebGLRenderer( {antialias: false, alpha: false} ),
-    camera   = new THREE.PerspectiveCamera(48.5, (16/9), 0.01, 100),
-    camHome  = new THREE.Vector3(  2*Math.sin(0)*Math.cos(0),  2*Math.sin(0)*Math.sin(0),  2*Math.cos(0) ),
-    camLoad  = new THREE.Vector3( 60*Math.sin(0)*Math.cos(0), 60*Math.sin(0)*Math.sin(0), 60*Math.cos(0) ),
+var scene     = new THREE.Scene(),
+    renderer  = new THREE.WebGLRenderer( {antialias: false, alpha: false} ),
+    camera    = new THREE.PerspectiveCamera(48.5, (16/9), 0.01, 100),
+    domEvents = new THREEx.DomEvents(camera, renderer.domElement),
+    camHome   = new THREE.Vector3(  2*Math.sin(0)*Math.cos(0),  2*Math.sin(0)*Math.sin(0),  2*Math.cos(0) ),
+    camLoad   = new THREE.Vector3( 60*Math.sin(0)*Math.cos(0), 60*Math.sin(0)*Math.sin(0), 60*Math.cos(0) ),
 
-    clock    = new THREE.Clock(),
+    clock     = new THREE.Clock(),
 
-    mouse    = {x: 0, y: 0},
-    controls = new THREE.OrbitControls( camera, $("container") );
+    mouse     = {x: 0, y: 0},
+    controls  = new THREE.OrbitControls( camera, $("container") );
     
 var loaded_images = 0,
     hoverKey      = null,
@@ -96,6 +97,11 @@ rhombicDodecahedron.prototype = {
 
     this.mesh.rotation.x += 2*Math.PI/speed;
     this.mesh.rotation.z -= 2*Math.PI/speed;
+  },
+
+  clicked: function() {
+    
+    THREEx.Linkify(domEvents, this.mesh, 'http://en.wikipedia.org/wiki/Rhombic_dodecahedron');
   }
 };
 
