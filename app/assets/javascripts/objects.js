@@ -12,7 +12,6 @@ var scene    = new THREE.Scene(),
     controls = new THREE.OrbitControls( camera, $("container") );
     
 var loaded_images = 0,
-    click         = false,
     hoverKey      = null,
     clickKey      = null;
 
@@ -137,15 +136,16 @@ function wireFrameCube(segments) {
   );
 
     this.mesh.visible = false;
-    //this.mesh.position.set(0, 0, 0);
+    this.mesh.position.set(0, 0, 0);
 };
 
 
+//the info
 function trailerInfo() {
 
   this.object3D = new THREE.Object3D();
 
-    this.object3D.visible = true;
+    this.object3D.visible = false;
 
   this.params = {  titleMesh: {  pixelength:    1280, 
                                  pixelwidth:     128, 
@@ -206,6 +206,7 @@ trailerInfo.prototype = {
 };
 
 
+//controls for video playback
 function videoPlaybackControls() {
 
   this.object3D = new THREE.Object3D();

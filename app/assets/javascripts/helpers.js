@@ -34,3 +34,57 @@
     };
   };
 
+
+//the trailer object (placed here for compile reasons)
+  function trailer(identifiers, genre, plot, director, actors, release) {
+  
+    identifiers = typeof identifiers !== 'undefined' ? identifiers : {title:'', filename:''};
+    genre       = typeof genre       !== 'undefined' ? genre       : '';
+    plot        = typeof plot        !== 'undefined' ? plot        : {line1:'', line2:'', line3:'', line4:'', line5:'', line6:''};
+    director    = typeof director    !== 'undefined' ? director    : '';
+    actors      = typeof actors      !== 'undefined' ? actors      : {1:'', 2:'', 3:'', 4:'', 5:''};
+    release     = typeof release     !== 'undefined' ? release     : '';  
+
+    this.identifiers = identifiers;
+    this.genre       = genre;
+    this.plot        = plot;
+    this.director    = director;
+    this.actors      = actors;
+    this.release     = release;
+
+    this.filesource = "https://files9.s3-us-west-2.amazonaws.com/hd_trailers/"+this.identifiers.filename+"/"+this.identifiers.filename;
+
+    this.video = create("video");
+      this.video.crossOrigin = 'anonymous';
+      this.video.src = this.filesource+".mp4";
+
+    this.canvas = create("canvas");
+      this.canvas.width  = 1280;
+      this.canvas.height = 720;
+
+    this.context = this.canvas.getContext('2d');
+      this.context.fillStyle = '0#000000';
+      this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.texture = new THREE.Texture(this.canvas);
+
+    this.videoScreen = new THREE.Mesh( 
+      new THREE.PlaneBufferGeometry(.16, .09, 1, 1), 
+      new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture("/public_assets/t_c.png"), overdraw: true} )
+    );
+
+      this.videoScreen.visible = false;
+  };
+
+  trailer.prototype = {
+
+    constructor: trailer,
+
+    videoUpdate: function() {
+
+      if(this.video.readyState === this.video.HAVE_ENOUGH_DATA) { this.context.drawImage(this.video, 0, 0) };
+
+      this.texture.needsUpdate = true;
+    }    
+  };
+

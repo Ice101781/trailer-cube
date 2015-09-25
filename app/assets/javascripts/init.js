@@ -20,30 +20,26 @@
 */
 
 window.onload = function() {
-
 /////////////////////////////////////////scene objects, global vars, etc.//////////////////////////////////////////////////////////////////////////
+var light            = new pointLights(),
+    spinBox          = new rhombicDodecahedron(.75),
+    loading          = new loadBar(),
+    cube             = new wireFrameCube(10),
+    info             = new trailerInfo(),
+    playbackControls = new videoPlaybackControls(),
 
-       var light = new pointLights(),
-         spinBox = new rhombicDodecahedron(.75),
-         loading = new loadBar(),
-            cube = new wireFrameCube(10),
-            info = new trailerInfo(),
-playbackControls = new videoPlaybackControls(),
-
-   noClickEffect = [ spinBox.mesh,
-                     loading.mesh,
-                     cube.mesh,
-                     info.object3D,
-                     playbackControls.backgroundMesh,
-                     playbackControls.timelineMesh,
-                     playbackControls.bufferedMesh,
-                     playbackControls.progressMesh,
-                     playbackControls.timeElapsedMesh,
-                     playbackControls.timeRemainingMesh ];
-
+    noClickEffect    = [ spinBox.mesh,
+                         loading.mesh,
+                         cube.mesh,
+                         info.object3D,
+                         playbackControls.backgroundMesh,
+                         playbackControls.timelineMesh,
+                         playbackControls.bufferedMesh,
+                         playbackControls.progressMesh,
+                         playbackControls.timeElapsedMesh,
+                         playbackControls.timeRemainingMesh ];
 
 //append the container to the document, then the renderer to the container
-
 if( document.body != null ) { 
   append( $("container"), document.body );
 };
@@ -55,7 +51,6 @@ if( $("container") != null ) {
 };
 
 /////////////////////////////////////////user functions////////////////////////////////////////////////////////////////////////////////////////////
-
 //listen for events
 window.addEventListener('resize', onWindowResize);
 window.addEventListener('mousemove', onMouseMove);
@@ -88,16 +83,14 @@ function onMouseHover() {
   //console.log(intersects);
 
   //logic for trailer info visibility
-  if(intersects[0] != undefined && playbackControls.object3D.parent != scene) {
-    
+  if(intersects[0] != undefined && playbackControls.object3D.parent != scene) {    
     for(var key in trailers) {
-    
       if(intersects[0].object == trailers[key].videoScreen) {
         //retrieve a global-scope key
         hoverKey = key;
 
         //clear a color for debugging and render the trailer info
-        info.clearAll('red');  
+        info.clearAll('red'); 
         info.draw();
       };
     };
@@ -109,7 +102,6 @@ function onMouseHover() {
 
   //logic for playback controls visibility
   if(intersects[0] != undefined && playbackControls.object3D.parent == scene) {
-  
     if(intersects[0].object.parent == playbackControls.object3D) {
       playbackControls.object3D.visible = true;
       return; 
@@ -136,14 +128,11 @@ function onMouseClick() {
 
   //logic for objects that produce no effect when clicked
   if(intersects[0] == undefined) { return };
-
   for(i=0; i<noClickEffect.length; i++) { if(intersects[0].object == noClickEffect[i]) { return } };
 
-  //determine whether a trailer has been selected or not
+  //logic for clicked video screens
   if(playbackControls.object3D.parent != scene) {
-
     for(var key in trailers) {
-
       if(intersects[0].object == trailers[key].videoScreen) {
         //retrieve a global-scope key
         clickKey = key;
@@ -154,9 +143,9 @@ function onMouseClick() {
         camera.remove(info.object3D);
 
         //position the camera in front of the video screen that's been clicked, then target it
-        camera.position.copy(trailers[key].location);
+        camera.position.copy(trailers[key].videoScreen.position);
         camera.position.z += controls.minDistance;
-        controls.target = trailers[key].location;
+        controls.target = trailers[key].videoScreen.position;
 
         //remove the image still and replace it with the video texture, then load and play the video
         trailers[key].videoScreen.material.map = trailers[key].texture;
@@ -164,7 +153,7 @@ function onMouseClick() {
         trailers[key].video.play();
 
         //position and add the playback controls
-        playbackControls.object3D.position.copy(trailers[key].location);
+        playbackControls.object3D.position.copy(trailers[key].videoScreen.position);
         scene.add(playbackControls.object3D);
 
         //swap for play button at video end
@@ -174,8 +163,7 @@ function onMouseClick() {
   };
 
   //logic for playback controls functionality
-  if(playbackControls.object3D.parent == scene) { 
-    
+  if(playbackControls.object3D.parent == scene) {
     if(intersects[0].object == trailers[clickKey].videoScreen) {
       return;
     }
@@ -243,16 +231,15 @@ function init() {
   //add objects to the scene;
   scene.add(camera, light.object3D, spinBox.mesh, loading.mesh, cube.mesh);
 
-  //trailer locations - need a function to generate these dynamically
-  trailers.avengers2.location = cube.mesh.geometry.vertices[440];
-  trailers.furious7.location  = cube.mesh.geometry.vertices[442];
-
   //allow CORS for images
   THREE.ImageUtils.crossOrigin = 'anonymous';
   
-  //position the video screens and add them to the scene, then load the image stills
+  //set trailer locations, position the video screens and add them to the scene, then load the image stills
   for(var key in trailers) {
+    trailers[key].location = cube.mesh.geometry.vertices[440+2*Object.keys(trailers).indexOf(key)];
+    
     trailers[key].videoScreen.position.copy(trailers[key].location);
+    trailers[key].videoScreen.position.z += 0.001;
     scene.add(trailers[key].videoScreen);
 
     trailers[key].imageStill = THREE.ImageUtils.loadTexture( trailers[key].filesource+".jpg", undefined, function() { loaded_images++ } );
@@ -275,6 +262,8 @@ function images_loaded() {
 
   //toggle object visibility
   cube.mesh.visible = true;
+  info.object3D.visible = true;
+  for(var key in trailers) { trailers[key].videoScreen.visible = true };
 
   //reset count of loaded images
   loaded_images = 0;
