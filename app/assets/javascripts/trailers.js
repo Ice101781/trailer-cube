@@ -1,4 +1,4 @@
-//the trailer object
+//the trailer object///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function trailer(identifiers, genre, plot, director, actors, release) {
   
   identifiers = typeof identifiers !== 'undefined' ? identifiers : {title:'', filename:''};
@@ -52,7 +52,7 @@ trailer.prototype = {
 };
 
 
-//the trailer data
+//the trailer data/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 var trailers = {
 
   avengers2: new trailer(  { title: "Avengers 2:  Age of Ultron", filename: 'avengers2' },
@@ -93,11 +93,4 @@ var trailers = {
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 };
-
-
-//trailer locations - need a function to generate these dynamically
-trailers.avengers2.location = new THREE.Vector3(-.42, .455, .51);
-
-trailers.furious7.location  = new THREE.Vector3(-.25, .455, .51);
-
 

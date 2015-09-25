@@ -93,30 +93,18 @@ function onMouseHover() {
     for(var key in trailers) {
     
       if(intersects[0].object == trailers[key].videoScreen) {
-        //clear a color for debugging
-        info.dynamicTextures.titleMesh.clear('red');
-        info.dynamicTextures.plotMesh.clear('red');  
-      
-        info.dynamicTextures.titleMesh.drawText(trailers[key].identifiers.title, 10, 90, 'white', '100px Corbel');
-      
-        info.dynamicTextures.plotMesh//.chain
-          .drawText(trailers[key].plot.line1, 10,  40, 'white', '35px Corbel')
-          .drawText(trailers[key].plot.line2, 10,  80, 'white', '35px Corbel')
-          .drawText(trailers[key].plot.line3, 10, 120, 'white', '35px Corbel')
-          .drawText(trailers[key].plot.line4, 10, 160, 'white', '35px Corbel')
-          .drawText(trailers[key].plot.line5, 10, 200, 'white', '35px Corbel')
-          .drawText(trailers[key].plot.line6, 10, 240, 'white', '35px Corbel');
-
+        //retrieve a global-scope key
         hoverKey = key;
-        return hoverKey;
+
+        //clear a color for debugging and render the trailer info
+        info.clearAll('red');  
+        info.draw();
       };
     };
   }
   else {
-    info.dynamicTextures.titleMesh.clear();
-    info.dynamicTextures.plotMesh.clear();
-
-    hoverKey = hoverKey == null ? hoverKey : null;
+    info.clearAll();
+    hoverKey = null;
   };
 
   //logic for playback controls visibility
@@ -157,9 +145,13 @@ function onMouseClick() {
     for(var key in trailers) {
 
       if(intersects[0].object == trailers[key].videoScreen) {
-        //adjust and disable controls
+        //retrieve a global-scope key
+        clickKey = key;
+
+        //adjust and disable controls, then remove the trailer info object
         controls.minDistance = .1;
         controls.enabled = false;
+        camera.remove(info.object3D);
 
         //position the camera in front of the video screen that's been clicked, then target it
         camera.position.copy(trailers[key].location);
@@ -177,9 +169,6 @@ function onMouseClick() {
 
         //swap for play button at video end
         trailers[key].video.addEventListener('ended', function(event) { if(playbackControls.pauseButton.visible == true) {playbackControls.playButtonSwap()} });
-
-        clickKey = key;
-        return clickKey;
       };
     };
   };
@@ -233,6 +222,7 @@ function onMouseClick() {
       trailers[clickKey].videoScreen.material.map = trailers[clickKey].imageStill;
       camera.position.y = trailers[clickKey].location.y+.25;
       camera.position.z = trailers[clickKey].location.z+.50;
+      camera.add(info.object3D);
       controls.target = new THREE.Vector3();
       controls.minDistance = 1;
       controls.enabled = true;
@@ -252,8 +242,12 @@ function init() {
     
   //add objects to the scene;
   scene.add(camera, light.object3D, spinBox.mesh, loading.mesh, cube.mesh);
-    
-  //allow CORS
+
+  //trailer locations - need a function to generate these dynamically
+  trailers.avengers2.location = cube.mesh.geometry.vertices[440];
+  trailers.furious7.location  = cube.mesh.geometry.vertices[442];
+
+  //allow CORS for images
   THREE.ImageUtils.crossOrigin = 'anonymous';
   
   //position the video screens and add them to the scene, then load the image stills

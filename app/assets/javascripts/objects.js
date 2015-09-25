@@ -181,6 +181,30 @@ function trailerInfo() {
   };
 };
 
+trailerInfo.prototype = {
+
+  constructor: trailerInfo,
+
+  draw: function() {
+
+    this.dynamicTextures.titleMesh.drawText(trailers[hoverKey].identifiers.title, 10, 90, 'white', '100px Corbel');
+      
+    this.dynamicTextures.plotMesh//.chain
+      .drawText(trailers[hoverKey].plot.line1, 10,  40, 'white', '35px Corbel')
+      .drawText(trailers[hoverKey].plot.line2, 10,  80, 'white', '35px Corbel')
+      .drawText(trailers[hoverKey].plot.line3, 10, 120, 'white', '35px Corbel')
+      .drawText(trailers[hoverKey].plot.line4, 10, 160, 'white', '35px Corbel')
+      .drawText(trailers[hoverKey].plot.line5, 10, 200, 'white', '35px Corbel')
+      .drawText(trailers[hoverKey].plot.line6, 10, 240, 'white', '35px Corbel');
+  },
+
+  clearAll: function(col) {
+
+    this.dynamicTextures.titleMesh.clear(col);
+    this.dynamicTextures.plotMesh.clear(col);
+  }
+};
+
 
 function videoPlaybackControls() {
 
