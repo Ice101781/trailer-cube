@@ -12,7 +12,7 @@ var scene     = new THREE.Scene(),
     mouse     = {x: 0, y: 0},
     controls  = new THREE.OrbitControls( camera, $("container") );
     
-var loaded_images = 0,
+var loadedImages  = 0,
     hoverKey      = null,
     clickKey      = null;
 
@@ -125,7 +125,7 @@ loadBar.prototype = {
 
   progress: function() {
 
-    this.mesh.scale.x = (this.mesh.maxsize*(loaded_images/Object.keys(trailers).length)-this.mesh.geometry.parameters.width)/this.mesh.geometry.parameters.width;
+    this.mesh.scale.x = (this.mesh.maxsize*(loadedImages/Object.keys(trailers).length)-this.mesh.geometry.parameters.width)/this.mesh.geometry.parameters.width;
     this.mesh.position.x = (-this.mesh.maxsize+this.mesh.scale.x*this.mesh.geometry.parameters.width)/2;
   }
 };
@@ -153,17 +153,25 @@ function trailerInfo() {
 
     this.object3D.visible = false;
 
-  this.params = {  titleMesh: {  pixelength:    1280, 
-                                 pixelwidth:     128, 
-                                 meshlength:   .0288,
-                                  meshwidth:  .00288, 
-                                  posadjust:  { x: -.04485, y: -.02625, z: -.075 }  },
+  this.params = {    titleMesh: {  pixelength:    1280, 
+                                   pixelwidth:     128, 
+                                   meshlength:   .0288,
+                                   meshwidth:   .00288, 
+                                   posadjust:  { x: -.04485, y: -.0265, z: -.075 }  },
                    
-                    plotMesh: {  pixelength:    1280, 
-                                 pixelwidth:     256, 
-                                 meshlength:   .0575,  
-                                  meshwidth:   .0115,
-                                  posadjust:  { x: -.0305, y: -.03375, z: -.075 }  }  };
+                      plotMesh: {  pixelength:    1280, 
+                                   pixelwidth:     256, 
+                                   meshlength:   .0575,  
+                                   meshwidth:    .0115,
+                                   posadjust:  { x: -.0305, y: -.034, z: -.075 }  },
+
+                     genreMesh: {  pixelength:    1280,
+                                   pixelwidth:     128, 
+                                   meshlength:   .0285,
+                                   meshwidth:   .00288,
+                                   posadjust:  { x: -.016, y: -.0265, z: -.075 }  }//,
+
+                };
 
   params = this.params;
   
@@ -195,19 +203,21 @@ trailerInfo.prototype = {
 
     this.dynamicTextures.titleMesh.drawText(trailers[hoverKey].identifiers.title, 10, 90, 'white', '100px Corbel');
       
-    this.dynamicTextures.plotMesh//.chain
-      .drawText(trailers[hoverKey].plot.line1, 10,  40, 'white', '35px Corbel')
+    this.dynamicTextures.plotMesh.drawText(trailers[hoverKey].plot.line1, 10,  40, 'white', '35px Corbel')//method.chain
       .drawText(trailers[hoverKey].plot.line2, 10,  80, 'white', '35px Corbel')
       .drawText(trailers[hoverKey].plot.line3, 10, 120, 'white', '35px Corbel')
       .drawText(trailers[hoverKey].plot.line4, 10, 160, 'white', '35px Corbel')
       .drawText(trailers[hoverKey].plot.line5, 10, 200, 'white', '35px Corbel')
       .drawText(trailers[hoverKey].plot.line6, 10, 240, 'white', '35px Corbel');
+
+    this.dynamicTextures.genreMesh.drawText(trailers[hoverKey].genre, 375, 90, 'white', '75px Corbel');
   },
 
   clearAll: function(col) {
 
     this.dynamicTextures.titleMesh.clear(col);
     this.dynamicTextures.plotMesh.clear(col);
+    this.dynamicTextures.genreMesh.clear(col);
   }
 };
 

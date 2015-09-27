@@ -4,7 +4,7 @@ var trailers = {
 
   avengers2: new trailer(  { title: "Avengers 2:  Age of Ultron", filename: 'avengers2' },
 
-                           'Action/Adventure',
+                           'Action / Adventure',
 
                            { line1: '   When Tony Stark (Robert Downey Jr.) jump-starts a dormant peacekeeping  program,',
                              line2: 'things go terribly awry, forcing him, Thor (Chris Hemsworth),  the Incredible  Hulk',
@@ -23,7 +23,7 @@ var trailers = {
   
    furious7: new trailer(  { title: "Furious 7", filename: 'furious7' },
 
-                           'Action/Adventure',
+                           'Action / Adventure',
 
                            { line1: '   After defeating international terrorist Owen Shaw, Dominic Toretto (Vin Diesel),',
                              line2: 'Brian O\'Conner (Paul  Walker) and the rest of the crew have separated to return to',
@@ -36,7 +36,10 @@ var trailers = {
 
                            { 1: 'Vin Diesel', 2: 'Paul Walker', 3: 'Michelle Rodriguez', 4: 'Tyrese Gibson', 5: 'Jason Statham' },
 
-                           'April 3rd, 2015'  )
+                           'April 3rd, 2015'  )//,
+
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 };

@@ -245,13 +245,13 @@ function init() {
     trailers[key].videoScreen.position.z += 0.001;
     scene.add(trailers[key].videoScreen);
 
-    trailers[key].imageStill = THREE.ImageUtils.loadTexture( trailers[key].filesource+".jpg", undefined, function() { loaded_images++ } );
+    trailers[key].imageStill = THREE.ImageUtils.loadTexture( trailers[key].filesource+".jpg", undefined, function() { loadedImages++ } );
     trailers[key].videoScreen.material.map = trailers[key].imageStill;
   };
 };
 
 
-function images_loaded() {
+function imagesLoaded() {
   //remove the loading screen
   scene.remove(spinBox.mesh, loading.mesh);
 
@@ -268,7 +268,7 @@ function images_loaded() {
   for(var key in trailers) { trailers[key].videoScreen.visible = true };
 
   //reset count of loaded images
-  loaded_images = 0;
+  loadedImages = 0;
 };
 
 
@@ -281,7 +281,7 @@ function render() {
   if(loading.mesh.parent == scene) { loading.progress() };
 
   //view homepage if all images have been loaded
-  if(loaded_images == Object.keys(trailers).length) { images_loaded() };
+  if(loadedImages == Object.keys(trailers).length) { imagesLoaded() };
 
   //check for highlighted objects
   onMouseHover();
