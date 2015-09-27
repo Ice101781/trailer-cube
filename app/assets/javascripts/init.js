@@ -154,6 +154,8 @@ function onMouseClick() {
         //remove the image still and replace it with the video texture, then load and play the video
         trailers[key].videoScreen.material.map = trailers[key].texture;
         trailers[key].video.load();
+        //mute for debugging
+        trailers[key].video.muted = true;
         trailers[key].video.play();
 
         //position and add the playback controls

@@ -153,25 +153,41 @@ function trailerInfo() {
 
     this.object3D.visible = false;
 
-  this.params = {    titleMesh: {  pixelength:    1280, 
-                                   pixelwidth:     128, 
-                                   meshlength:   .0288,
-                                   meshwidth:   .00288,
-                                   posadjust:  { x: -.04485, y: -.0265, z: -.075 }  },
+  this.params = {   titleMesh: {  pixelength:    1280, 
+                                  pixelwidth:     128, 
+                                  meshlength:   .0286,
+                                  meshwidth:   .00286,
+                                  posadjust:  { x: -.04495, y: -.0265, z: -.075 }  },
 
-                     genreMesh: {  pixelength:    1280,
-                                   pixelwidth:     128, 
-                                   meshlength:   .0285,
-                                   meshwidth:   .00288,
-                                   posadjust:  { x: -.016, y: -.0265, z: -.075 }  },
+                    genreMesh: {  pixelength:    1280,
+                                  pixelwidth:     256,
+                                  meshlength:   .0143,
+                                  meshwidth:   .00286,
+                                  posadjust:  { x: -.02325, y: -.0265, z: -.075 }  },
 
-                      plotMesh: {  pixelength:    1280, 
-                                   pixelwidth:     256, 
-                                   meshlength:   .0575,
-                                   meshwidth:    .0115,
-                                   posadjust:  { x: -.0305, y: -.034, z: -.075 }  }//,
+                     plotMesh: {  pixelength:    1280,
+                                  pixelwidth:     256,
+                                  meshlength:   .0575,
+                                  meshwidth:    .0115,
+                                  posadjust:  { x: -.0305, y: -.034, z: -.075 }  },
 
-                };
+               //directorMesh: {  pixelength:    0,
+                                //pixelwidth:    0,
+                                //meshlength:    0,
+                                //meshwidth:     0,
+                                //posadjust:  { x: 0, y: 0, z: 0 }  }//,
+
+                   //castMesh: {  pixelength:    0,
+                                //pixelwidth:    0,
+                                //meshlength:    0,
+                                //meshwidth:     0,
+                                //posadjust:  { x: 0, y: 0, z: 0 }  }//,
+
+                  releaseMesh: {  pixelength:    0,
+                                  pixelwidth:    0,
+                                  meshlength:    0,
+                                  meshwidth:     0,
+                                  posadjust:  { x: 0, y: 0, z: 0 }  }   };
 
   params = this.params;
   
@@ -203,7 +219,7 @@ trailerInfo.prototype = {
 
     this.dynamicTextures.titleMesh.drawText(trailers[hoverKey].identifiers.title, 10, 90, 'white', '100px Corbel');
 
-    this.dynamicTextures.genreMesh.drawText(trailers[hoverKey].genre, 375, 90, 'white', '75px Corbel');
+    this.dynamicTextures.genreMesh.drawText(trailers[hoverKey].genre, 57.5, 175, 'white', '150px Corbel');
 
     this.dynamicTextures.plotMesh.drawText(trailers[hoverKey].plot.line1, 10,  40, 'white', '35px Corbel')//method.chain
       .drawText(trailers[hoverKey].plot.line2, 10,  80, 'white', '35px Corbel')
@@ -285,7 +301,7 @@ function videoPlaybackControls() {
 
                     restartButton:  {  pixelength:      null,
                                        pixelwidth:      null,
-                                       meshlength:     .0072, 
+                                       meshlength:     .0072,
                                         meshwidth:    .00405,
                                             color:  0xFFFFFF,
                                        dynamicmap:     false,
