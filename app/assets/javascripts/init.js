@@ -20,6 +20,7 @@
 */
 
 window.onload = function() {
+
 /////////////////////////////////////////scene objects, global vars, etc.//////////////////////////////////////////////////////////////////////////
 var light            = new pointLights(),
     spinBox          = new rhombicDodecahedron(.75),
@@ -296,7 +297,7 @@ function render() {
 
   //monitor fullscreen button during playback
   if(playbackControls.object3D.parent == scene) { playbackControls.fullscreenButtonCheck() };
-  
+
   controls.update(delta);
   renderer.render(scene, camera);
   //console.log(variable name(s) here);

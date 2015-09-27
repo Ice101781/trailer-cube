@@ -156,20 +156,20 @@ function trailerInfo() {
   this.params = {    titleMesh: {  pixelength:    1280, 
                                    pixelwidth:     128, 
                                    meshlength:   .0288,
-                                   meshwidth:   .00288, 
+                                   meshwidth:   .00288,
                                    posadjust:  { x: -.04485, y: -.0265, z: -.075 }  },
-                   
-                      plotMesh: {  pixelength:    1280, 
-                                   pixelwidth:     256, 
-                                   meshlength:   .0575,  
-                                   meshwidth:    .0115,
-                                   posadjust:  { x: -.0305, y: -.034, z: -.075 }  },
 
                      genreMesh: {  pixelength:    1280,
                                    pixelwidth:     128, 
                                    meshlength:   .0285,
                                    meshwidth:   .00288,
-                                   posadjust:  { x: -.016, y: -.0265, z: -.075 }  }//,
+                                   posadjust:  { x: -.016, y: -.0265, z: -.075 }  },
+
+                      plotMesh: {  pixelength:    1280, 
+                                   pixelwidth:     256, 
+                                   meshlength:   .0575,
+                                   meshwidth:    .0115,
+                                   posadjust:  { x: -.0305, y: -.034, z: -.075 }  }//,
 
                 };
 
@@ -202,22 +202,22 @@ trailerInfo.prototype = {
   draw: function() {
 
     this.dynamicTextures.titleMesh.drawText(trailers[hoverKey].identifiers.title, 10, 90, 'white', '100px Corbel');
-      
+
+    this.dynamicTextures.genreMesh.drawText(trailers[hoverKey].genre, 375, 90, 'white', '75px Corbel');
+
     this.dynamicTextures.plotMesh.drawText(trailers[hoverKey].plot.line1, 10,  40, 'white', '35px Corbel')//method.chain
       .drawText(trailers[hoverKey].plot.line2, 10,  80, 'white', '35px Corbel')
       .drawText(trailers[hoverKey].plot.line3, 10, 120, 'white', '35px Corbel')
       .drawText(trailers[hoverKey].plot.line4, 10, 160, 'white', '35px Corbel')
       .drawText(trailers[hoverKey].plot.line5, 10, 200, 'white', '35px Corbel')
       .drawText(trailers[hoverKey].plot.line6, 10, 240, 'white', '35px Corbel');
-
-    this.dynamicTextures.genreMesh.drawText(trailers[hoverKey].genre, 375, 90, 'white', '75px Corbel');
   },
 
   clearAll: function(col) {
 
     this.dynamicTextures.titleMesh.clear(col);
-    this.dynamicTextures.plotMesh.clear(col);
     this.dynamicTextures.genreMesh.clear(col);
+    this.dynamicTextures.plotMesh.clear(col);
   }
 };
 
