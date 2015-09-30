@@ -171,11 +171,11 @@ function trailerInfo() {
                                   meshwidth:    .0115,
                                   posadjust:  { x: -.0305, y: -.034, z: -.075 }  },
 
-               //directorMesh: {  pixelength:    0,
-                                //pixelwidth:    0,
-                                //meshlength:    0,
-                                //meshwidth:     0,
-                                //posadjust:  { x: 0, y: 0, z: 0 }  }//,
+                 directorMesh: {  pixelength:    1280,
+                                  pixelwidth:     160,
+                                  meshlength:  .02288,
+                                  meshwidth:   .00286,
+                                  posadjust:  { x: .047, y: -.0265, z: -.075 }  },
 
                    //castMesh: {  pixelength:    0,
                                 //pixelwidth:    0,
@@ -183,11 +183,11 @@ function trailerInfo() {
                                 //meshwidth:     0,
                                 //posadjust:  { x: 0, y: 0, z: 0 }  }//,
 
-                  releaseMesh: {  pixelength:    0,
-                                  pixelwidth:    0,
-                                  meshlength:    0,
-                                  meshwidth:     0,
-                                  posadjust:  { x: 0, y: 0, z: 0 }  }   };
+                  releaseMesh: {  pixelength:    1280,
+                                  pixelwidth:     256,
+                                  meshlength:   .0141,
+                                  meshwidth:   .00282,
+                                  posadjust:  { x: -.0088, y: -.0265, z: -.075 }  }   };
 
   params = this.params;
   
@@ -216,10 +216,10 @@ trailerInfo.prototype = {
   constructor: trailerInfo,
 
   draw: function() {
+    
+    this.dynamicTextures.titleMesh.drawText(trailers[hoverKey].identifiers.title, 15, 90, 'white', '100px Corbel');
 
-    this.dynamicTextures.titleMesh.drawText(trailers[hoverKey].identifiers.title, 10, 90, 'white', '100px Corbel');
-
-    this.dynamicTextures.genreMesh.drawText(trailers[hoverKey].genre, 57.5, 175, 'white', '150px Corbel');
+    this.dynamicTextures.genreMesh.drawText(trailers[hoverKey].genre, 55, 175, 'white', '150px Corbel');
 
     this.dynamicTextures.plotMesh.drawText(trailers[hoverKey].plot.line1, 10,  40, 'white', '35px Corbel')//method.chain
       .drawText(trailers[hoverKey].plot.line2, 10,  80, 'white', '35px Corbel')
@@ -227,6 +227,10 @@ trailerInfo.prototype = {
       .drawText(trailers[hoverKey].plot.line4, 10, 160, 'white', '35px Corbel')
       .drawText(trailers[hoverKey].plot.line5, 10, 200, 'white', '35px Corbel')
       .drawText(trailers[hoverKey].plot.line6, 10, 240, 'white', '35px Corbel');
+
+    this.dynamicTextures.directorMesh.drawText("Director:     "+trailers[hoverKey].director, 15, 110, 'white', '100px Corbel');
+
+    this.dynamicTextures.releaseMesh.drawText(trailers[hoverKey].release, 240, 160, 'white', '130px Corbel');
   },
 
   clearAll: function(col) {
@@ -234,6 +238,10 @@ trailerInfo.prototype = {
     this.dynamicTextures.titleMesh.clear(col);
     this.dynamicTextures.genreMesh.clear(col);
     this.dynamicTextures.plotMesh.clear(col);
+    this.dynamicTextures.directorMesh.clear(col);
+    this.dynamicTextures.releaseMesh.clear(col);
+
+    hoverKey = null;
   }
 };
 

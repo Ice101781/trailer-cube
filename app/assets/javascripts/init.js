@@ -20,7 +20,6 @@
 */
 
 window.onload = function() {
-
 /////////////////////////////////////////scene objects, global vars, etc.//////////////////////////////////////////////////////////////////////////
 var light            = new pointLights(),
     spinBox          = new rhombicDodecahedron(.75),
@@ -83,32 +82,35 @@ function onMouseHover() {
   //console.log(intersects);
 
   //logic for trailer info visibility
-  if(intersects[0] != undefined && playbackControls.object3D.parent != scene) {    
+  if(intersects[0] != undefined && playbackControls.object3D.parent != scene) {
     for(var key in trailers) {
-      if(intersects[0].object == trailers[key].videoScreen) {
-        //retrieve a global-scope key
+      if(intersects[0].object == trailers[key].videoScreen && hoverKey !== undefined) {
+        //clear a color for debugging
+        info.clearAll('red');
+
+        //retrieve a global scope key
         hoverKey = key;
 
-        //clear a color for debugging and render the trailer info
-        info.clearAll('red'); 
+        //render the info
         info.draw();
       };
+    };
+
+    if(intersects[0].object == cube.mesh) {
+      info.clearAll();
     };
   }
   else {
     info.clearAll();
-    hoverKey = null;
   };
 
   //logic for playback controls visibility
   if(intersects[0] != undefined && playbackControls.object3D.parent == scene) {
     if(intersects[0].object.parent == playbackControls.object3D) {
       playbackControls.object3D.visible = true;
-      return; 
     }
     else {
       playbackControls.object3D.visible = false;
-      return;
     };
   };
 };
@@ -141,15 +143,12 @@ function onMouseClick() {
         //retrieve a global-scope key
         clickKey = key;
 
-        //adjust and disable controls, then remove the trailer info object
-        controls.minDistance = .1;
+        //disable controls and target the screen that's been clicked, then remove the trailer info and position the camera in front of the screen
         controls.enabled = false;
+        controls.target = trailers[key].videoScreen.position;
         camera.remove(info.object3D);
-
-        //position the camera in front of the video screen that's been clicked, then target it
         camera.position.copy(trailers[key].videoScreen.position);
         camera.position.z += controls.minDistance;
-        controls.target = trailers[key].videoScreen.position;
 
         //remove the image still and replace it with the video texture, then load and play the video
         trailers[key].videoScreen.material.map = trailers[key].texture;
@@ -214,12 +213,11 @@ function onMouseClick() {
       trailers[clickKey].video.currentTime = 0;
       trailers[clickKey].context.clearRect(0, 0, trailers[clickKey].canvas.width, trailers[clickKey].canvas.height);
       trailers[clickKey].videoScreen.material.map = trailers[clickKey].imageStill;
-      camera.position.y = trailers[clickKey].location.y+.25;
-      camera.position.z = trailers[clickKey].location.z+.50;
-      camera.add(info.object3D);
-      controls.target = new THREE.Vector3();
-      controls.minDistance = 1;
       controls.enabled = true;
+      camera.position.z += .25;
+      camera.add(info.object3D);
+      //assign hoverKey to be undefined to avoid trailer info flashing on exit
+      hoverKey = undefined;
       clickKey = null;
       return;
     };
@@ -246,7 +244,7 @@ function init() {
     
     trailers[key].videoScreen.position.copy(trailers[key].location);
     trailers[key].videoScreen.position.z += 0.001;
-    scene.add(trailers[key].videoScreen);
+    cube.mesh.add(trailers[key].videoScreen);
 
     trailers[key].imageStill = THREE.ImageUtils.loadTexture( trailers[key].filesource+".jpg", undefined, function() { loadedImages++ } );
     trailers[key].videoScreen.material.map = trailers[key].imageStill;
@@ -258,19 +256,20 @@ function imagesLoaded() {
   //remove the loading screen
   scene.remove(spinBox.mesh, loading.mesh);
 
-  //adjust and enable controls, then move camera to home position and add to it the trailer info object
-  controls.minDistance = 1;
-  controls.maxDistance = 3;
+  //adjust and enable controls, then move camera to home position and add to it the trailer info
+  controls.minDistance = .1;
+  controls.maxDistance = 2;
   controls.enabled = true;
   camera.position.copy(camHome);
   camera.add(info.object3D);
 
   //toggle object visibility
+  //enable cube mesh visibility for debugging
   cube.mesh.visible = true;
-  info.object3D.visible = true;
   for(var key in trailers) { trailers[key].videoScreen.visible = true };
+  info.object3D.visible = true;
 
-  //reset count of loaded images
+  //reset value of loaded images
   loadedImages = 0;
 };
 
@@ -278,30 +277,36 @@ function imagesLoaded() {
 function render() {
   //get the number of seconds passed since the last render
   var delta = clock.getDelta();
-  
-  //loading screen animation and image load progress
-  if(spinBox.mesh.parent == scene) { spinBox.animation() };
-  if(loading.mesh.parent == scene) { loading.progress() };
 
-  //view homepage if all images have been loaded
-  if(loadedImages == Object.keys(trailers).length) { imagesLoaded() };
+  //remain at the loading screen until all images have loaded, then go to the home page; otherwise, do nothing
+  if(loadedImages < Object.keys(trailers).length) { 
+    spinBox.animation();
+    loading.progress();
+  }
+  else if(loadedImages == Object.keys(trailers).length) {
+    imagesLoaded();
+  }
+  else {
+    return;
+  };
 
   //check for highlighted objects
   onMouseHover();
 
-  //update the video if it's playing
+  //update the video if it's playing, and monitor fullscreen button during playback
   if(clickKey != null && trailers[clickKey].video != undefined) {
-
     trailers[clickKey].videoUpdate();
     
-    if(trailers[clickKey].video.readyState > 0) { playbackControls.trailerTimeUpdate() };
+    if(trailers[clickKey].video.readyState > 0) { 
+      playbackControls.trailerTimeUpdate();
+      playbackControls.fullscreenButtonCheck();
+    };
   };
 
-  //monitor fullscreen button during playback
-  if(playbackControls.object3D.parent == scene) { playbackControls.fullscreenButtonCheck() };
-
+  //update the controls and the scene
   controls.update(delta);
   renderer.render(scene, camera);
+
   //console.log(variable name(s) here);
 };
 
@@ -313,6 +318,7 @@ function animate() {
 
 init();
 animate();
+
 //console.log(variable name(s) here);
 };
 
