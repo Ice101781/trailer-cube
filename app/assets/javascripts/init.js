@@ -20,7 +20,9 @@
 */
 
 window.onload = function() {
+
 /////////////////////////////////////////scene objects, global vars, etc.//////////////////////////////////////////////////////////////////////////
+
 var light            = new pointLights(),
     spinBox          = new rhombicDodecahedron(.75),
     loading          = new loadBar(),
@@ -49,7 +51,9 @@ if( $("container") != null ) {
   append( renderer.domElement, $("container") );
 };
 
+
 /////////////////////////////////////////user functions////////////////////////////////////////////////////////////////////////////////////////////
+
 //listen for events
 window.addEventListener('resize', onWindowResize);
 window.addEventListener('mousemove', onMouseMove);
@@ -63,7 +67,7 @@ function onWindowResize() {
 
 
 function onMouseMove(event) {
-  event.preventDefault(); 
+  event.preventDefault();
   mouse.x = (event.clientX/window.innerWidth)*2-1; 
   mouse.y = -(event.clientY/window.innerHeight)*2+1;
 };
@@ -84,9 +88,10 @@ function onMouseHover() {
   //logic for trailer info visibility
   if(intersects[0] != undefined && playbackControls.object3D.parent != scene) {
     for(var key in trailers) {
+      //display the trailer info if a screen is highlighted
       if(intersects[0].object == trailers[key].videoScreen && hoverKey !== undefined) {
         //clear a color for debugging
-        info.clearAll('red');
+        info.clearAll();
 
         //retrieve a global scope key
         hoverKey = key;
@@ -172,14 +177,20 @@ function onMouseClick() {
     if(intersects[0].object == trailers[clickKey].videoScreen) {
       return;
     }
-    else if(intersects[0].object == playbackControls.restartButton) {
+    else if(intersects[0].object == playbackControls.restartButton) {      
       trailers[clickKey].video.currentTime = 0;
-      trailers[clickKey].video.play();
-      if(playbackControls.playButton.visible == true) { playbackControls.pauseButtonSwap() };
+      if(playbackControls.pauseButton.visible == true) {
+        trailers[clickKey].video.pause();
+        playbackControls.playButtonSwap();
+      };
       return;
     }
     else if(intersects[0].object == playbackControls.rewindButton) {
       trailers[clickKey].video.currentTime -= 5;
+      if(trailers[clickKey].video.currentTime == 0 && playbackControls.pauseButton.visible == true) {
+        trailers[clickKey].video.pause();
+        playbackControls.playButtonSwap();
+      };
       return;
     }
     else if(intersects[0].object == playbackControls.playButton) {
@@ -194,7 +205,6 @@ function onMouseClick() {
     }
     else if(intersects[0].object == playbackControls.fastForwardButton) {
       trailers[clickKey].video.currentTime += 5;
-      if(trailers[clickKey].video.currentTime == trailers[clickKey].video.duration) { return };
       return;
     }
     else if(intersects[0].object == playbackControls.enterFullscreenButton) {
@@ -206,7 +216,7 @@ function onMouseClick() {
       return;
     }
     else if(intersects[0].object == playbackControls.exitButton) {
-      if(playbackControls.playButton.visible == true) { playbackControls.pauseButtonSwap() };
+      if(playbackControls.playButton.visible == true) {playbackControls.pauseButtonSwap()};
       playbackControls.object3D.visible = false;
       scene.remove(playbackControls.object3D);
       trailers[clickKey].video.pause();
@@ -238,7 +248,7 @@ function init() {
   //allow CORS for images
   THREE.ImageUtils.crossOrigin = 'anonymous';
   
-  //set trailer locations, position the video screens and add them to the scene, then load the image stills
+  //set trailer locations, position the video screens and add them to the cube, then load the image stills
   for(var key in trailers) {
     trailers[key].location = cube.mesh.geometry.vertices[440+2*Object.keys(trailers).indexOf(key)];
     
@@ -246,7 +256,7 @@ function init() {
     trailers[key].videoScreen.position.z += 0.001;
     cube.mesh.add(trailers[key].videoScreen);
 
-    trailers[key].imageStill = THREE.ImageUtils.loadTexture( trailers[key].filesource+".jpg", undefined, function() { loadedImages++ } );
+    trailers[key].imageStill = THREE.ImageUtils.loadTexture( trailers[key].filesource+".jpg", undefined, function() {loadedImages++} );
     trailers[key].videoScreen.material.map = trailers[key].imageStill;
   };
 };
@@ -266,7 +276,7 @@ function imagesLoaded() {
   //toggle object visibility
   //enable cube mesh visibility for debugging
   cube.mesh.visible = true;
-  for(var key in trailers) { trailers[key].videoScreen.visible = true };
+  for(var key in trailers) {trailers[key].videoScreen.visible = true};
   info.object3D.visible = true;
 
   //reset value of loaded images
@@ -278,16 +288,13 @@ function render() {
   //get the number of seconds passed since the last render
   var delta = clock.getDelta();
 
-  //remain at the loading screen until all images have loaded, then go to the home page; otherwise, do nothing
+  //remain at the loading screen until all images have loaded, then go to the home page
   if(loadedImages < Object.keys(trailers).length) { 
     spinBox.animation();
     loading.progress();
   }
   else if(loadedImages == Object.keys(trailers).length) {
     imagesLoaded();
-  }
-  else {
-    return;
   };
 
   //check for highlighted objects

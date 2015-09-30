@@ -10,9 +10,9 @@ var scene     = new THREE.Scene(),
     clock     = new THREE.Clock(),
 
     mouse     = {x: 0, y: 0},
-    controls  = new THREE.OrbitControls( camera, $("container") );
+    controls  = new THREE.OrbitControls( camera, $("container") ),
     
-var loadedImages  = 0,
+    loadedImages  = 0,
     hoverKey      = null,
     clickKey      = null;
 
@@ -171,17 +171,24 @@ function trailerInfo() {
                                   meshwidth:    .0115,
                                   posadjust:  { x: -.0305, y: -.034, z: -.075 }  },
 
-                 directorMesh: {  pixelength:    1280,
-                                  pixelwidth:     160,
-                                  meshlength:  .02288,
-                                  meshwidth:   .00286,
-                                  posadjust:  { x: .047, y: -.0265, z: -.075 }  },
+               dividerMeshOne: {  pixelength:     256,
+                                  pixelwidth:    1280,
+                                  meshlength: .002925,
+                                  meshwidth:  .014625,
+                                  posadjust:  { x: 0, y: -.03239, z: -.075 }  },
 
-                   //castMesh: {  pixelength:    0,
+
+                 directorMesh: {  pixelength:    1280,
+                                  pixelwidth:     128,
+                                  meshlength:   .0286,
+                                  meshwidth:   .00286,
+                                  posadjust:  { x: .0161, y: -.0265, z: -.075 }  },
+
+                //castMeshOne: {  pixelength:    0,
                                 //pixelwidth:    0,
                                 //meshlength:    0,
                                 //meshwidth:     0,
-                                //posadjust:  { x: 0, y: 0, z: 0 }  }//,
+                                //posadjust:  { x: 0, y: 0, z: 0 }  },
 
                   releaseMesh: {  pixelength:    1280,
                                   pixelwidth:     256,
@@ -228,18 +235,22 @@ trailerInfo.prototype = {
       .drawText(trailers[hoverKey].plot.line5, 10, 200, 'white', '35px Corbel')
       .drawText(trailers[hoverKey].plot.line6, 10, 240, 'white', '35px Corbel');
 
-    this.dynamicTextures.directorMesh.drawText("Director:     "+trailers[hoverKey].director, 15, 110, 'white', '100px Corbel');
+    this.dynamicTextures.dividerMeshOne.drawText("|", 102,  175, 'white', '200px Corbel')//method.chain
+      .drawText("|", 102,  360, 'white', '200px Corbel')
+      .drawText("|", 102,  550, 'white', '200px Corbel')
+      .drawText("|", 102,  740, 'white', '200px Corbel')
+      .drawText("|", 102,  930, 'white', '200px Corbel')
+      .drawText("|", 102, 1120, 'white', '200px Corbel')
+      .drawText("|", 102, 1210, 'white', '200px Corbel');
+
+    this.dynamicTextures.directorMesh.drawText("Director:     "+trailers[hoverKey].director, 20, 85, 'white', '75px Corbel');
 
     this.dynamicTextures.releaseMesh.drawText(trailers[hoverKey].release, 240, 160, 'white', '130px Corbel');
   },
 
   clearAll: function(col) {
 
-    this.dynamicTextures.titleMesh.clear(col);
-    this.dynamicTextures.genreMesh.clear(col);
-    this.dynamicTextures.plotMesh.clear(col);
-    this.dynamicTextures.directorMesh.clear(col);
-    this.dynamicTextures.releaseMesh.clear(col);
+    for(var name in this.params) { this.dynamicTextures[name].clear(col) };
 
     hoverKey = null;
   }
