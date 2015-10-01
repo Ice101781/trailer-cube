@@ -34,7 +34,7 @@ var trailers = {
 
                            'Joss Whedon',
 
-                           { 1: 'Robert Downey, Jr.', 2: 'Chris Hemsworth', 3: 'Mark Ruffalo', 4: 'Scarlett Johansson', 5: 'Chris Evans' },
+                           { lead1: 'Robert Downey, Jr.', lead2: 'Chris Hemsworth', lead3: 'Mark Ruffalo', lead4: 'Scarlett Johansson', lead5: 'Chris Evans' },
 
                            'May 1st, 2015'  ),
 
@@ -53,7 +53,7 @@ var trailers = {
 
                            'James Wan',
 
-                           { 1: 'Vin Diesel', 2: 'Paul Walker', 3: 'Michelle Rodriguez', 4: 'Tyrese Gibson', 5: 'Jason Statham' },
+                           { lead1: 'Vin Diesel', lead2: 'Paul Walker', lead3: 'Michelle Rodriguez', lead4: 'Tyrese Gibson', lead5: 'Jason Statham' },
 
                            'April 3rd, 2015'  )//,
 

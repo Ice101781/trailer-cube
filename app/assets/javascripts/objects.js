@@ -177,18 +177,17 @@ function trailerInfo() {
                                   meshwidth:  .014625,
                                   posadjust:  { x: 0, y: -.03239, z: -.075 }  },
 
-
                  directorMesh: {  pixelength:    1280,
                                   pixelwidth:     128,
                                   meshlength:   .0286,
                                   meshwidth:   .00286,
-                                  posadjust:  { x: .0161, y: -.0265, z: -.075 }  },
+                                  posadjust:  { x: .01605, y: -.0265, z: -.075 }  },
 
-                //castMeshOne: {  pixelength:    0,
-                                //pixelwidth:    0,
-                                //meshlength:    0,
-                                //meshwidth:     0,
-                                //posadjust:  { x: 0, y: 0, z: 0 }  },
+                  castMeshOne: {  pixelength:    1280,
+                                  pixelwidth:     128,
+                                  meshlength:   .0286,
+                                  meshwidth:   .00286,
+                                  posadjust:  { x: .01605, y: -.02965, z: -.075 }  },
 
                   releaseMesh: {  pixelength:    1280,
                                   pixelwidth:     256,
@@ -226,7 +225,7 @@ trailerInfo.prototype = {
     
     this.dynamicTextures.titleMesh.drawText(trailers[hoverKey].identifiers.title, 15, 90, 'white', '100px Corbel');
 
-    this.dynamicTextures.genreMesh.drawText(trailers[hoverKey].genre, 55, 175, 'white', '150px Corbel');
+    this.dynamicTextures.genreMesh.drawText(trailers[hoverKey].genre, 60, 175, 'white', '150px Corbel');
 
     this.dynamicTextures.plotMesh.drawText(trailers[hoverKey].plot.line1, 10,  40, 'white', '35px Corbel')//method.chain
       .drawText(trailers[hoverKey].plot.line2, 10,  80, 'white', '35px Corbel')
@@ -235,15 +234,17 @@ trailerInfo.prototype = {
       .drawText(trailers[hoverKey].plot.line5, 10, 200, 'white', '35px Corbel')
       .drawText(trailers[hoverKey].plot.line6, 10, 240, 'white', '35px Corbel');
 
-    this.dynamicTextures.dividerMeshOne.drawText("|", 102,  175, 'white', '200px Corbel')//method.chain
-      .drawText("|", 102,  360, 'white', '200px Corbel')
-      .drawText("|", 102,  550, 'white', '200px Corbel')
-      .drawText("|", 102,  740, 'white', '200px Corbel')
-      .drawText("|", 102,  930, 'white', '200px Corbel')
-      .drawText("|", 102, 1120, 'white', '200px Corbel')
-      .drawText("|", 102, 1210, 'white', '200px Corbel');
+    this.dynamicTextures.dividerMeshOne.drawText("|", 102,  175, 'white', '210px Corbel')//method.chain
+      .drawText("|", 102,  365, 'white', '210px Corbel')
+      .drawText("|", 102,  555, 'white', '210px Corbel')
+      .drawText("|", 102,  745, 'white', '210px Corbel')
+      .drawText("|", 102,  935, 'white', '210px Corbel')
+      .drawText("|", 102, 1125, 'white', '210px Corbel')
+      .drawText("|", 102, 1205, 'white', '210px Corbel');
 
     this.dynamicTextures.directorMesh.drawText("Director:     "+trailers[hoverKey].director, 20, 85, 'white', '75px Corbel');
+
+    this.dynamicTextures.castMeshOne.drawText("Cast:             "+trailers[hoverKey].cast.lead1, 20, 85, 'white', '75px Corbel');//method.chain
 
     this.dynamicTextures.releaseMesh.drawText(trailers[hoverKey].release, 240, 160, 'white', '130px Corbel');
   },

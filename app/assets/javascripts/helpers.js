@@ -42,7 +42,7 @@
     genre       = typeof genre       !== 'undefined' ? genre       : '';
     plot        = typeof plot        !== 'undefined' ? plot        : {line1:'', line2:'', line3:'', line4:'', line5:'', line6:''};
     director    = typeof director    !== 'undefined' ? director    : '';
-    cast        = typeof cast        !== 'undefined' ? cast        : {1:'', 2:'', 3:'', 4:'', 5:''};
+    cast        = typeof cast        !== 'undefined' ? cast        : {lead1:'', lead2:'', lead3:'', lead4:'', lead5:''};
     release     = typeof release     !== 'undefined' ? release     : '';  
 
     this.identifiers = identifiers;

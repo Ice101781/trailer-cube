@@ -91,7 +91,7 @@ function onMouseHover() {
       //display the trailer info if a screen is highlighted
       if(intersects[0].object == trailers[key].videoScreen && hoverKey !== undefined) {
         //clear a color for debugging
-        info.clearAll();
+        info.clearAll('blue');
 
         //retrieve a global scope key
         hoverKey = key;
