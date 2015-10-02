@@ -163,7 +163,7 @@ function trailerInfo() {
                                   pixelwidth:     256,
                                   meshlength:   .0143,
                                   meshwidth:   .00286,
-                                  posadjust:  { x: -.02325, y: -.0265, z: -.075 }  },
+                                  posadjust:  { x: -.023322, y: -.0265, z: -.075 }  },
 
                      plotMesh: {  pixelength:    1280,
                                   pixelwidth:     256,
@@ -184,16 +184,40 @@ function trailerInfo() {
                                   posadjust:  { x: .01605, y: -.0265, z: -.075 }  },
 
                   castMeshOne: {  pixelength:    1280,
-                                  pixelwidth:     128,
+                                  pixelwidth:      80,
                                   meshlength:   .0286,
-                                  meshwidth:   .00286,
-                                  posadjust:  { x: .01605, y: -.02965, z: -.075 }  },
+                                  meshwidth: .0017875,
+                                  posadjust:  { x: .01605, y: -.0308, z: -.075 }  },
+
+                  castMeshTwo: {  pixelength:    1280,
+                                  pixelwidth:      80,
+                                  meshlength:   .0286,
+                                  meshwidth: .0017875,
+                                  posadjust:  { x: .01605, y: -.0328, z: -.075 }  },
+
+                castMeshThree: {  pixelength:    1280,
+                                  pixelwidth:      80,
+                                  meshlength:   .0286,
+                                  meshwidth: .0017875,
+                                  posadjust:  { x: .01605, y: -.0348, z: -.075 }  },
+
+                 castMeshFour: {  pixelength:    1280,
+                                  pixelwidth:      80,
+                                  meshlength:   .0286,
+                                  meshwidth: .0017875,
+                                  posadjust:  { x: .01605, y: -.0368, z: -.075 }  },
+
+                 castMeshFive: {  pixelength:    1280,
+                                  pixelwidth:      80,
+                                  meshlength:   .0286,
+                                  meshwidth: .0017875,
+                                  posadjust:  { x: .01605, y: -.0388, z: -.075 }  },
 
                   releaseMesh: {  pixelength:    1280,
                                   pixelwidth:     256,
-                                  meshlength:   .0141,
-                                  meshwidth:   .00282,
-                                  posadjust:  { x: -.0088, y: -.0265, z: -.075 }  }   };
+                                  meshlength:   .0143,
+                                  meshwidth:   .00286,
+                                  posadjust:  { x: -.0089, y: -.0265, z: -.075 }  }   };
 
   params = this.params;
   
@@ -244,7 +268,11 @@ trailerInfo.prototype = {
 
     this.dynamicTextures.directorMesh.drawText("Director:     "+trailers[hoverKey].director, 20, 85, 'white', '75px Corbel');
 
-    this.dynamicTextures.castMeshOne.drawText("Cast:             "+trailers[hoverKey].cast.lead1, 20, 85, 'white', '75px Corbel');//method.chain
+    this.dynamicTextures.castMeshOne.drawText("Cast:              "+trailers[hoverKey].cast.lead1, 20, 57.5, 'white', '70px Corbel');
+    this.dynamicTextures.castMeshTwo.drawText(trailers[hoverKey].cast.lead2, 365, 57.5, 'white', '70px Corbel');
+    this.dynamicTextures.castMeshThree.drawText(trailers[hoverKey].cast.lead3, 365, 57.5, 'white', '70px Corbel');
+    this.dynamicTextures.castMeshFour.drawText(trailers[hoverKey].cast.lead4, 365, 57.5, 'white', '70px Corbel');
+    this.dynamicTextures.castMeshFive.drawText(trailers[hoverKey].cast.lead5, 365, 57.5, 'white', '70px Corbel');
 
     this.dynamicTextures.releaseMesh.drawText(trailers[hoverKey].release, 240, 160, 'white', '130px Corbel');
   },
