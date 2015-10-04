@@ -26,7 +26,7 @@ window.onload = function() {
 var light            = new pointLights(),
     spinBox          = new rhombicDodecahedron(.75),
     loading          = new loadBar(),
-    cube             = new wireFrameCube(10),
+    cube             = new wireFrameCube(50),
     info             = new trailerInfo(),
     playbackControls = new videoPlaybackControls(),
 
@@ -250,7 +250,7 @@ function init() {
   
   //set trailer locations, position the video screens and add them to the cube, then load the image stills
   for(var key in trailers) {
-    trailers[key].location = cube.mesh.geometry.vertices[440+2*Object.keys(trailers).indexOf(key)];
+    trailers[key].location = cube.mesh.geometry.vertices[10302+9*Object.keys(trailers).indexOf(key)];
     
     trailers[key].videoScreen.position.copy(trailers[key].location);
     trailers[key].videoScreen.position.z += 0.001;
@@ -326,6 +326,6 @@ function animate() {
 init();
 animate();
 
-//console.log(variable name(s) here);
+console.log(cube.mesh);
 };
 
