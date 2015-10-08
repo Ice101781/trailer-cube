@@ -36,21 +36,25 @@
 
 
 //the trailer object (placed here for compile reasons)
-  function trailer(identifiers, genre, plot, director, cast, release) {
+  function trailer(identifiers, genre, plot, director, cast, cinematography, writers, release) {
   
-    identifiers = typeof identifiers !== 'undefined' ? identifiers : {title:'', filename:''};
-    genre       = typeof genre       !== 'undefined' ? genre       : '';
-    plot        = typeof plot        !== 'undefined' ? plot        : {line1:'', line2:'', line3:'', line4:'', line5:'', line6:''};
-    director    = typeof director    !== 'undefined' ? director    : '';
-    cast        = typeof cast        !== 'undefined' ? cast        : {lead1:'', lead2:'', lead3:'', lead4:'', lead5:''};
-    release     = typeof release     !== 'undefined' ? release     : '';  
+    identifiers    = typeof identifiers    !== 'undefined' ? identifiers    : { title:'', filename:'' };
+    genre          = typeof genre          !== 'undefined' ? genre          : '';
+    plot           = typeof plot           !== 'undefined' ? plot           : { line1:'', line2:'', line3:'', line4:'', line5:'', line6:'' };
+    director       = typeof director       !== 'undefined' ? director       : '';
+    cast           = typeof cast           !== 'undefined' ? cast           : { one:'', two:'', three:'', four:'', five:'' };
+    cinematography = typeof cinematography !== 'undefined' ? cinematography : { one:'', two:'' };
+    writers        = typeof writers        !== 'undefined' ? writers        : { one:'', two:'', three:'' };
+    release        = typeof release        !== 'undefined' ? release        : '';
 
-    this.identifiers = identifiers;
-    this.genre       = genre;
-    this.plot        = plot;
-    this.director    = director;
-    this.cast        = cast;
-    this.release     = release;
+    this.identifiers    = identifiers;
+    this.genre          = genre;
+    this.plot           = plot;
+    this.director       = director;
+    this.cast           = cast;
+    this.cinematography = cinematography;
+    this.writers        = writers;
+    this.release        = release;
 
     this.filesource = "https://files9.s3-us-west-2.amazonaws.com/hd_trailers/"+this.identifiers.filename+"/"+this.identifiers.filename;
 
@@ -85,6 +89,6 @@
       if(this.video.readyState === this.video.HAVE_ENOUGH_DATA) { this.context.drawImage(this.video, 0, 0) };
 
       this.texture.needsUpdate = true;
-    }    
+    }
   };
 

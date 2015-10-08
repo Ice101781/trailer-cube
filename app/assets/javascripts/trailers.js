@@ -13,9 +13,15 @@
 
                          //'',
 
-                         //{ 1: '', 2: '', 3: '', 4: '', 5: '' },
+                         //{ one: '', two: '', three: '', four: '', five: '' },
 
-                         //''  )
+                         //{ one: '', two: '' },
+
+                         //{ one: '', two: '', three: '' },
+
+                         //''  )//,
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //the trailer data/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -34,11 +40,15 @@ var trailers = {
 
                            'Joss Whedon',
 
-                           { lead1: 'Robert Downey, Jr.', lead2: 'Chris Hemsworth', lead3: 'Mark Ruffalo', lead4: 'Scarlett Johansson', lead5: 'Chris Evans' },
+                           { one: 'Robert Downey, Jr.', two: 'Chris Hemsworth', three: 'Mark Ruffalo', four: 'Scarlett Johansson', five: 'Chris Evans' },
+
+                           { one: 'Ben Davis', two: 'cinematographer2' },
+
+                           { one: 'Joss Whedon', two: 'writer2', three: 'writer3' },
 
                            'May 1st, 2015'  ),
 
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
    furious7: new trailer(  { title: "Furious 7", filename: 'furious7' },
 
@@ -53,10 +63,14 @@ var trailers = {
 
                            'James Wan',
 
-                           { lead1: 'Vin Diesel', lead2: 'Paul Walker', lead3: 'Michelle Rodriguez', lead4: 'Tyrese Gibson', lead5: 'Jason Statham' },
+                           { one: 'Vin Diesel', two: 'Paul Walker', three: 'Michelle Rodriguez', four: 'Tyrese Gibson', five: 'Jason Statham' },
+
+                           { one: 'Marc Spicer', two: 'Stephen F. Windon' },
+
+                           { one: 'Chris Morgan', two: 'Gary Scott Thompson', three: 'writer3' },
 
                            'April 3rd, 2015'  )//,
 
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 };
 
