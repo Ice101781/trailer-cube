@@ -36,7 +36,7 @@
 
 
 //the trailer object (placed here for compile reasons)
-  function trailer(identifiers, genre, plot, director, cast, cinematography, writers, release) {
+  function trailer(identifiers, genre, plot, director, cast, cinematography, writing, release) {
   
     identifiers    = typeof identifiers    !== 'undefined' ? identifiers    : { title:'', filename:'' };
     genre          = typeof genre          !== 'undefined' ? genre          : '';
@@ -44,7 +44,7 @@
     director       = typeof director       !== 'undefined' ? director       : '';
     cast           = typeof cast           !== 'undefined' ? cast           : { one:'', two:'', three:'', four:'', five:'' };
     cinematography = typeof cinematography !== 'undefined' ? cinematography : { one:'', two:'' };
-    writers        = typeof writers        !== 'undefined' ? writers        : { one:'', two:'', three:'' };
+    writing        = typeof writing        !== 'undefined' ? writing        : { one:'', two:'', three:'' };
     release        = typeof release        !== 'undefined' ? release        : '';
 
     this.identifiers    = identifiers;
@@ -53,7 +53,7 @@
     this.director       = director;
     this.cast           = cast;
     this.cinematography = cinematography;
-    this.writers        = writers;
+    this.writing        = writing;
     this.release        = release;
 
     this.filesource = "https://files9.s3-us-west-2.amazonaws.com/hd_trailers/"+this.identifiers.filename+"/"+this.identifiers.filename;

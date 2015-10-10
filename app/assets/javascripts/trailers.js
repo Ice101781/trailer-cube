@@ -27,6 +27,8 @@
 
 var trailers = {
 
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   avengers2: new trailer(  { title: "Avengers 2:  Age of Ultron", filename: 'avengers2' },
 
                            'Action / Adventure',
@@ -42,11 +44,11 @@ var trailers = {
 
                            { one: 'Robert Downey, Jr.', two: 'Chris Hemsworth', three: 'Mark Ruffalo', four: 'Scarlett Johansson', five: 'Chris Evans' },
 
-                           { one: 'Ben Davis', two: 'cinematographer2' },
+                           { one: 'Ben Davis', two: '' },
 
-                           { one: 'Joss Whedon', two: 'writer2', three: 'writer3' },
+                           { one: 'Joss Whedon', two: '', three: '' },
 
-                           'May 1st, 2015'  ),
+                           '05/01/2015'  ),
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
@@ -67,9 +69,9 @@ var trailers = {
 
                            { one: 'Marc Spicer', two: 'Stephen F. Windon' },
 
-                           { one: 'Chris Morgan', two: 'Gary Scott Thompson', three: 'writer3' },
+                           { one: 'Chris Morgan', two: 'Gary Scott Thompson', three: '' },
 
-                           'April 3rd, 2015'  )//,
+                           '04/03/2015'  )//,
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 };
