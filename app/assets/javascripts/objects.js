@@ -12,9 +12,10 @@ var scene     = new THREE.Scene(),
     mouse     = {x: 0, y: 0},
     controls  = new THREE.OrbitControls( camera, $("container") ),
     
-    loadedImages  = 0,
-    hoverKey      = null,
-    clickKey      = null;
+    loadedImages = 0,
+    hoverKey     = null,
+    clickCount   = 0,
+    clickKey     = null;
 
 /////////////////////////////////////////objects///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -128,6 +129,12 @@ loadBar.prototype = {
     this.mesh.scale.x = (this.mesh.maxsize*(loadedImages/Object.keys(trailers).length)-this.mesh.geometry.parameters.width)/this.mesh.geometry.parameters.width;
     this.mesh.position.x = (-this.mesh.maxsize+this.mesh.scale.x*this.mesh.geometry.parameters.width)/2;
   }
+};
+
+
+//behind the cube
+function theVoid() {
+
 };
 
 
@@ -265,7 +272,19 @@ function trailerInfo() {
                                   pixelwidth:     256,
                                   meshlength:   .0143,
                                   meshwidth:   .00286,
-                                  posadjust:  { x: -.0087, y: -.0265, z: -.075 }  }   };
+                                  posadjust:  { x: -.0087, y: -.0265, z: -.075 }  },
+
+                  dividerMesh: {  pixelength:    1280,
+                                  pixelwidth:      16,
+                                  meshlength:    .118,
+                                  meshwidth:  .001475,
+                                  posadjust:  { x: 0, y: -.02415, z: -.075 }  },
+
+                 clearingMesh: {  pixelength:    1280,
+                                  pixelwidth:      16,
+                                  meshlength:    .118,
+                                  meshwidth:  .001475,
+                                  posadjust:  { x: 0, y: -.04075, z: -.075 }  }   };
 
   params = this.params;
   
@@ -326,6 +345,8 @@ trailerInfo.prototype = {
     this.dynamicTextures.writingMeshThree.drawText(trailers[hoverKey].writing.three, 20, 110, 'white', '125px Corbel');
 
     this.dynamicTextures.releaseMesh.drawText(trailers[hoverKey].release, 550, 160, 'white', '150px Corbel');
+
+    this.dynamicTextures.dividerMesh.drawText("___________________________________________________________________________________________________________________________________", 0, 10, 'white', '20px Corbel');
   },
 
   clearAll: function(col) {
@@ -355,7 +376,7 @@ function videoPlaybackControls() {
 
                      timelineMesh:  {  pixelength:      null,
                                        pixelwidth:      null,
-                                       meshlength:      .092, 
+                                       meshlength:      .092,
                                         meshwidth:     .0005,
                                             color:  0x261958,
                                        dynamicmap:     false,     

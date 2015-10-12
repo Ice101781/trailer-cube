@@ -87,26 +87,54 @@ function onMouseHover() {
 
   //logic for trailer info visibility
   if(intersects[0] != undefined && playbackControls.object3D.parent != scene) {
-    for(var key in trailers) {
-      //display the trailer info if a screen is highlighted
-      if(intersects[0].object == trailers[key].videoScreen && hoverKey !== undefined) {
-        //clear a color for debugging
-        info.clearAll();
-
-        //retrieve a global scope key
-        hoverKey = key;
-
-        //render the info
-        info.draw();
+    if(clickCount == 0) {
+      for(var key in trailers) {
+        //display the trailer info if a screen is highlighted
+        if(intersects[0].object == trailers[key].videoScreen && hoverKey !== undefined) {
+          //clear a color for debugging
+          info.clearAll();
+          //retrieve a global scope key
+          hoverKey = key;
+          //render the info
+          info.draw();
+        };
       };
-    };
+  
+      if(intersects[0].object == cube.mesh) {
+        info.clearAll();
+      };
+    }
+    else if(clickCount == 1) {
+      for(var key in trailers) {
+        if(intersects[0].object == trailers[key].videoScreen) {
+          if(key == clickKey) {
+            info.clearAll();
+            hoverKey = key;
+            info.draw();
+          }
+          else if(key != clickKey) {
+            hoverKey = key;
+          };
+        };
+      };
 
-    if(intersects[0].object == cube.mesh) {
-      info.clearAll();
+      if(intersects[0].object == cube.mesh) {
+        hoverKey = null;
+      }
+      else if(intersects[0].object == info.clearingMesh) {
+        info.clearAll();
+        clickKey = null;
+        clickCount = 0;
+      };
     };
   }
   else {
-    info.clearAll();
+    if(clickCount == 0) {
+      info.clearAll();
+    }
+    else if(clickCount == 1) {
+      hoverKey = null;
+    };
   };
 
   //logic for playback controls visibility
@@ -145,29 +173,41 @@ function onMouseClick() {
 
     for(var key in trailers) {
       if(intersects[0].object == trailers[key].videoScreen) {
+        if(key == clickKey) {
+          clickCount++;
+        }
+        else {
+          clickCount = 1;
+        };
+
         //retrieve a global-scope key
         clickKey = key;
 
-        //disable controls and target the screen that's been clicked, then remove the trailer info and position the camera in front of the screen
-        controls.enabled = false;
-        controls.target = trailers[key].videoScreen.position;
-        camera.remove(info.object3D);
-        camera.position.copy(trailers[key].videoScreen.position);
-        camera.position.z += controls.minDistance;
+        if(clickCount == 2) {
+          //disable controls and target the screen that's been clicked, then remove the trailer info and position the camera in front of the screen
+          controls.enabled = false;
+          controls.target = trailers[key].videoScreen.position;
+          camera.remove(info.object3D);
+          camera.position.copy(trailers[key].videoScreen.position);
+          camera.position.z += controls.minDistance;
 
-        //remove the image still and replace it with the video texture, then load and play the video
-        trailers[key].videoScreen.material.map = trailers[key].texture;
-        trailers[key].video.load();
-        //mute for debugging
-        trailers[key].video.muted = true;
-        trailers[key].video.play();
+          //remove the image still and replace it with the video texture, then load and play the video
+          trailers[key].videoScreen.material.map = trailers[key].texture;
+          trailers[key].video.load();
+          //mute for debugging
+          trailers[key].video.muted = true;
+          trailers[key].video.play();
 
-        //position and add the playback controls
-        playbackControls.object3D.position.copy(trailers[key].videoScreen.position);
-        scene.add(playbackControls.object3D);
+          //position and add the playback controls
+          playbackControls.object3D.position.copy(trailers[key].videoScreen.position);
+          scene.add(playbackControls.object3D);
 
-        //swap for play button at video end
-        trailers[key].video.addEventListener('ended', function(event) { if(playbackControls.pauseButton.visible == true) {playbackControls.playButtonSwap()} });
+          //swap for play button at video end
+          trailers[key].video.addEventListener('ended', function(event) { if(playbackControls.pauseButton.visible == true) {playbackControls.playButtonSwap()} });
+
+          //reset the click count
+          clickCount = 0;
+        };
       };
     };
   };
@@ -326,6 +366,6 @@ function animate() {
 init();
 animate();
 
-console.log(cube.mesh);
+//console.log(variable name(s) here);
 };
 
