@@ -77,7 +77,7 @@
       new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture("/public_assets/t_c.png"), overdraw: true} )
     );
 
-      this.videoScreen.visible = false;
+      this.videoScreen.visible = true;
   };
 
   trailer.prototype = {

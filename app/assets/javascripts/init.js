@@ -3,8 +3,8 @@
   1) trailer_cube is optimized for the Google Chrome(c) browser, so some functionality/features may be lost when
      using other browsers.
 
-  3) sometimes when exiting a video the camera will position itself above the cube, shooting downward.
-     this behavior seems to occur randomly. (possibly an orbitcontrols.js issue?)
+  ****3) sometimes when exiting a video the camera will position itself above the cube, shooting downward.
+         this behavior seems to occur randomly. (possibly an orbitcontrols.js issue?)****
 
   4) sometimes when playing a video the following console error will appear: "Uncaught IndexSizeError: Failed to execute
      'end' on 'TimeRanges': The index provided (0) is greater than or equal to the maximum bound (0)". the error doesn't
@@ -26,19 +26,9 @@ window.onload = function() {
 var light            = new pointLights(),
     spinBox          = new rhombicDodecahedron(.75),
     loading          = new loadBar(),
-    cube             = new wireFrameCube(50),
+    cube             = new wireFrameCube(50, 0x111111),
     info             = new trailerInfo(),
-    playbackControls = new videoPlaybackControls(),
-
-    noClickEffect    = [ loading.mesh,
-                         cube.mesh,
-                         info.object3D,
-                         playbackControls.backgroundMesh,
-                         playbackControls.timelineMesh,
-                         playbackControls.bufferedMesh,
-                         playbackControls.progressMesh,
-                         playbackControls.timeElapsedMesh,
-                         playbackControls.timeRemainingMesh ];
+    playbackControls = new videoPlaybackControls();
 
 //append the container to the document, then the renderer to the container
 if( document.body != null ) { 
@@ -50,7 +40,6 @@ if( $("container") != null ) {
   renderer.setClearColor(0x000000);
   append( renderer.domElement, $("container") );
 };
-
 
 /////////////////////////////////////////user functions////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -87,63 +76,82 @@ function onMouseHover() {
 
   //logic for trailer info visibility
   if(intersects[0] != undefined && playbackControls.object3D.parent != scene) {
-    if(clickCount == 0) {
-      for(var key in trailers) {
-        //display the trailer info if a screen is highlighted
-        if(intersects[0].object == trailers[key].videoScreen && hoverKey !== undefined) {
-          //clear a color for debugging
-          info.clearAll();
-          //retrieve a global scope key
-          hoverKey = key;
-          //render the info
-          info.draw();
-        };
-      };
-  
-      if(intersects[0].object == cube.mesh) {
-        info.clearAll();
-      };
-    }
-    else if(clickCount == 1) {
-      for(var key in trailers) {
-        if(intersects[0].object == trailers[key].videoScreen) {
-          if(key == clickKey) {
+    switch(clickCount) {
+      case 0:
+        for(var key in trailers) {
+          if(intersects[0].object == trailers[key].videoScreen && hoverKey !== undefined) {
             info.clearAll();
             hoverKey = key;
             info.draw();
-          }
-          else if(key != clickKey) {
-            hoverKey = key;
           };
         };
-      };
+        if(intersects[0].object == cube.mesh) { info.clearAll() };
+        break;
 
-      if(intersects[0].object == cube.mesh) {
-        hoverKey = null;
-      }
-      else if(intersects[0].object == info.clearingMesh) {
-        info.clearAll();
-        clickKey = null;
-        clickCount = 0;
-      };
+      case 1:
+        switch(intersects[0].object) {
+          case info.titleMesh:
+            info.dynamicTextures.titleMesh.drawText(trailers[clickKey].identifiers.title, 15, 80, 'rgb(75, 50, 175)', '55px RicassoRegular');
+            break;
+
+          case info.directorMesh:
+            info.dynamicTextures.directorMesh.drawText(trailers[clickKey].director, 20, 110, 'rgb(75, 50, 175)', '75px RicassoRegular');
+            break;
+
+          case info.castMeshOne:
+            info.dynamicTextures.castMeshOne.drawText(trailers[clickKey].cast.one, 20, 105, 'rgb(75, 50, 175)', '75px RicassoRegular');
+            break;
+
+          case info.castMeshTwo:
+            info.dynamicTextures.castMeshTwo.drawText(trailers[clickKey].cast.two, 20, 105, 'rgb(75, 50, 175)', '75px RicassoRegular');
+            break;
+
+          case info.castMeshThree:
+            info.dynamicTextures.castMeshThree.drawText(trailers[clickKey].cast.three, 20, 105, 'rgb(75, 50, 175)', '75px RicassoRegular');
+            break;
+
+          case info.castMeshFour:
+            info.dynamicTextures.castMeshFour.drawText(trailers[clickKey].cast.four, 20, 105, 'rgb(75, 50, 175)', '75px RicassoRegular');
+            break;
+
+          case info.castMeshFive:
+            info.dynamicTextures.castMeshFive.drawText(trailers[clickKey].cast.five, 20, 105, 'rgb(75, 50, 175)', '75px RicassoRegular');
+            break;
+
+          case info.clearingMesh:
+            info.clearAll();
+            clickCount = 0;
+            clickKey = null;
+            break;
+
+          default:
+            info.clearAll();
+            info.draw(clickKey);
+        };
+        break;
     };
   }
   else {
-    if(clickCount == 0) {
-      info.clearAll();
-    }
-    else if(clickCount == 1) {
-      hoverKey = null;
+    switch(clickCount) {
+      case 0:
+        info.clearAll();
+        break;
+      
+      default:
+        info.clearAll();
+        info.draw(clickKey);
     };
   };
 
   //logic for playback controls visibility
   if(intersects[0] != undefined && playbackControls.object3D.parent == scene) {
-    if(intersects[0].object.parent == playbackControls.object3D) {
-      playbackControls.object3D.visible = true;
-    }
-    else {
-      playbackControls.object3D.visible = false;
+    switch(intersects[0].object.parent) {
+      case playbackControls.object3D:
+        playbackControls.object3D.visible = true;
+        break;
+
+      default:
+        playbackControls.object3D.visible = false;
     };
   };
 };
@@ -163,12 +171,22 @@ function onMouseClick() {
 
   //logic for objects that produce no effect when clicked
   if(intersects[0] == undefined) { return };
-  for(i=0; i<noClickEffect.length; i++) { if(intersects[0].object == noClickEffect[i]) { return } };
 
   //logic for clicked objects if no video is playing
   if(playbackControls.object3D.parent != scene) {
-    if(intersects[0].object == spinBox.mesh) {
+    switch(intersects[0].object) {
+      case spinBox.mesh:
         spinBox.clicked();
+        break;
+
+      case loading.mesh:
+        break;
+
+      case cube.mesh:
+        break;
+
+      case info.object3D:
+        break;
     };
 
     for(var key in trailers) {
@@ -214,62 +232,81 @@ function onMouseClick() {
 
   //logic for clicked objects if video is playing
   if(playbackControls.object3D.parent == scene) {
-    if(intersects[0].object == trailers[clickKey].videoScreen) {
-      return;
-    }
-    else if(intersects[0].object == playbackControls.restartButton) {      
-      trailers[clickKey].video.currentTime = 0;
-      if(playbackControls.pauseButton.visible == true) {
+    switch(intersects[0].object) {
+      case playbackControls.backgroundMesh:
+        break;
+
+      case playbackControls.timelineMesh:
+        break;
+
+      case playbackControls.bufferedMesh:
+        break;
+
+      case playbackControls.progressMesh:
+        break;
+
+      case playbackControls.timeElapsedMesh:
+        break;
+
+      case playbackControls.timeRemainingMesh:
+        break;
+
+      case trailers[clickKey].videoScreen:
+        break;
+
+      case playbackControls.restartButton:      
+        trailers[clickKey].video.currentTime = 0;
+        if(playbackControls.pauseButton.visible == true) {
+          trailers[clickKey].video.pause();
+          playbackControls.playButtonSwap();
+        };
+        break;
+
+      case playbackControls.rewindButton:
+        trailers[clickKey].video.currentTime -= 5;
+        if(trailers[clickKey].video.currentTime == 0 && playbackControls.pauseButton.visible == true) {
+          trailers[clickKey].video.pause();
+          playbackControls.playButtonSwap();
+        };
+        break;
+
+      case playbackControls.playButton:
+        trailers[clickKey].video.play();
+        playbackControls.pauseButtonSwap();
+        break;
+
+      case playbackControls.pauseButton:
         trailers[clickKey].video.pause();
         playbackControls.playButtonSwap();
-      };
-      return;
-    }
-    else if(intersects[0].object == playbackControls.rewindButton) {
-      trailers[clickKey].video.currentTime -= 5;
-      if(trailers[clickKey].video.currentTime == 0 && playbackControls.pauseButton.visible == true) {
+        break;
+
+      case playbackControls.fastForwardButton:
+        trailers[clickKey].video.currentTime += 5;
+        break;
+
+      case playbackControls.enterFullscreenButton:
+        renderer.domElement.webkitRequestFullscreen();
+        break;
+
+      case playbackControls.exitFullscreenButton:
+        document.webkitExitFullscreen();
+        break;
+
+      case playbackControls.exitButton:
+        if(playbackControls.playButton.visible == true) {playbackControls.pauseButtonSwap()};
+        playbackControls.object3D.visible = false;
+        scene.remove(playbackControls.object3D);
         trailers[clickKey].video.pause();
-        playbackControls.playButtonSwap();
-      };
-      return;
-    }
-    else if(intersects[0].object == playbackControls.playButton) {
-      trailers[clickKey].video.play();
-      playbackControls.pauseButtonSwap();
-      return;
-    }
-    else if(intersects[0].object == playbackControls.pauseButton) {
-      trailers[clickKey].video.pause();
-      playbackControls.playButtonSwap();
-      return;
-    }
-    else if(intersects[0].object == playbackControls.fastForwardButton) {
-      trailers[clickKey].video.currentTime += 5;
-      return;
-    }
-    else if(intersects[0].object == playbackControls.enterFullscreenButton) {
-      renderer.domElement.webkitRequestFullscreen();
-      return;
-    }
-    else if(intersects[0].object == playbackControls.exitFullscreenButton) {
-      document.webkitExitFullscreen();
-      return;
-    }
-    else if(intersects[0].object == playbackControls.exitButton) {
-      if(playbackControls.playButton.visible == true) {playbackControls.pauseButtonSwap()};
-      playbackControls.object3D.visible = false;
-      scene.remove(playbackControls.object3D);
-      trailers[clickKey].video.pause();
-      trailers[clickKey].video.currentTime = 0;
-      trailers[clickKey].context.clearRect(0, 0, trailers[clickKey].canvas.width, trailers[clickKey].canvas.height);
-      trailers[clickKey].videoScreen.material.map = trailers[clickKey].imageStill;
-      controls.enabled = true;
-      camera.position.z += .25;
-      camera.add(info.object3D);
-      //assign hoverKey to be undefined to avoid trailer info flashing on exit
-      hoverKey = undefined;
-      clickKey = null;
-      return;
+        trailers[clickKey].video.currentTime = 0;
+        trailers[clickKey].context.clearRect(0, 0, trailers[clickKey].canvas.width, trailers[clickKey].canvas.height);
+        trailers[clickKey].videoScreen.material.map = trailers[clickKey].imageStill;
+        controls.enabled = true;
+        camera.position.z += .25;
+        camera.add(info.object3D);
+        //assign hoverKey to be undefined so that trailer info won't flash on exit 
+        hoverKey = undefined;
+        clickKey = null;
+        break;
     };
   };
 };
@@ -314,9 +351,7 @@ function imagesLoaded() {
   camera.add(info.object3D);
 
   //toggle object visibility
-  //enable cube mesh visibility for debugging
   cube.mesh.visible = true;
-  for(var key in trailers) {trailers[key].videoScreen.visible = true};
   info.object3D.visible = true;
 
   //reset value of loaded images
