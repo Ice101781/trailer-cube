@@ -35,16 +35,22 @@
   };
 
 
+//IMDB link helper
+  function imdb(stringNum) {
+    return 'http://www.imdb.com/name/nm' + stringNum + '/';
+  };
+
+
 //the trailer object (placed here for compile reasons)
   function trailer(identifiers, genre, plot, director, cast, cinematography, writing, release) {
   
-    identifiers    = typeof identifiers    !== 'undefined' ? identifiers    : { title:'', filename:'' };
+    identifiers    = typeof identifiers    !== 'undefined' ? identifiers    : { title: { name:'', link:'' }, filename:'' };
     genre          = typeof genre          !== 'undefined' ? genre          : '';
     plot           = typeof plot           !== 'undefined' ? plot           : { line1:'', line2:'', line3:'', line4:'', line5:'', line6:'' };
-    director       = typeof director       !== 'undefined' ? director       : '';
-    cast           = typeof cast           !== 'undefined' ? cast           : { one:'', two:'', three:'', four:'', five:'' };
-    cinematography = typeof cinematography !== 'undefined' ? cinematography : { one:'', two:'' };
-    writing        = typeof writing        !== 'undefined' ? writing        : { one:'', two:'', three:'' };
+    director       = typeof director       !== 'undefined' ? director       : { name:'', link:'' };
+    cast           = typeof cast           !== 'undefined' ? cast           : { one: { name:'', link:'' }, two: { name:'', link:'' }, three: { name:'', link:'' }, four: { name:'', link:'' }, five: { name:'', link:'' } };
+    cinematography = typeof cinematography !== 'undefined' ? cinematography : { one: { name:'', link:'' }, two: { name:'', link:'' } };
+    writing        = typeof writing        !== 'undefined' ? writing        : { one: { name:'', link:'' }, two: { name:'', link:'' }, three: { name:'', link:'' } };
     release        = typeof release        !== 'undefined' ? release        : '';
 
     this.identifiers    = identifiers;

@@ -91,31 +91,87 @@ function onMouseHover() {
       case 1:
         switch(intersects[0].object) {
           case info.titleMesh:
-            info.dynamicTextures.titleMesh.drawText(trailers[clickKey].identifiers.title, 15, 80, 'rgb(75, 50, 175)', '55px RicassoRegular');
+            info.clearAll();
+            info.textColors.one = t_cBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.one = 'white';
             break;
 
           case info.directorMesh:
-            info.dynamicTextures.directorMesh.drawText(trailers[clickKey].director, 20, 110, 'rgb(75, 50, 175)', '75px RicassoRegular');
+            info.clearAll();
+            info.textColors.two = t_cBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.two = 'white';
             break;
 
           case info.castMeshOne:
-            info.dynamicTextures.castMeshOne.drawText(trailers[clickKey].cast.one, 20, 105, 'rgb(75, 50, 175)', '75px RicassoRegular');
+            info.clearAll();
+            info.textColors.three = t_cBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.three = 'white';
             break;
 
           case info.castMeshTwo:
-            info.dynamicTextures.castMeshTwo.drawText(trailers[clickKey].cast.two, 20, 105, 'rgb(75, 50, 175)', '75px RicassoRegular');
+            info.clearAll();
+            info.textColors.four = t_cBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.four = 'white';
             break;
 
           case info.castMeshThree:
-            info.dynamicTextures.castMeshThree.drawText(trailers[clickKey].cast.three, 20, 105, 'rgb(75, 50, 175)', '75px RicassoRegular');
+            info.clearAll();
+            info.textColors.five = t_cBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.five = 'white';
             break;
 
           case info.castMeshFour:
-            info.dynamicTextures.castMeshFour.drawText(trailers[clickKey].cast.four, 20, 105, 'rgb(75, 50, 175)', '75px RicassoRegular');
+            info.clearAll();
+            info.textColors.six = t_cBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.six = 'white';
             break;
 
           case info.castMeshFive:
-            info.dynamicTextures.castMeshFive.drawText(trailers[clickKey].cast.five, 20, 105, 'rgb(75, 50, 175)', '75px RicassoRegular');
+            info.clearAll();
+            info.textColors.seven = t_cBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.seven = 'white';
+            break;
+
+          case info.cinematographyMeshOne:
+            info.clearAll();
+            info.textColors.eight = t_cBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.eight = 'white';
+            break;
+
+          case info.cinematographyMeshTwo:
+            info.clearAll();
+            info.textColors.nine = t_cBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.nine = 'white';
+            break;
+
+          case info.writingMeshOne:
+            info.clearAll();
+            info.textColors.ten = t_cBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.ten = 'white';
+            break;
+
+          case info.writingMeshTwo:
+            info.clearAll();
+            info.textColors.eleven = t_cBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.eleven = 'white';
+            break;
+
+          case info.writingMeshThree:
+            info.clearAll();
+            info.textColors.twelve = t_cBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.twelve = 'white';
             break;
 
           case info.clearingMesh:
@@ -379,7 +435,7 @@ function render() {
   if(clickKey != null && trailers[clickKey].video != undefined) {
     trailers[clickKey].videoUpdate();
     
-    if(trailers[clickKey].video.readyState > 0) { 
+    if(trailers[clickKey].video.readyState > 0) {
       playbackControls.trailerTimeUpdate();
       playbackControls.fullscreenButtonCheck();
     };

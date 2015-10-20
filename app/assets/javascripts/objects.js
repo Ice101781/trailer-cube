@@ -15,7 +15,8 @@ var scene     = new THREE.Scene(),
     loadedImages = 0,
     clickCount   = 0,
     hoverKey     = null,
-    clickKey     = null;
+    clickKey     = null,
+    t_cBlue      = 'rgb(75, 50, 175)';
 
 /////////////////////////////////////////objects///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -143,7 +144,7 @@ function theVoid() {
 function wireFrameCube(segments, hex) {
 
   segments = typeof segments !== 'undefined' ? segments : 100;
-  hex      = typeof hex      !== 'undefined' ? hex : 0x4B32AF;
+  hex      = typeof hex      !== 'undefined' ? hex      : 0x4B32AF;
   
   this.mesh = new THREE.Mesh(
     new THREE.BoxGeometry(1, 1, 1, segments, segments, segments), 
@@ -314,11 +315,17 @@ trailerInfo.prototype = {
 
   constructor: trailerInfo,
 
-  draw: function(key) {
+  draw: function(key, textColors) {
 
-    key = typeof key !== 'undefined' ? key : hoverKey;
+    key        = typeof key        !== 'undefined' ? key        : hoverKey;
+    textColors = typeof textColors !== 'undefined' ? textColors : { one:   'white', two:    'white', three:  'white',//continue
+                                                                    four:  'white', five:   'white', six:    'white',//continue 
+                                                                    seven: 'white', eight:  'white', nine:   'white',//continue
+                                                                    ten:   'white', eleven: 'white', twelve: 'white' };
 
-    this.dynamicTextures.titleMesh.drawText(trailers[key].identifiers.title, 15, 80, 'white', '55px RicassoRegular');
+    this.textColors = textColors;
+
+    this.dynamicTextures.titleMesh.drawText(trailers[key].identifiers.title.name, 15, 80, textColors.one, '55px RicassoRegular');
 
     this.dynamicTextures.genreMesh.drawText(trailers[key].genre, 90, 125, 'white', '75px RicassoRegular');
 
@@ -330,23 +337,23 @@ trailerInfo.prototype = {
       .drawText(trailers[key].plot.line6, 5, 200, 'white', '17px RicassoRegular');
 
     this.dynamicTextures.directorTextMesh.drawText("Director:", 20, 215, 'white', '170px RicassoRegular');
-    this.dynamicTextures.directorMesh.drawText(trailers[key].director, 20, 110, 'white', '75px RicassoRegular');
+    this.dynamicTextures.directorMesh.drawText(trailers[key].director.name, 20, 110, textColors.two, '75px RicassoRegular');
 
     this.dynamicTextures.castTextMesh.drawText("Cast:", 540, 215, 'white', '170px RicassoRegular');
-    this.dynamicTextures.castMeshOne.drawText(trailers[key].cast.one, 20, 105, 'white', '75px RicassoRegular');
-    this.dynamicTextures.castMeshTwo.drawText(trailers[key].cast.two, 20, 105, 'white', '75px RicassoRegular');
-    this.dynamicTextures.castMeshThree.drawText(trailers[key].cast.three, 20, 105, 'white', '75px RicassoRegular');
-    this.dynamicTextures.castMeshFour.drawText(trailers[key].cast.four, 20, 105, 'white', '75px RicassoRegular');
-    this.dynamicTextures.castMeshFive.drawText(trailers[key].cast.five, 20, 105, 'white', '75px RicassoRegular');
+    this.dynamicTextures.castMeshOne.drawText(trailers[key].cast.one.name, 20, 105, textColors.three, '75px RicassoRegular');
+    this.dynamicTextures.castMeshTwo.drawText(trailers[key].cast.two.name, 20, 105, textColors.four, '75px RicassoRegular');
+    this.dynamicTextures.castMeshThree.drawText(trailers[key].cast.three.name, 20, 105, textColors.five, '75px RicassoRegular');
+    this.dynamicTextures.castMeshFour.drawText(trailers[key].cast.four.name, 20, 105, textColors.six, '75px RicassoRegular');
+    this.dynamicTextures.castMeshFive.drawText(trailers[key].cast.five.name, 20, 105, textColors.seven, '75px RicassoRegular');
 
     this.dynamicTextures.cinematographyTextMesh.drawText("Cinematography:", 105, 100, 'white', '85px RicassoRegular');
-    this.dynamicTextures.cinematographyMeshOne.drawText(trailers[key].cinematography.one, 20, 105, 'white', '75px RicassoRegular');
-    this.dynamicTextures.cinematographyMeshTwo.drawText(trailers[key].cinematography.two, 20, 105, 'white', '75px RicassoRegular');
+    this.dynamicTextures.cinematographyMeshOne.drawText(trailers[key].cinematography.one.name, 20, 105, textColors.eight, '75px RicassoRegular');
+    this.dynamicTextures.cinematographyMeshTwo.drawText(trailers[key].cinematography.two.name, 20, 105, textColors.nine, '75px RicassoRegular');
 
     this.dynamicTextures.writingTextMesh.drawText("Writing:", 740, 105, 'white', '85px RicassoRegular');
-    this.dynamicTextures.writingMeshOne.drawText(trailers[key].writing.one, 20, 105, 'white', '75px RicassoRegular');
-    this.dynamicTextures.writingMeshTwo.drawText(trailers[key].writing.two, 20, 105, 'white', '75px RicassoRegular');
-    this.dynamicTextures.writingMeshThree.drawText(trailers[key].writing.three, 20, 105, 'white', '75px RicassoRegular');
+    this.dynamicTextures.writingMeshOne.drawText(trailers[key].writing.one.name, 20, 105, textColors.ten, '75px RicassoRegular');
+    this.dynamicTextures.writingMeshTwo.drawText(trailers[key].writing.two.name, 20, 105, textColors.eleven, '75px RicassoRegular');
+    this.dynamicTextures.writingMeshThree.drawText(trailers[key].writing.three.name, 20, 105, textColors.twelve, '75px RicassoRegular');
 
     this.dynamicTextures.releaseMesh.drawText(trailers[key].release, 40, 200, 'white', '125px RicassoRegular');
 

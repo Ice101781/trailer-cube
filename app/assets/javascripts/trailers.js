@@ -4,7 +4,7 @@ var trailers = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
-   furious7: new trailer(  { title: "Furious 7", filename: 'furious7' },
+   furious7: new trailer(  { title: { name: 'Furious 7', link: 'http://www.rottentomatoes.com/m/furious_7/' }, filename: 'furious7' },
 
                            'Action/Adventure',
 
@@ -15,13 +15,13 @@ var trailers = {
                              line5: 'care of Shaw in exchange for their help in rescuing a kidnapped computer hacker who',
                              line6: 'has developed a powerful surveillance program.' },
 
-                           'James Wan',
+                           { name: 'James Wan', link: imdb('1490123') },
 
-                           { one: 'Vin Diesel', two: 'Paul Walker', three: 'Michelle Rodriguez', four: 'Tyrese Gibson', five: 'Jason Statham' },
+                           { one: { name: 'Vin Diesel', link: imdb('0004874') }, two: { name: 'Paul Walker', link: imdb('0908094') }, three: { name: 'Michelle Rodriguez', link: imdb('0735442') }, four: { name: 'Tyrese Gibson', link: imdb('0879085') }, five: { name: 'Jason Statham', link: imdb('0005458') } },
 
-                           { one: 'Marc Spicer', two: 'Stephen F. Windon' },
+                           { one: { name: 'Marc Spicer', link: imdb('0818484') }, two: { name: 'Stephen F. Windon', link: imdb('0934752') } },
 
-                           { one: 'Chris Morgan', two: 'Gary S. Thompson', three: '' },
+                           { one: { name: 'Chris Morgan', link: imdb('0604555') }, two: { name: 'Gary S. Thompson', link: imdb('0860155') }, three: { name: 'writing3', link: imdb('') } },
 
                            '04/03/2015'  ),
 
@@ -29,7 +29,7 @@ var trailers = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  avengers2: new trailer(  { title: "Avengers 2: Age of Ultron", filename: 'avengers2' },
+  avengers2: new trailer(  { title: { name: 'Avengers: Age of Ultron', link: 'http://www.rottentomatoes.com/m/avengers_age_of_ultron/' }, filename: 'avengers2' },
 
                            'Action/Adventure',
 
@@ -40,13 +40,13 @@ var trailers = {
                              line5: 'technological terror hell-bent on human extinction.  Along the way, they  encounter',
                              line6: 'two mysterious and powerful newcomers, Pietro and Wanda Maximoff.' },
 
-                           'Joss Whedon',
+                           { name: 'Joss Whedon', link: imdb('0923736') },
 
-                           { one: 'Robert Downey, Jr.', two: 'Chris Hemsworth', three: 'Mark Ruffalo', four: 'Scarlett Johansson', five: 'Chris Evans' },
+                           { one: { name: 'Robert Downey, Jr.', link: imdb('0000375') }, two: { name: 'Chris Hemsworth', link: imdb('1165110') }, three: { name: 'Mark Ruffalo', link: imdb('0749263') }, four: { name: 'Scarlett Johansson', link: imdb('0424060') }, five: { name: 'Chris Evans', link: imdb('0262635') } },
 
-                           { one: 'Ben Davis', two: '' },
+                           { one: { name: 'Ben Davis', link: imdb('1023204') }, two: { name: 'cinematography2', link: imdb('') } },
 
-                           { one: 'Joss Whedon', two: '', three: '' },
+                           { one: { name: 'Joss Whedon', link: imdb('0923736') }, two: { name: 'writing2', link: imdb('') }, three: { name: 'writing3', link: imdb('') } },
 
                            '05/01/2015'  )//,
 
@@ -56,7 +56,7 @@ var trailers = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      //key: new trailer(  { title: "", filename: '' },
+      //key: new trailer(  { title: { name: '', link: '' }, filename: '' },
 
                          //'',
 
@@ -67,13 +67,13 @@ var trailers = {
                            //line5: '',
                            //line6: '' },
 
-                         //'',
+                         //{ name: '', link: imdb('') },
 
-                         //{ one: '', two: '', three: '', four: '', five: '' },
+                         //{ one: { name: '', link: imdb('') }, two: { name: '', link: imdb('') }, three: { name: '', link: imdb('') }, four: { name: '', link: imdb('') }, five: { name: '', link: imdb('') } },
 
-                         //{ one: '', two: '' },
+                         //{ one: { name: '', link: imdb('') }, two: { name: '', link: imdb('') } },
 
-                         //{ one: '', two: '', three: '' },
+                         //{ one: { name: '', link: imdb('') }, two: { name: '', link: imdb('') }, three: { name: '', link: imdb('') } },
 
                          //''  )//,
 
