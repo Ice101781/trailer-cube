@@ -21,7 +21,7 @@ var trailers = {
 
                            { one: { name: 'Marc Spicer', link: imdb('0818484') }, two: { name: 'Stephen F. Windon', link: imdb('0934752') } },
 
-                           { one: { name: 'Chris Morgan', link: imdb('0604555') }, two: { name: 'Gary S. Thompson', link: imdb('0860155') }, three: { name: 'writing3', link: imdb('') } },
+                           { one: { name: 'Chris Morgan', link: imdb('0604555') }, two: { name: 'Gary S. Thompson', link: imdb('0860155') }, three: { name: '', link: '' } },
 
                            '04/03/2015'  ),
 
@@ -44,9 +44,9 @@ var trailers = {
 
                            { one: { name: 'Robert Downey, Jr.', link: imdb('0000375') }, two: { name: 'Chris Hemsworth', link: imdb('1165110') }, three: { name: 'Mark Ruffalo', link: imdb('0749263') }, four: { name: 'Scarlett Johansson', link: imdb('0424060') }, five: { name: 'Chris Evans', link: imdb('0262635') } },
 
-                           { one: { name: 'Ben Davis', link: imdb('1023204') }, two: { name: 'cinematography2', link: imdb('') } },
+                           { one: { name: 'Ben Davis', link: imdb('1023204') }, two: { name: '', link: '' } },
 
-                           { one: { name: 'Joss Whedon', link: imdb('0923736') }, two: { name: 'writing2', link: imdb('') }, three: { name: 'writing3', link: imdb('') } },
+                           { one: { name: 'Joss Whedon', link: imdb('0923736') }, two: { name: '', link: '' }, three: { name: '', link: '' } },
 
                            '05/01/2015'  )//,
 

@@ -1,24 +1,3 @@
-/////////////////////////////////////////bugs//////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
-  1) trailer_cube is optimized for the Google Chrome(c) browser, so some functionality/features may be lost when
-     using other browsers.
-
-  ****3) sometimes when exiting a video the camera will position itself above the cube, shooting downward.
-         this behavior seems to occur randomly. (possibly an orbitcontrols.js issue?)****
-
-  4) sometimes when playing a video the following console error will appear: "Uncaught IndexSizeError: Failed to execute
-     'end' on 'TimeRanges': The index provided (0) is greater than or equal to the maximum bound (0)". the error doesn't
-     seem to affect playback much.
-
-  5) if a video is paused, it's possible to fast-forward beyond the point of what's been buffered;
-     this causes playback to lag.
-
-  ***FIXED 07/18/15 @ 1:00am*****************************************************************************
-  2) when playing the first video of a given user session, the pause button will need to be pressed twice 
-     in order to function correctly, unless another playback button is initially pressed.
-  *******************************************************************************************************
-*/
-
 window.onload = function() {
 
 /////////////////////////////////////////scene objects, global vars, etc.//////////////////////////////////////////////////////////////////////////
@@ -78,6 +57,10 @@ function onMouseHover() {
   if(intersects[0] != undefined && playbackControls.object3D.parent != scene) {
     switch(clickCount) {
       case 0:
+        if(intersects[0].object == cube.mesh) {
+          info.clearAll();
+        };
+
         for(var key in trailers) {
           if(intersects[0].object == trailers[key].videoScreen && hoverKey !== undefined) {
             info.clearAll();
@@ -85,93 +68,97 @@ function onMouseHover() {
             info.draw();
           };
         };
-        if(intersects[0].object == cube.mesh) { info.clearAll() };
         break;
 
       case 1:
         switch(intersects[0].object) {
+          default:
+            info.clearAll();
+            info.draw(clickKey);
+            break;
+
           case info.titleMesh:
             info.clearAll();
             info.textColors.one = t_cBlue;
             info.draw(clickKey, info.textColors);
-            info.textColors.one = 'white';
+            info.textColors.one = deepSkyBlue;
             break;
 
           case info.directorMesh:
             info.clearAll();
             info.textColors.two = t_cBlue;
             info.draw(clickKey, info.textColors);
-            info.textColors.two = 'white';
+            info.textColors.two = deepSkyBlue;
             break;
 
           case info.castMeshOne:
             info.clearAll();
             info.textColors.three = t_cBlue;
             info.draw(clickKey, info.textColors);
-            info.textColors.three = 'white';
+            info.textColors.three = deepSkyBlue;
             break;
 
           case info.castMeshTwo:
             info.clearAll();
             info.textColors.four = t_cBlue;
             info.draw(clickKey, info.textColors);
-            info.textColors.four = 'white';
+            info.textColors.four = deepSkyBlue;
             break;
 
           case info.castMeshThree:
             info.clearAll();
             info.textColors.five = t_cBlue;
             info.draw(clickKey, info.textColors);
-            info.textColors.five = 'white';
+            info.textColors.five = deepSkyBlue;
             break;
 
           case info.castMeshFour:
             info.clearAll();
             info.textColors.six = t_cBlue;
             info.draw(clickKey, info.textColors);
-            info.textColors.six = 'white';
+            info.textColors.six = deepSkyBlue;
             break;
 
           case info.castMeshFive:
             info.clearAll();
             info.textColors.seven = t_cBlue;
             info.draw(clickKey, info.textColors);
-            info.textColors.seven = 'white';
+            info.textColors.seven = deepSkyBlue;
             break;
 
           case info.cinematographyMeshOne:
             info.clearAll();
             info.textColors.eight = t_cBlue;
             info.draw(clickKey, info.textColors);
-            info.textColors.eight = 'white';
+            info.textColors.eight = deepSkyBlue;
             break;
 
           case info.cinematographyMeshTwo:
             info.clearAll();
             info.textColors.nine = t_cBlue;
             info.draw(clickKey, info.textColors);
-            info.textColors.nine = 'white';
+            info.textColors.nine = deepSkyBlue;
             break;
 
           case info.writingMeshOne:
             info.clearAll();
             info.textColors.ten = t_cBlue;
             info.draw(clickKey, info.textColors);
-            info.textColors.ten = 'white';
+            info.textColors.ten = deepSkyBlue;
             break;
 
           case info.writingMeshTwo:
             info.clearAll();
             info.textColors.eleven = t_cBlue;
             info.draw(clickKey, info.textColors);
-            info.textColors.eleven = 'white';
+            info.textColors.eleven = deepSkyBlue;
             break;
 
           case info.writingMeshThree:
             info.clearAll();
             info.textColors.twelve = t_cBlue;
             info.draw(clickKey, info.textColors);
-            info.textColors.twelve = 'white';
+            info.textColors.twelve = deepSkyBlue;
             break;
 
           case info.clearingMesh:
@@ -179,35 +166,32 @@ function onMouseHover() {
             clickCount = 0;
             clickKey = null;
             break;
-
-          default:
-            info.clearAll();
-            info.draw(clickKey);
         };
         break;
     };
-  }
-  else {
+  } else {
     switch(clickCount) {
-      case 0:
-        info.clearAll();
-        break;
-      
       default:
         info.clearAll();
         info.draw(clickKey);
-    };
-  };
-
-  //logic for playback controls visibility
-  if(intersects[0] != undefined && playbackControls.object3D.parent == scene) {
-    switch(intersects[0].object.parent) {
-      case playbackControls.object3D:
-        playbackControls.object3D.visible = true;
         break;
 
-      default:
-        playbackControls.object3D.visible = false;
+      case 0:
+        info.clearAll();
+     
+        //logic for playback controls visibility
+        if(intersects[0] != undefined && playbackControls.object3D.parent == scene) {
+          switch(intersects[0].object.parent) {
+            default:
+              playbackControls.object3D.visible = false;
+              break;
+
+            case playbackControls.object3D:
+              playbackControls.object3D.visible = true;
+              break;
+          };
+        };
+        break;
     };
   };
 };
@@ -225,32 +209,90 @@ function onMouseClick() {
   var intersects = clickRaycaster.intersectObjects(scene.children, true);
   //console.log(intersects);
 
-  //logic for objects that produce no effect when clicked
-  if(intersects[0] == undefined) { return };
+  if(intersects[0] == undefined) { 
+    return;
+  };
 
   //logic for clicked objects if no video is playing
   if(playbackControls.object3D.parent != scene) {
     switch(intersects[0].object) {
       case spinBox.mesh:
-        spinBox.clicked();
+        window.open(spinBox.link);
         break;
 
-      case loading.mesh:
+      case info.titleMesh:
+        window.open(trailers[clickKey].identifiers.title.link);
         break;
 
-      case cube.mesh:
+      case info.directorMesh:
+        window.open(trailers[clickKey].director.link);
         break;
 
-      case info.object3D:
+      case info.castMeshOne:
+        window.open(trailers[clickKey].cast.one.link);
+        break;
+
+      case info.castMeshTwo:
+        if(trailers[clickKey].cast.two.link != '') {
+          window.open(trailers[clickKey].cast.two.link);
+        };
+        break;
+
+      case info.castMeshThree:
+        if(trailers[clickKey].cast.three.link != '') {
+          window.open(trailers[clickKey].cast.three.link);
+        };
+        break;
+
+      case info.castMeshFour:
+        if(trailers[clickKey].cast.four.link != '') {
+          window.open(trailers[clickKey].cast.four.link);
+        };
+        break;
+
+      case info.castMeshFive:
+        if(trailers[clickKey].cast.five.link != '') {
+          window.open(trailers[clickKey].cast.five.link);
+        };
+        break;
+
+      case info.cinematographyMeshOne:
+        if(trailers[clickKey].cinematography.one.link != '') {
+          window.open(trailers[clickKey].cinematography.one.link);
+        };
+        break;
+
+      case info.cinematographyMeshTwo:
+        if(trailers[clickKey].cinematography.two.link != '') {
+          window.open(trailers[clickKey].cinematography.two.link);
+        };
+        break;
+
+      case info.writingMeshOne:
+        if(trailers[clickKey].writing.one.link != '') {
+          window.open(trailers[clickKey].writing.one.link);
+        };
+        break;
+
+      case info.writingMeshTwo:
+        if(trailers[clickKey].writing.two.link != '') {
+          window.open(trailers[clickKey].writing.two.link);
+        };
+        break;
+
+      case info.writingMeshThree:
+        if(trailers[clickKey].writing.three.link != '') {
+          window.open(trailers[clickKey].writing.three.link);
+        };
         break;
     };
 
     for(var key in trailers) {
       if(intersects[0].object == trailers[key].videoScreen) {
+        //update the click count 
         if(key == clickKey) {
           clickCount++;
-        }
-        else {
+        } else {
           clickCount = 1;
         };
 
@@ -258,19 +300,18 @@ function onMouseClick() {
         clickKey = key;
 
         if(clickCount == 2) {
-          //disable controls and target the screen that's been clicked, then remove the trailer info and position the camera in front of the screen
-          controls.enabled = false;
-          controls.target = trailers[key].videoScreen.position;
+          //remove the trailer info and position the camera in front of the screen
           camera.remove(info.object3D);
           camera.position.copy(trailers[key].videoScreen.position);
-          camera.position.z += controls.minDistance;
+          camera.position.z += .1;
 
           //remove the image still and replace it with the video texture, then load and play the video
           trailers[key].videoScreen.material.map = trailers[key].texture;
           trailers[key].video.load();
+          trailers[key].video.play();
+
           //mute for debugging
           trailers[key].video.muted = true;
-          trailers[key].video.play();
 
           //position and add the playback controls
           playbackControls.object3D.position.copy(trailers[key].videoScreen.position);
@@ -289,25 +330,7 @@ function onMouseClick() {
   //logic for clicked objects if video is playing
   if(playbackControls.object3D.parent == scene) {
     switch(intersects[0].object) {
-      case playbackControls.backgroundMesh:
-        break;
-
-      case playbackControls.timelineMesh:
-        break;
-
-      case playbackControls.bufferedMesh:
-        break;
-
-      case playbackControls.progressMesh:
-        break;
-
-      case playbackControls.timeElapsedMesh:
-        break;
-
-      case playbackControls.timeRemainingMesh:
-        break;
-
-      case trailers[clickKey].videoScreen:
+      default:
         break;
 
       case playbackControls.restartButton:      
@@ -349,15 +372,16 @@ function onMouseClick() {
         break;
 
       case playbackControls.exitButton:
-        if(playbackControls.playButton.visible == true) {playbackControls.pauseButtonSwap()};
+        if(playbackControls.playButton.visible == true) {
+          playbackControls.pauseButtonSwap();
+        };
         playbackControls.object3D.visible = false;
         scene.remove(playbackControls.object3D);
         trailers[clickKey].video.pause();
         trailers[clickKey].video.currentTime = 0;
         trailers[clickKey].context.clearRect(0, 0, trailers[clickKey].canvas.width, trailers[clickKey].canvas.height);
         trailers[clickKey].videoScreen.material.map = trailers[clickKey].imageStill;
-        controls.enabled = true;
-        camera.position.z += .25;
+        camera.position.z += .35;
         camera.add(info.object3D);
         //assign hoverKey to be undefined so that trailer info won't flash on exit 
         hoverKey = undefined;
@@ -369,10 +393,7 @@ function onMouseClick() {
 
 
 function init() {
-  //adjust and disable controls, then move camera to loading screen position
-  controls.minDistance = 30;
-  controls.maxDistance = 90;
-  controls.enabled = false;
+  //move camera to loading screen position
   camera.position.copy(camLoad);
     
   //add objects to the scene;
@@ -399,10 +420,7 @@ function imagesLoaded() {
   //remove the loading screen
   scene.remove(spinBox.mesh, loading.mesh);
 
-  //adjust and enable controls, then move camera to home position and add to it the trailer info
-  controls.minDistance = .1;
-  controls.maxDistance = 2;
-  controls.enabled = true;
+  //move camera to home position and add to it the trailer info
   camera.position.copy(camHome);
   camera.add(info.object3D);
 
@@ -416,16 +434,21 @@ function imagesLoaded() {
 
 
 function render() {
-  //get the number of seconds passed since the last render
-  var delta = clock.getDelta();
-
   //remain at the loading screen until all images have loaded, then go to the home page
-  if(loadedImages < Object.keys(trailers).length) { 
+  if(loading != undefined && loading.mesh.parent == scene) { 
     spinBox.animation();
     loading.progress();
-  }
-  else if(loadedImages == Object.keys(trailers).length) {
+  };
+  if(loadedImages == Object.keys(trailers).length) {
     imagesLoaded();
+  };
+
+  //controls
+  if(loading != undefined && loading.mesh.parent != scene && clickCount != 1//continue
+       && playbackControls != undefined && playbackControls.object3D.parent != scene) {
+
+    camera.position.x += ( mouse.x - 3*camera.position.x) * .003;
+    camera.position.y += ( mouse.y - 2.25*camera.position.y) * .003;
   };
 
   //check for highlighted objects
@@ -441,8 +464,7 @@ function render() {
     };
   };
 
-  //update the controls and the scene
-  controls.update(delta);
+  //update the scene
   renderer.render(scene, camera);
 
   //console.log(variable name(s) here);
@@ -453,6 +475,7 @@ function animate() {
   requestAnimationFrame(animate);
   render();
 };
+
 
 init();
 animate();

@@ -35,6 +35,12 @@
   };
 
 
+//RicassoRegular text helper
+  function ricasso(textSize) {
+    return textSize + 'px RicassoRegular';
+  };
+
+
 //IMDB link helper
   function imdb(stringNum) {
     return 'http://www.imdb.com/name/nm' + stringNum + '/';
