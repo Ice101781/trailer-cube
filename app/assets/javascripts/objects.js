@@ -5,7 +5,7 @@ var scene     = new THREE.Scene(),
     camera    = new THREE.PerspectiveCamera(48.5, (16/9), 0.01, 100),
 
     mouse     = {x: 0, y: 0},
-    camHome   = new THREE.Vector3(  2*Math.sin(0)*Math.cos(0),  2*Math.sin(0)*Math.sin(0),  2*Math.cos(0) ),
+    camHome   = new THREE.Vector3(  1*Math.sin(0)*Math.cos(0),  1*Math.sin(0)*Math.sin(0),  1*Math.cos(0) ),
     camLoad   = new THREE.Vector3( 60*Math.sin(0)*Math.cos(0), 60*Math.sin(0)*Math.sin(0), 60*Math.cos(0) ),
 
     loadedImages = 0,

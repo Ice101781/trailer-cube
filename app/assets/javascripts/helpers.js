@@ -48,7 +48,7 @@
 
 
 //the trailer object (placed here for compile reasons)
-  function trailer(identifiers, genre, plot, director, cast, cinematography, writing, release) {
+  function trailer(identifiers, genre, plot, director, cast, cinematography, writing, release, videoFormatError) {
   
     identifiers    = typeof identifiers    !== 'undefined' ? identifiers    : { title: { name:'', link:'' }, filename:'' };
     genre          = typeof genre          !== 'undefined' ? genre          : '';
@@ -59,16 +59,17 @@
     writing        = typeof writing        !== 'undefined' ? writing        : { one: { name:'', link:'' }, two: { name:'', link:'' }, three: { name:'', link:'' } };
     release        = typeof release        !== 'undefined' ? release        : '';
 
-    this.identifiers    = identifiers;
-    this.genre          = genre;
-    this.plot           = plot;
-    this.director       = director;
-    this.cast           = cast;
-    this.cinematography = cinematography;
-    this.writing        = writing;
-    this.release        = release;
+    this.identifiers      = identifiers;
+    this.genre            = genre;
+    this.plot             = plot;
+    this.director         = director;
+    this.cast             = cast;
+    this.cinematography   = cinematography;
+    this.writing          = writing;
+    this.release          = release;
+    this.videoFormatError = videoFormatError;
 
-    this.filesource = "https://files9.s3-us-west-2.amazonaws.com/hd_trailers/"+this.identifiers.filename+"/"+this.identifiers.filename;
+    this.filesource       = "https://files9.s3-us-west-2.amazonaws.com/hd_trailers/"+this.identifiers.filename+"/"+this.identifiers.filename;
 
     this.video = create("video");
       this.video.crossOrigin = 'anonymous';

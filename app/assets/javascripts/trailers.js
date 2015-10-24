@@ -4,51 +4,55 @@ var trailers = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
-   furious7: new trailer(  { title: { name: 'Furious 7', link: 'http://www.rottentomatoes.com/m/furious_7/' }, filename: 'furious7' },
+  starwars7: new trailer(  { title: { name: 'Star Wars: Episode VII', link: 'http://www.rottentomatoes.com/m/star_wars_episode_vii_the_force_awakens/' }, filename: 'starwars7' },
 
                            'Action/Adventure',
 
-                           { line1: '   After defeating international terrorist Owen Shaw, Dominic Toretto (Vin Diesel),',
-                             line2: 'Brian O\'Conner (Paul  Walker) and the rest of the crew have separated to return to',
-                             line3: 'more normal lives. However, Deckard Shaw (Jason Statham), Owen\'s older brother, is',
-                             line4: 'thirsty for revenge.  A slick government agent offers to help  Dom and company take',
-                             line5: 'care of Shaw in exchange for their help in rescuing a kidnapped computer hacker who',
-                             line6: 'has developed a powerful surveillance program.' },
+                           { line1: '   The Star Wars saga continues after the events of Return of the Jedi.',
+                             line2: '',
+                             line3: '',
+                             line4: '',
+                             line5: '',
+                             line6: '' },
 
-                           { name: 'James Wan', link: imdb('1490123') },
+                           { name: 'J.J. Abrams', link: imdb('0009190') },
 
-                           { one: { name: 'Vin Diesel', link: imdb('0004874') }, two: { name: 'Paul Walker', link: imdb('0908094') }, three: { name: 'Michelle Rodriguez', link: imdb('0735442') }, four: { name: 'Tyrese Gibson', link: imdb('0879085') }, five: { name: 'Jason Statham', link: imdb('0005458') } },
+                           { one: { name: 'Mark Hamill', link: imdb('0000434') }, two: { name: 'Harrison Ford', link: imdb('0000148') }, three: { name: 'Daisy Ridley', link: imdb('5397459') }, four: { name: 'Adam Driver', link: imdb('348845') }, five: { name: 'Oscar Isaac', link: imdb('1209966') } },
 
-                           { one: { name: 'Marc Spicer', link: imdb('0818484') }, two: { name: 'Stephen F. Windon', link: imdb('0934752') } },
+                           { one: { name: 'Daniel Mindel', link: imdb('0591053') }, two: { name: '', link: '' } },
 
-                           { one: { name: 'Chris Morgan', link: imdb('0604555') }, two: { name: 'Gary S. Thompson', link: imdb('0860155') }, three: { name: '', link: '' } },
+                           { one: { name: 'Lawrence Kasdan', link: imdb('0001410') }, two: { name: 'J.J. Abrams', link: imdb('0009190') }, three: { name: 'Michael Arndt', link: imdb('1578335') } },
 
-                           '04/03/2015'  ),
+                           '12/18/2015',
+
+                           true  ),
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  avengers2: new trailer(  { title: { name: 'Avengers: Age of Ultron', link: 'http://www.rottentomatoes.com/m/avengers_age_of_ultron/' }, filename: 'avengers2' },
+  batmanvsuperman: new trailer(  { title: { name: 'Batman v Superman', link: 'http://www.rottentomatoes.com/m/batman_v_superman_dawn_of_justice/' }, filename: 'batmanvsuperman' },
 
-                           'Action/Adventure',
+                                 'Action/Adventure',
 
-                           { line1: '   When Tony Stark (Robert Downey Jr.) jump-starts a dormant peacekeeping  program,',
-                             line2: 'things go terribly awry, forcing him, Thor (Chris Hemsworth),  the Incredible  Hulk',
-                             line3: '(Mark  Ruffalo) and the rest of the Avengers to reassemble.  As the  fate of  Earth',
-                             line4: 'hangs in the balance, the team is put to the ultimate test as they battle Ultron, a',
-                             line5: 'technological terror hell-bent on human extinction.  Along the way, they  encounter',
-                             line6: 'two mysterious and powerful newcomers, Pietro and Wanda Maximoff.' },
+                                 { line1: '   Following the detruction of Metropolis, Batman (Ben Affleck) embarks on a ',
+                                   line2: 'personal vendetta against Superman (Henry Cavill).',
+                                   line3: '',
+                                   line4: '',
+                                   line5: '',
+                                   line6: '' },
 
-                           { name: 'Joss Whedon', link: imdb('0923736') },
+                                 { name: 'Zack Snyder', link: imdb('0811583') },
 
-                           { one: { name: 'Robert Downey, Jr.', link: imdb('0000375') }, two: { name: 'Chris Hemsworth', link: imdb('1165110') }, three: { name: 'Mark Ruffalo', link: imdb('0749263') }, four: { name: 'Scarlett Johansson', link: imdb('0424060') }, five: { name: 'Chris Evans', link: imdb('0262635') } },
+                                 { one: { name: 'Henry Cavill', link: imdb('0147147') }, two: { name: 'Ben Affleck', link: imdb('0000255') }, three: { name: 'Amy Adams', link: imdb('0010736') }, four: { name: 'Jeremy Irons', link: imdb('0000460') }, five: { name: 'Jesse Eisenberg', link: imdb('0251986') } },
 
-                           { one: { name: 'Ben Davis', link: imdb('1023204') }, two: { name: '', link: '' } },
+                                 { one: { name: 'Larry Fong', link: imdb('0284583') }, two: { name: '', link: '' } },
 
-                           { one: { name: 'Joss Whedon', link: imdb('0923736') }, two: { name: '', link: '' }, three: { name: '', link: '' } },
+                                 { one: { name: 'Chris Terrio', link: imdb('0006516') }, two: { name: 'David S. Goyer', link: imdb('0333060') }, three: { name: '', link: '' } },
 
-                           '05/01/2015'  )//,
+                                 '03/25/2016',
+
+                                 true  )//,
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -75,7 +79,9 @@ var trailers = {
 
                          //{ one: { name: '', link: imdb('') }, two: { name: '', link: imdb('') }, three: { name: '', link: imdb('') } },
 
-                         //''  )//,
+                         //'',
+
+                         //boolean  )//,
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 };

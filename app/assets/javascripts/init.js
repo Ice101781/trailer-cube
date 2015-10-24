@@ -57,15 +57,17 @@ function onMouseHover() {
   if(intersects[0] != undefined && playbackControls.object3D.parent != scene) {
     switch(clickCount) {
       case 0:
-        if(intersects[0].object == cube.mesh) {
-          info.clearAll();
-        };
-
-        for(var key in trailers) {
-          if(intersects[0].object == trailers[key].videoScreen && hoverKey !== undefined) {
-            info.clearAll();
-            hoverKey = key;
-            info.draw();
+        if(intersects[0].object.parent == cube.mesh) {
+          for(var key in trailers) {
+            if(intersects[0].object == trailers[key].videoScreen) {
+              if(hoverKey !== undefined) {
+                info.clearAll();
+                hoverKey = key;
+                info.draw();
+              } else {
+                hoverKey = null;
+              };
+            };
           };
         };
         break;
@@ -178,7 +180,7 @@ function onMouseHover() {
 
       case 0:
         info.clearAll();
-     
+
         //logic for playback controls visibility
         if(intersects[0] != undefined && playbackControls.object3D.parent == scene) {
           switch(intersects[0].object.parent) {
@@ -215,115 +217,122 @@ function onMouseClick() {
 
   //logic for clicked objects if no video is playing
   if(playbackControls.object3D.parent != scene) {
-    switch(intersects[0].object) {
-      case spinBox.mesh:
-        window.open(spinBox.link);
-        break;
+    if(intersects[0] != undefined && intersects[0].object != cube.mesh) {
+      for(var key in trailers) {
+        if(intersects[0].object == trailers[key].videoScreen) {
+          //update the click count 
+          if(key == clickKey) {
+            clickCount++;
+          } else {
+            clickCount = 1;
+          };
 
-      case info.titleMesh:
-        window.open(trailers[clickKey].identifiers.title.link);
-        break;
-
-      case info.directorMesh:
-        window.open(trailers[clickKey].director.link);
-        break;
-
-      case info.castMeshOne:
-        window.open(trailers[clickKey].cast.one.link);
-        break;
-
-      case info.castMeshTwo:
-        if(trailers[clickKey].cast.two.link != '') {
-          window.open(trailers[clickKey].cast.two.link);
-        };
-        break;
-
-      case info.castMeshThree:
-        if(trailers[clickKey].cast.three.link != '') {
-          window.open(trailers[clickKey].cast.three.link);
-        };
-        break;
-
-      case info.castMeshFour:
-        if(trailers[clickKey].cast.four.link != '') {
-          window.open(trailers[clickKey].cast.four.link);
-        };
-        break;
-
-      case info.castMeshFive:
-        if(trailers[clickKey].cast.five.link != '') {
-          window.open(trailers[clickKey].cast.five.link);
-        };
-        break;
-
-      case info.cinematographyMeshOne:
-        if(trailers[clickKey].cinematography.one.link != '') {
-          window.open(trailers[clickKey].cinematography.one.link);
-        };
-        break;
-
-      case info.cinematographyMeshTwo:
-        if(trailers[clickKey].cinematography.two.link != '') {
-          window.open(trailers[clickKey].cinematography.two.link);
-        };
-        break;
-
-      case info.writingMeshOne:
-        if(trailers[clickKey].writing.one.link != '') {
-          window.open(trailers[clickKey].writing.one.link);
-        };
-        break;
-
-      case info.writingMeshTwo:
-        if(trailers[clickKey].writing.two.link != '') {
-          window.open(trailers[clickKey].writing.two.link);
-        };
-        break;
-
-      case info.writingMeshThree:
-        if(trailers[clickKey].writing.three.link != '') {
-          window.open(trailers[clickKey].writing.three.link);
-        };
-        break;
-    };
-
-    for(var key in trailers) {
-      if(intersects[0].object == trailers[key].videoScreen) {
-        //update the click count 
-        if(key == clickKey) {
-          clickCount++;
-        } else {
-          clickCount = 1;
-        };
-
-        //retrieve a global-scope key
-        clickKey = key;
-
-        if(clickCount == 2) {
-          //remove the trailer info and position the camera in front of the screen
-          camera.remove(info.object3D);
-          camera.position.copy(trailers[key].videoScreen.position);
-          camera.position.z += .1;
-
-          //remove the image still and replace it with the video texture, then load and play the video
-          trailers[key].videoScreen.material.map = trailers[key].texture;
-          trailers[key].video.load();
-          trailers[key].video.play();
-
-          //mute for debugging
-          trailers[key].video.muted = true;
-
-          //position and add the playback controls
-          playbackControls.object3D.position.copy(trailers[key].videoScreen.position);
-          scene.add(playbackControls.object3D);
-
-          //swap for play button at video end
-          trailers[key].video.addEventListener('ended', function(event) { if(playbackControls.pauseButton.visible == true) {playbackControls.playButtonSwap()} });
-
-          //reset the click count
-          clickCount = 0;
+          //retrieve a global-scope key
+          clickKey = key;
         };
       };
+
+      switch(intersects[0].object) {
+        case spinBox.mesh:
+          window.open(spinBox.link);
+          break;
+
+        case info.titleMesh:
+          window.open(trailers[clickKey].identifiers.title.link);
+          break;
+
+        case info.directorMesh:
+          window.open(trailers[clickKey].director.link);
+          break;
+
+        case info.castMeshOne:
+          window.open(trailers[clickKey].cast.one.link);
+          break;
+
+        case info.castMeshTwo:
+          if(trailers[clickKey].cast.two.link != '') {
+            window.open(trailers[clickKey].cast.two.link);
+          };
+          break;
+
+        case info.castMeshThree:
+          if(trailers[clickKey].cast.three.link != '') {
+            window.open(trailers[clickKey].cast.three.link);
+          };
+          break;
+
+        case info.castMeshFour:
+          if(trailers[clickKey].cast.four.link != '') {
+            window.open(trailers[clickKey].cast.four.link);
+          };
+          break;
+
+        case info.castMeshFive:
+          if(trailers[clickKey].cast.five.link != '') {
+            window.open(trailers[clickKey].cast.five.link);
+          };
+          break;
+
+        case info.cinematographyMeshOne:
+          if(trailers[clickKey].cinematography.one.link != '') {
+            window.open(trailers[clickKey].cinematography.one.link);
+          };
+          break;
+
+        case info.cinematographyMeshTwo:
+          if(trailers[clickKey].cinematography.two.link != '') {
+            window.open(trailers[clickKey].cinematography.two.link);
+          };
+          break;
+
+        case info.writingMeshOne:
+          if(trailers[clickKey].writing.one.link != '') {
+            window.open(trailers[clickKey].writing.one.link);
+          };
+          break;
+
+        case info.writingMeshTwo:
+          if(trailers[clickKey].writing.two.link != '') {
+            window.open(trailers[clickKey].writing.two.link);
+          };
+          break;
+
+        case info.writingMeshThree:
+          if(trailers[clickKey].writing.three.link != '') {
+            window.open(trailers[clickKey].writing.three.link);
+          };
+          break;
+      };
+    };
+
+    if(clickCount == 2) {
+      //remove the trailer info and position the camera in front of the video
+      info.clearAll();
+      camera.remove(info.object3D);
+      camera.position.copy(trailers[clickKey].videoScreen.position);
+      camera.position.z += .1;
+      if(trailers[clickKey].videoFormatError == true) {
+        camera.position.y += .011;
+        for(var name in playbackControls.params) { playbackControls[name].position.y += .01 };
+      };
+
+      //remove the image still and replace it with the video texture, then load and play the video
+      trailers[clickKey].videoScreen.material.map = trailers[clickKey].texture;
+      trailers[clickKey].video.load();
+      trailers[clickKey].video.play();
+
+      //mute for debugging
+      trailers[clickKey].video.muted = true;
+
+      //position and add the playback controls
+      playbackControls.object3D.position.copy(trailers[clickKey].videoScreen.position);
+      scene.add(playbackControls.object3D);
+
+      //swap for play button at video end
+      trailers[clickKey].video.addEventListener('ended', function(event) { if(playbackControls.pauseButton.visible == true) {playbackControls.playButtonSwap()} });
+
+      //reset the click count
+      clickCount = 0;
     };
   };
 
@@ -372,10 +381,12 @@ function onMouseClick() {
         break;
 
       case playbackControls.exitButton:
-        if(playbackControls.playButton.visible == true) {
-          playbackControls.pauseButtonSwap();
-        };
         playbackControls.object3D.visible = false;
+        if(playbackControls.playButton.visible == true) { playbackControls.pauseButtonSwap() };
+        if(trailers[clickKey].videoFormatError == true) {
+          camera.position.y -= .011;
+          for(var name in playbackControls.params) { playbackControls[name].position.y -= .01 };
+        };
         scene.remove(playbackControls.object3D);
         trailers[clickKey].video.pause();
         trailers[clickKey].video.currentTime = 0;
@@ -444,11 +455,18 @@ function render() {
   };
 
   //controls
-  if(loading != undefined && loading.mesh.parent != scene && clickCount != 1//continue
+  if(loading != undefined && loading.mesh.parent != scene//continue
        && playbackControls != undefined && playbackControls.object3D.parent != scene) {
+    
+    switch(clickCount) {
+      default:
+        camera.position.x += ( mouse.x - 3*camera.position.x) * .003;
+        camera.position.y += ( mouse.y - 2.25*camera.position.y) * .003;
 
-    camera.position.x += ( mouse.x - 3*camera.position.x) * .003;
-    camera.position.y += ( mouse.y - 2.25*camera.position.y) * .003;
+      case 1:
+        camera.position.x += ( mouse.x - 3*camera.position.x) * .00006;
+        camera.position.y += ( mouse.y - 2.25*camera.position.y) * .00006;
+    };
   };
 
   //check for highlighted objects
