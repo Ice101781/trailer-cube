@@ -1,6 +1,5 @@
 window.onload = function() {
-
-/////////////////////////////////////////scene objects, global vars, etc.//////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////scene objects, etc.///////////////////////////////////////////////////////////////////////////////////////
 
 var light            = new pointLights(),
     spinBox          = new rhombicDodecahedron(.75),
@@ -66,7 +65,7 @@ function onMouseHover() {
             };
           };
         } else {
-          hoverKey = null;
+          info.clearAll();
         };
         break;
 
@@ -178,7 +177,6 @@ function onMouseHover() {
 
       case 0:
         info.clearAll();
-
         //logic for playback controls visibility
         if(intersects[0] != undefined && playbackControls.object3D.parent == scene) {
           switch(intersects[0].object.parent) {
@@ -209,7 +207,7 @@ function onMouseClick() {
   var intersects = clickRaycaster.intersectObjects(scene.children, true);
   //console.log(intersects);
 
-  if(intersects[0] == undefined) { return };
+  if(intersects[0] == undefined || intersects[0].object == cube.mesh) { return };
 
   if(spinBox.mesh.parent == scene && intersects[0].object == spinBox.mesh) {
     window.open(spinBox.link);
@@ -307,13 +305,16 @@ function onMouseClick() {
       camera.remove(info.object3D);
       camera.position.copy(trailers[clickKey].videoScreen.position);
       camera.position.z += .1;
+
       //handle any trailer format issues
       if(trailers[clickKey].videoHeightError == true) {
         camera.position.y += .011;
         for(var name in playbackControls.params) { playbackControls[name].position.y += .01 };
       };
+
       if(trailers[clickKey].aspectRatio == '1.85:1') {
         camera.position.z += .01;
+        camera.position.y -= .0015;
         for(var name in playbackControls.params) { playbackControls[name].position.y -= .0075 };
       };
 
@@ -384,15 +385,18 @@ function onMouseClick() {
       case playbackControls.exitButton:
         if(playbackControls.playButton.visible == true) { playbackControls.pauseButtonSwap() };
         playbackControls.object3D.visible = false;
-        //handle any trailer format issues
+    
+        //reserve any trailer format issues
         if(trailers[clickKey].videoHeightError == true) {
           camera.position.y -= .011;
           for(var name in playbackControls.params) { playbackControls[name].position.y -= .01 };
         };
         if(trailers[clickKey].aspectRatio == '1.85:1') {
           camera.position.z -= .01;
+          camera.position.y += .0015;
           for(var name in playbackControls.params) { playbackControls[name].position.y += .0075 };
         };
+    
         scene.remove(playbackControls.object3D);
         trailers[clickKey].video.pause();
         trailers[clickKey].video.currentTime = 0;
@@ -400,6 +404,7 @@ function onMouseClick() {
         trailers[clickKey].videoScreen.material.map = trailers[clickKey].imageStill;
         camera.position.z += .35;
         camera.add(info.object3D);
+    
         //assign hoverKey to be undefined so that trailer info won't flash on exit 
         hoverKey = undefined;
         clickKey = null;
@@ -438,7 +443,7 @@ function imagesLoaded() {
   scene.remove(spinBox.mesh, loading.mesh);
 
   //move camera to the home position and add to it the trailer info
-  camera.position.set( trailers[Object.keys(trailers)[0]].location.x, trailers[Object.keys(trailers)[0]].location.y, trailers[Object.keys(trailers)[0]].location.z+0.5 );
+  camera.position.set( trailers[Object.keys(trailers)[0]].location.x+0.3, trailers[Object.keys(trailers)[0]].location.y-0.15, trailers[Object.keys(trailers)[0]].location.z+0.5 );
   camera.add(info.object3D);
 
   //toggle object visibility
@@ -461,7 +466,7 @@ function render() {
   };
 
   //controls
-  if(loading != undefined && loading.mesh.parent != scene//continue
+  /*if(loading != undefined && loading.mesh.parent != scene//continue
        && playbackControls != undefined && playbackControls.object3D.parent != scene) {
     
     switch(clickCount) {
@@ -473,7 +478,7 @@ function render() {
         camera.position.x += ( mouse.x - 3*camera.position.x) * .00003;
         camera.position.y += ( mouse.y - 2.25*camera.position.y) * .00003;
     };
-  };
+  };*/
 
   //check for highlighted objects
   onMouseHover();

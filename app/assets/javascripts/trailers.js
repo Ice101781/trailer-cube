@@ -62,6 +62,35 @@ var trailers = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  race: new trailer(  { title: { name: 'Race', link: 'http://www.rottentomatoes.com/m/race_2016/' }, filename: 'race' },
+
+                      'Drama',
+
+                      { line1: '   Race is based on the incredible true story of Jesse Owens, the legendary',
+                        line2: 'athletic superstar whose quest to become the greatest track and field athlete',
+                        line3: 'in history thrusts him onto the world stage of the 1936 Olympics, where he',
+                        line4: 'faces off against Adolf Hitler\'s vision of Aryan supremacy.',
+                        line5: '',
+                        line6: '' },
+
+                      { name: 'Stephen Hopkins', link: imdb('0394280') },
+
+                      { one: { name: 'Jason Sudeikis', link: imdb('0837177') }, two: { name: 'Stephan James', link: imdb('4150847') }, three: { name: 'Carice Van Houten', link: imdb('0396924') }, four: { name: 'Jeremy Irons', link: imdb('0000460') }, five: { name: 'Amanda Crew', link: imdb('1468739') } },
+
+                      { one: { name: 'Peter Levy', link: imdb('0002614') }, two: { name: '', link: '' } },
+
+                      { one: { name: 'Joe Shrapnel', link: imdb('1100123') }, two: { name: 'Anna Waterhouse', link: imdb('3143608') }, three: { name: '', link: '' } },
+
+                      '02/19/2016',
+
+                      true,
+
+                      '2.35:1'  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   batmanvsuperman: new trailer(  { title: { name: 'Batman v Superman', link: 'http://www.rottentomatoes.com/m/batman_v_superman_dawn_of_justice/' }, filename: 'batmanvsuperman' },
 
                                  'Action/Adventure',
@@ -95,7 +124,7 @@ var trailers = {
 
       //key: new trailer(  { title: { name: '', link: '' }, filename: '' },
 
-                         //'',
+                         //'genre',
 
                          //{ line1: '',
                            //line2: '',
@@ -112,11 +141,11 @@ var trailers = {
 
                          //{ one: { name: '', link: imdb('') }, two: { name: '', link: imdb('') }, three: { name: '', link: imdb('') } },
 
-                         //'',
+                         //'release date',
 
                          //boolean,
 
-                         //''  )//,
+                         //'aspect ratio'  )//,
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 };
