@@ -15,7 +15,7 @@ if( document.body != null ) {
 };
 
 if( $("container") != null ) {
-  renderer.setSize(window.innerWidth, window.innerHeight); 
+  renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setClearColor(0x000000);
   append( renderer.domElement, $("container") );
 };
@@ -59,16 +59,14 @@ function onMouseHover() {
       case 0:
         if(intersects[0].object.parent == cube.mesh) {
           for(var key in trailers) {
-            if(intersects[0].object == trailers[key].videoScreen) {
-              if(hoverKey !== undefined) {
-                info.clearAll();
-                hoverKey = key;
-                info.draw();
-              } else {
-                hoverKey = null;
-              };
+            if(intersects[0].object == trailers[key].videoScreen && hoverKey !== undefined) {
+              info.clearAll();
+              hoverKey = key;
+              info.draw();
             };
           };
+        } else {
+          hoverKey = null;
         };
         break;
 
@@ -81,86 +79,86 @@ function onMouseHover() {
 
           case info.titleMesh:
             info.clearAll();
-            info.textColors.one = t_cBlue;
-            info.draw(clickKey, info.textColors);
             info.textColors.one = deepSkyBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.one = t_cBlue;
             break;
 
           case info.directorMesh:
             info.clearAll();
-            info.textColors.two = t_cBlue;
-            info.draw(clickKey, info.textColors);
             info.textColors.two = deepSkyBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.two = t_cBlue;
             break;
 
           case info.castMeshOne:
             info.clearAll();
-            info.textColors.three = t_cBlue;
-            info.draw(clickKey, info.textColors);
             info.textColors.three = deepSkyBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.three = t_cBlue;
             break;
 
           case info.castMeshTwo:
             info.clearAll();
-            info.textColors.four = t_cBlue;
-            info.draw(clickKey, info.textColors);
             info.textColors.four = deepSkyBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.four = t_cBlue;
             break;
 
           case info.castMeshThree:
             info.clearAll();
-            info.textColors.five = t_cBlue;
-            info.draw(clickKey, info.textColors);
             info.textColors.five = deepSkyBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.five = t_cBlue;
             break;
 
           case info.castMeshFour:
             info.clearAll();
-            info.textColors.six = t_cBlue;
-            info.draw(clickKey, info.textColors);
             info.textColors.six = deepSkyBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.six = t_cBlue;
             break;
 
           case info.castMeshFive:
             info.clearAll();
-            info.textColors.seven = t_cBlue;
-            info.draw(clickKey, info.textColors);
             info.textColors.seven = deepSkyBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.seven = t_cBlue;
             break;
 
           case info.cinematographyMeshOne:
             info.clearAll();
-            info.textColors.eight = t_cBlue;
-            info.draw(clickKey, info.textColors);
             info.textColors.eight = deepSkyBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.eight = t_cBlue;
             break;
 
           case info.cinematographyMeshTwo:
             info.clearAll();
-            info.textColors.nine = t_cBlue;
-            info.draw(clickKey, info.textColors);
             info.textColors.nine = deepSkyBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.nine = t_cBlue;
             break;
 
           case info.writingMeshOne:
             info.clearAll();
-            info.textColors.ten = t_cBlue;
-            info.draw(clickKey, info.textColors);
             info.textColors.ten = deepSkyBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.ten = t_cBlue;
             break;
 
           case info.writingMeshTwo:
             info.clearAll();
-            info.textColors.eleven = t_cBlue;
-            info.draw(clickKey, info.textColors);
             info.textColors.eleven = deepSkyBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.eleven = t_cBlue;
             break;
 
           case info.writingMeshThree:
             info.clearAll();
-            info.textColors.twelve = t_cBlue;
-            info.draw(clickKey, info.textColors);
             info.textColors.twelve = deepSkyBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.twelve = t_cBlue;
             break;
 
           case info.clearingMesh:
@@ -211,13 +209,15 @@ function onMouseClick() {
   var intersects = clickRaycaster.intersectObjects(scene.children, true);
   //console.log(intersects);
 
-  if(intersects[0] == undefined) { 
-    return;
+  if(intersects[0] == undefined) { return };
+
+  if(spinBox.mesh.parent == scene && intersects[0].object == spinBox.mesh) {
+    window.open(spinBox.link);
   };
 
   //logic for clicked objects if no video is playing
-  if(playbackControls.object3D.parent != scene) {
-    if(intersects[0] != undefined && intersects[0].object != cube.mesh) {
+  if(spinBox.mesh.parent != scene && playbackControls.object3D.parent != scene) {
+    if(intersects[0].object.parent == cube.mesh) {
       for(var key in trailers) {
         if(intersects[0].object == trailers[key].videoScreen) {
           //update the click count 
@@ -231,78 +231,74 @@ function onMouseClick() {
           clickKey = key;
         };
       };
+    } else if(intersects[0].object.parent = info.object3D) {
+        switch(intersects[0].object) {
+          case info.titleMesh:
+            window.open(trailers[clickKey].identifiers.title.link);
+            break;
 
-      switch(intersects[0].object) {
-        case spinBox.mesh:
-          window.open(spinBox.link);
-          break;
+          case info.directorMesh:
+            window.open(trailers[clickKey].director.link);
+            break;
 
-        case info.titleMesh:
-          window.open(trailers[clickKey].identifiers.title.link);
-          break;
+          case info.castMeshOne:
+            window.open(trailers[clickKey].cast.one.link);
+            break;
 
-        case info.directorMesh:
-          window.open(trailers[clickKey].director.link);
-          break;
+          case info.castMeshTwo:
+            if(trailers[clickKey].cast.two.link != '') {
+              window.open(trailers[clickKey].cast.two.link);
+            };
+            break;
 
-        case info.castMeshOne:
-          window.open(trailers[clickKey].cast.one.link);
-          break;
+          case info.castMeshThree:
+            if(trailers[clickKey].cast.three.link != '') {
+              window.open(trailers[clickKey].cast.three.link);
+            };
+            break;
 
-        case info.castMeshTwo:
-          if(trailers[clickKey].cast.two.link != '') {
-            window.open(trailers[clickKey].cast.two.link);
-          };
-          break;
+          case info.castMeshFour:
+            if(trailers[clickKey].cast.four.link != '') {
+              window.open(trailers[clickKey].cast.four.link);
+            };
+            break;
 
-        case info.castMeshThree:
-          if(trailers[clickKey].cast.three.link != '') {
-            window.open(trailers[clickKey].cast.three.link);
-          };
-          break;
+          case info.castMeshFive:
+            if(trailers[clickKey].cast.five.link != '') {
+              window.open(trailers[clickKey].cast.five.link);
+            };
+            break;
 
-        case info.castMeshFour:
-          if(trailers[clickKey].cast.four.link != '') {
-            window.open(trailers[clickKey].cast.four.link);
-          };
-          break;
+          case info.cinematographyMeshOne:
+            if(trailers[clickKey].cinematography.one.link != '') {
+              window.open(trailers[clickKey].cinematography.one.link);
+            };
+            break;
 
-        case info.castMeshFive:
-          if(trailers[clickKey].cast.five.link != '') {
-            window.open(trailers[clickKey].cast.five.link);
-          };
-          break;
+          case info.cinematographyMeshTwo:
+            if(trailers[clickKey].cinematography.two.link != '') {
+              window.open(trailers[clickKey].cinematography.two.link);
+            };
+            break;
 
-        case info.cinematographyMeshOne:
-          if(trailers[clickKey].cinematography.one.link != '') {
-            window.open(trailers[clickKey].cinematography.one.link);
-          };
-          break;
+          case info.writingMeshOne:
+            if(trailers[clickKey].writing.one.link != '') {
+              window.open(trailers[clickKey].writing.one.link);
+            };
+            break;
 
-        case info.cinematographyMeshTwo:
-          if(trailers[clickKey].cinematography.two.link != '') {
-            window.open(trailers[clickKey].cinematography.two.link);
-          };
-          break;
+          case info.writingMeshTwo:
+            if(trailers[clickKey].writing.two.link != '') {
+              window.open(trailers[clickKey].writing.two.link);
+            };
+            break;
 
-        case info.writingMeshOne:
-          if(trailers[clickKey].writing.one.link != '') {
-            window.open(trailers[clickKey].writing.one.link);
-          };
-          break;
-
-        case info.writingMeshTwo:
-          if(trailers[clickKey].writing.two.link != '') {
-            window.open(trailers[clickKey].writing.two.link);
-          };
-          break;
-
-        case info.writingMeshThree:
-          if(trailers[clickKey].writing.three.link != '') {
-            window.open(trailers[clickKey].writing.three.link);
-          };
-          break;
-      };
+          case info.writingMeshThree:
+            if(trailers[clickKey].writing.three.link != '') {
+              window.open(trailers[clickKey].writing.three.link);
+            };
+            break;
+        };
     };
 
     if(clickCount == 2) {
@@ -311,9 +307,14 @@ function onMouseClick() {
       camera.remove(info.object3D);
       camera.position.copy(trailers[clickKey].videoScreen.position);
       camera.position.z += .1;
-      if(trailers[clickKey].videoFormatError == true) {
+      //handle any trailer format issues
+      if(trailers[clickKey].videoHeightError == true) {
         camera.position.y += .011;
         for(var name in playbackControls.params) { playbackControls[name].position.y += .01 };
+      };
+      if(trailers[clickKey].aspectRatio == '1.85:1') {
+        camera.position.z += .01;
+        for(var name in playbackControls.params) { playbackControls[name].position.y -= .0075 };
       };
 
       //remove the image still and replace it with the video texture, then load and play the video
@@ -381,11 +382,16 @@ function onMouseClick() {
         break;
 
       case playbackControls.exitButton:
-        playbackControls.object3D.visible = false;
         if(playbackControls.playButton.visible == true) { playbackControls.pauseButtonSwap() };
-        if(trailers[clickKey].videoFormatError == true) {
+        playbackControls.object3D.visible = false;
+        //handle any trailer format issues
+        if(trailers[clickKey].videoHeightError == true) {
           camera.position.y -= .011;
           for(var name in playbackControls.params) { playbackControls[name].position.y -= .01 };
+        };
+        if(trailers[clickKey].aspectRatio == '1.85:1') {
+          camera.position.z -= .01;
+          for(var name in playbackControls.params) { playbackControls[name].position.y += .0075 };
         };
         scene.remove(playbackControls.object3D);
         trailers[clickKey].video.pause();
@@ -404,10 +410,10 @@ function onMouseClick() {
 
 
 function init() {
-  //move camera to loading screen position
-  camera.position.copy(camLoad);
-    
-  //add objects to the scene;
+  //set camera position at load
+  camera.position.set( 60*Math.sin(0)*Math.cos(0), 60*Math.sin(0)*Math.sin(0), 60*Math.cos(0) );
+
+  //add objects to the scene
   scene.add(camera, light.object3D, spinBox.mesh, loading.mesh, cube.mesh);
 
   //allow CORS for images
@@ -431,8 +437,8 @@ function imagesLoaded() {
   //remove the loading screen
   scene.remove(spinBox.mesh, loading.mesh);
 
-  //move camera to home position and add to it the trailer info
-  camera.position.copy(camHome);
+  //move camera to the home position and add to it the trailer info
+  camera.position.set( trailers[Object.keys(trailers)[0]].location.x, trailers[Object.keys(trailers)[0]].location.y, trailers[Object.keys(trailers)[0]].location.z+0.5 );
   camera.add(info.object3D);
 
   //toggle object visibility
@@ -464,8 +470,8 @@ function render() {
         camera.position.y += ( mouse.y - 2.25*camera.position.y) * .003;
 
       case 1:
-        camera.position.x += ( mouse.x - 3*camera.position.x) * .00006;
-        camera.position.y += ( mouse.y - 2.25*camera.position.y) * .00006;
+        camera.position.x += ( mouse.x - 3*camera.position.x) * .00003;
+        camera.position.y += ( mouse.y - 2.25*camera.position.y) * .00003;
     };
   };
 

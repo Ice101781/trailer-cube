@@ -1,12 +1,10 @@
 /////////////////////////////////////////global vars///////////////////////////////////////////////////////////////////////////////////////////////
 
-var scene     = new THREE.Scene(),
-    renderer  = new THREE.WebGLRenderer({antialias: false, alpha: false}),
-    camera    = new THREE.PerspectiveCamera(48.5, (16/9), 0.01, 100),
+var scene        = new THREE.Scene(),
+    renderer     = new THREE.WebGLRenderer({antialias: false, alpha: false}),
+    camera       = new THREE.PerspectiveCamera(48.5, (16/9), 0.01, 100),
 
-    mouse     = {x: 0, y: 0},
-    camHome   = new THREE.Vector3(  1*Math.sin(0)*Math.cos(0),  1*Math.sin(0)*Math.sin(0),  1*Math.cos(0) ),
-    camLoad   = new THREE.Vector3( 60*Math.sin(0)*Math.cos(0), 60*Math.sin(0)*Math.sin(0), 60*Math.cos(0) ),
+    mouse        = {x: 0, y: 0},
 
     loadedImages = 0,
     clickCount   = 0,
@@ -312,10 +310,10 @@ trailerInfo.prototype = {
   draw: function(key, textColors) {
 
     key        = typeof key        !== 'undefined' ? key        : hoverKey;
-    textColors = typeof textColors !== 'undefined' ? textColors : { one:   deepSkyBlue,  two:    deepSkyBlue,  three:  deepSkyBlue,//continue
-                                                                    four:  deepSkyBlue,  five:   deepSkyBlue,  six:    deepSkyBlue,//continue
-                                                                    seven: deepSkyBlue,  eight:  deepSkyBlue,  nine:   deepSkyBlue,//continue
-                                                                    ten:   deepSkyBlue,  eleven: deepSkyBlue,  twelve: deepSkyBlue };
+    textColors = typeof textColors !== 'undefined' ? textColors : { one:   t_cBlue,  two:    t_cBlue,  three:  t_cBlue,//continue
+                                                                    four:  t_cBlue,  five:   t_cBlue,  six:    t_cBlue,//continue
+                                                                    seven: t_cBlue,  eight:  t_cBlue,  nine:   t_cBlue,//continue
+                                                                    ten:   t_cBlue,  eleven: t_cBlue,  twelve: t_cBlue };
 
     this.textColors = textColors;
 

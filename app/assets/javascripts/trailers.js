@@ -17,7 +17,7 @@ var trailers = {
 
                            { name: 'J.J. Abrams', link: imdb('0009190') },
 
-                           { one: { name: 'Mark Hamill', link: imdb('0000434') }, two: { name: 'Harrison Ford', link: imdb('0000148') }, three: { name: 'Daisy Ridley', link: imdb('5397459') }, four: { name: 'Adam Driver', link: imdb('348845') }, five: { name: 'Oscar Isaac', link: imdb('1209966') } },
+                           { one: { name: 'Mark Hamill', link: imdb('0000434') }, two: { name: 'Harrison Ford', link: imdb('0000148') }, three: { name: 'Daisy Ridley', link: imdb('5397459') }, four: { name: 'Adam Driver', link: imdb('3485845') }, five: { name: 'Oscar Isaac', link: imdb('1209966') } },
 
                            { one: { name: 'Daniel Mindel', link: imdb('0591053') }, two: { name: '', link: '' } },
 
@@ -25,7 +25,38 @@ var trailers = {
 
                            '12/18/2015',
 
-                           true  ),
+                           true,
+
+                           '2.35:1'  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  joy: new trailer(  { title: { name: 'Joy', link: 'http://www.rottentomatoes.com/m/joy_2014/' }, filename: 'joy' },
+
+                     'Drama',
+
+                     { line1: '   Joy is the wild story of a family across four generations centered on the girl',
+                       line2: 'who becomes the woman who founds a business dynasty and becomes a matriarch in',
+                       line3: 'her own right.',
+                       line4: '',
+                       line5: '',
+                       line6: '' },
+
+                     { name: 'David O. Russell', link: imdb('0751102') },
+
+                     { one: { name: 'Jennifer Lawrence', link: imdb('2225369') }, two: { name: 'Bradley Cooper', link: imdb('0177896') }, three: { name: 'Robert De Niro', link: imdb('0000134') }, four: { name: 'Virginia Madsen', link: imdb('0000515') }, five: { name: 'Isabella Rossellini', link: imdb('0000618') } },
+
+                     { one: { name: 'Linus Sandgren', link: imdb('0761874') }, two: { name: '', link: '' } },
+
+                     { one: { name: 'David O. Russell', link: imdb('0751102') }, two: { name: 'Annie Mumolo', link: imdb('1754239') }, three: { name: '', link: '' } },
+
+                     '12/25/2015',
+
+                     false,
+
+                     '1.85:1'  ),
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -52,7 +83,9 @@ var trailers = {
 
                                  '03/25/2016',
 
-                                 true  )//,
+                                 true,
+
+                                 '2.35:1'  )//,
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -81,7 +114,9 @@ var trailers = {
 
                          //'',
 
-                         //boolean  )//,
+                         //boolean,
+
+                         //''  )//,
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 };

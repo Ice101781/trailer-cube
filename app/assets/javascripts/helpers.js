@@ -48,16 +48,18 @@
 
 
 //the trailer object (placed here for compile reasons)
-  function trailer(identifiers, genre, plot, director, cast, cinematography, writing, release, videoFormatError) {
+  function trailer(identifiers, genre, plot, director, cast, cinematography, writing, release, videoHeightError, aspectRatio) {
   
-    identifiers    = typeof identifiers    !== 'undefined' ? identifiers    : { title: { name:'', link:'' }, filename:'' };
-    genre          = typeof genre          !== 'undefined' ? genre          : '';
-    plot           = typeof plot           !== 'undefined' ? plot           : { line1:'', line2:'', line3:'', line4:'', line5:'', line6:'' };
-    director       = typeof director       !== 'undefined' ? director       : { name:'', link:'' };
-    cast           = typeof cast           !== 'undefined' ? cast           : { one: { name:'', link:'' }, two: { name:'', link:'' }, three: { name:'', link:'' }, four: { name:'', link:'' }, five: { name:'', link:'' } };
-    cinematography = typeof cinematography !== 'undefined' ? cinematography : { one: { name:'', link:'' }, two: { name:'', link:'' } };
-    writing        = typeof writing        !== 'undefined' ? writing        : { one: { name:'', link:'' }, two: { name:'', link:'' }, three: { name:'', link:'' } };
-    release        = typeof release        !== 'undefined' ? release        : '';
+    identifiers      = typeof identifiers      !== 'undefined' ? identifiers      : { title: { name:'', link:'' }, filename:'' };
+    genre            = typeof genre            !== 'undefined' ? genre            : '';
+    plot             = typeof plot             !== 'undefined' ? plot             : { line1:'', line2:'', line3:'', line4:'', line5:'', line6:'' };
+    director         = typeof director         !== 'undefined' ? director         : { name:'', link:'' };
+    cast             = typeof cast             !== 'undefined' ? cast             : { one: { name:'', link:'' }, two: { name:'', link:'' }, three: { name:'', link:'' }, four: { name:'', link:'' }, five: { name:'', link:'' } };
+    cinematography   = typeof cinematography   !== 'undefined' ? cinematography   : { one: { name:'', link:'' }, two: { name:'', link:'' } };
+    writing          = typeof writing          !== 'undefined' ? writing          : { one: { name:'', link:'' }, two: { name:'', link:'' }, three: { name:'', link:'' } };
+    release          = typeof release          !== 'undefined' ? release          : '';
+    videoHeightError = typeof videoHeightError !== 'undefined' ? videoHeightError : false;
+    aspectRatio      = typeof aspectRatio      !== 'undefined' ? aspectRatio      : '';
 
     this.identifiers      = identifiers;
     this.genre            = genre;
@@ -67,7 +69,8 @@
     this.cinematography   = cinematography;
     this.writing          = writing;
     this.release          = release;
-    this.videoFormatError = videoFormatError;
+    this.videoHeightError = videoHeightError;
+    this.aspectRatio      = aspectRatio;
 
     this.filesource       = "https://files9.s3-us-west-2.amazonaws.com/hd_trailers/"+this.identifiers.filename+"/"+this.identifiers.filename;
 
