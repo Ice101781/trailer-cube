@@ -4,7 +4,7 @@ window.onload = function() {
 var light            = new pointLights(),
     spinBox          = new rhombicDodecahedron(.75),
     loading          = new loadBar(),
-    cube             = new wireFrameCube(50, 0x111111),
+    cube             = new wireFrameCube(10, 0x4B32AF),
     info             = new trailerInfo(),
     playbackControls = new videoPlaybackControls();
 
@@ -232,7 +232,7 @@ function onMouseClick() {
     } else if(intersects[0].object.parent = info.object3D) {
         switch(intersects[0].object) {
           case info.titleMesh:
-            window.open(trailers[clickKey].identifiers.title.link);
+            window.open(trailers[clickKey].title.link);
             break;
 
           case info.directorMesh:
@@ -307,19 +307,20 @@ function onMouseClick() {
       camera.position.z += .1;
 
       //handle any trailer format issues
-      if(trailers[clickKey].videoHeightError == true) {
+      if(trailers[clickKey].formatting.videoHeightError == true) {
         camera.position.y += .011;
-        for(var name in playbackControls.params) { playbackControls[name].position.y += .01 };
+        for(var name in playbackControls.params) { playbackControls[name].position.y += .0106 };
       };
 
-      if(trailers[clickKey].aspectRatio == '1.85:1') {
+      if(trailers[clickKey].formatting.aspectRatio == 'type2') {
         camera.position.z += .01;
-        camera.position.y -= .0015;
+        camera.position.y -= .001;
         for(var name in playbackControls.params) { playbackControls[name].position.y -= .0075 };
       };
 
-      //remove the image still and replace it with the video texture, then load and play the video
+      //remove the image still and replace it with the video texture, then source, load and play the video
       trailers[clickKey].videoScreen.material.map = trailers[clickKey].texture;
+      trailers[clickKey].video.src = "https://files9.s3-us-west-2.amazonaws.com/hd_trailers/"+clickKey+"/"+clickKey+".mp4";
       trailers[clickKey].video.load();
       trailers[clickKey].video.play();
 
@@ -386,14 +387,15 @@ function onMouseClick() {
         if(playbackControls.playButton.visible == true) { playbackControls.pauseButtonSwap() };
         playbackControls.object3D.visible = false;
     
-        //reserve any trailer format issues
-        if(trailers[clickKey].videoHeightError == true) {
+        //reverse any trailer format issues
+        if(trailers[clickKey].formatting.videoHeightError == true) {
           camera.position.y -= .011;
-          for(var name in playbackControls.params) { playbackControls[name].position.y -= .01 };
+          for(var name in playbackControls.params) { playbackControls[name].position.y -= .0106 };
         };
-        if(trailers[clickKey].aspectRatio == '1.85:1') {
+      
+        if(trailers[clickKey].formatting.aspectRatio == 'type2') {
           camera.position.z -= .01;
-          camera.position.y += .0015;
+          camera.position.y += .001;
           for(var name in playbackControls.params) { playbackControls[name].position.y += .0075 };
         };
     
@@ -402,7 +404,7 @@ function onMouseClick() {
         trailers[clickKey].video.currentTime = 0;
         trailers[clickKey].context.clearRect(0, 0, trailers[clickKey].canvas.width, trailers[clickKey].canvas.height);
         trailers[clickKey].videoScreen.material.map = trailers[clickKey].imageStill;
-        camera.position.z += .35;
+        camera.position.set( trailers[clickKey].location.x+.1, trailers[clickKey].location.y-.125, trailers[clickKey].location.z+.45 );
         camera.add(info.object3D);
     
         //assign hoverKey to be undefined so that trailer info won't flash on exit 
@@ -426,13 +428,13 @@ function init() {
   
   //set trailer locations, position the video screens and add them to the cube, then load the image stills
   for(var key in trailers) {
-    trailers[key].location = cube.mesh.geometry.vertices[10302+9*Object.keys(trailers).indexOf(key)];
-    
+    trailers[key].location = screenLocations[Object.keys(trailers).indexOf(key)];
     trailers[key].videoScreen.position.copy(trailers[key].location);
-    trailers[key].videoScreen.position.z += 0.001;
+    trailers[key].videoScreen.position.z += .001;
+    
     cube.mesh.add(trailers[key].videoScreen);
 
-    trailers[key].imageStill = THREE.ImageUtils.loadTexture( trailers[key].filesource+".jpg", undefined, function() {loadedImages++} );
+    trailers[key].imageStill = THREE.ImageUtils.loadTexture( 'public_assets/'+key+'.jpg', undefined, function(){loadedImages++} );
     trailers[key].videoScreen.material.map = trailers[key].imageStill;
   };
 };
@@ -443,7 +445,7 @@ function imagesLoaded() {
   scene.remove(spinBox.mesh, loading.mesh);
 
   //move camera to the home position and add to it the trailer info
-  camera.position.set( trailers[Object.keys(trailers)[0]].location.x+0.3, trailers[Object.keys(trailers)[0]].location.y-0.15, trailers[Object.keys(trailers)[0]].location.z+0.5 );
+  camera.position.set( trailers[Object.keys(trailers)[0]].location.x+.3, trailers[Object.keys(trailers)[0]].location.y-.15, trailers[Object.keys(trailers)[0]].location.z+.5 );
   camera.add(info.object3D);
 
   //toggle object visibility
@@ -461,6 +463,7 @@ function render() {
     spinBox.animation();
     loading.progress();
   };
+  
   if(loadedImages == Object.keys(trailers).length) {
     imagesLoaded();
   };
@@ -471,12 +474,7 @@ function render() {
     
     switch(clickCount) {
       default:
-        camera.position.x += ( mouse.x - 3*camera.position.x) * .003;
-        camera.position.y += ( mouse.y - 2.25*camera.position.y) * .003;
-
-      case 1:
-        camera.position.x += ( mouse.x - 3*camera.position.x) * .00003;
-        camera.position.y += ( mouse.y - 2.25*camera.position.y) * .00003;
+        camera.position.z += - ( mouse.x + camera.position.x ) * .003;
     };
   };*/
 

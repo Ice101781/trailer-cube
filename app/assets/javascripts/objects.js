@@ -11,7 +11,18 @@ var scene        = new THREE.Scene(),
     hoverKey     = null,
     clickKey     = null,
     t_cBlue      = 'rgb(75, 50, 175)',
-    deepSkyBlue  = 'rgb(0, 191, 255)';
+    deepSkyBlue  = 'rgb(0, 191, 255)',
+
+    screenLocations = {  0: new THREE.Vector3(-0.4, 0.4, 0.5),
+                         1: new THREE.Vector3(-0.2, 0.4, 0.5),
+                         2: new THREE.Vector3( 0.0, 0.4, 0.5),
+                         3: new THREE.Vector3( 0.2, 0.4, 0.5),
+                         4: new THREE.Vector3( 0.4, 0.4, 0.5),
+                         5: new THREE.Vector3(-0.4, 0.275, 0.5),
+                         6: new THREE.Vector3(-0.2, 0.275, 0.5),
+                         7: new THREE.Vector3( 0.0, 0.275, 0.5),
+                         8: new THREE.Vector3( 0.2, 0.275, 0.5),
+                         9: new THREE.Vector3( 0.4, 0.275, 0.5)  };
 
 /////////////////////////////////////////objects///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -317,7 +328,7 @@ trailerInfo.prototype = {
 
     this.textColors = textColors;
 
-    this.dynamicTextures.titleMesh.drawText(trailers[key].identifiers.title.name, 15, 80, textColors.one, ricasso('55'));
+    this.dynamicTextures.titleMesh.drawText(trailers[key].title.name, 15, 80, textColors.one, ricasso('55'));
 
     this.dynamicTextures.genreMesh.drawText(trailers[key].genre, 90, 125, 'white', ricasso('75'));
 
