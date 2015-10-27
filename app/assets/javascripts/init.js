@@ -4,7 +4,7 @@ window.onload = function() {
 var light            = new pointLights(),
     spinBox          = new rhombicDodecahedron(.75),
     loading          = new loadBar(),
-    cube             = new wireFrameCube(20, 0x000000),
+    cube             = new wireFrameCube(20, 0x222222),
     info             = new trailerInfo(),
     playbackControls = new videoPlaybackControls();
 
@@ -15,7 +15,7 @@ if( document.body != null ) {
 
 if( $("container") != null ) {
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor(0x000000);
+  renderer.setClearColor(0x111111);
   append( renderer.domElement, $("container") );
 };
 
@@ -71,6 +71,7 @@ function onMouseHover() {
 
       case 1:
         switch(intersects[0].object) {
+          //clear trailer info and redraw when another video screen's been clicked
           default:
             info.clearAll();
             info.draw(clickKey);
@@ -169,29 +170,30 @@ function onMouseHover() {
         };
         break;
     };
+  } else if(intersects[0] != undefined && playbackControls.object3D.parent == scene) {
+      //logic for playback controls visibility
+      switch(intersects[0].object.parent) {
+        default:
+          playbackControls.object3D.visible = false;
+          break;
+
+        case playbackControls.object3D:
+          playbackControls.object3D.visible = true;
+          break;
+      };
   } else {
-    switch(clickCount) {
-      default:
-        info.clearAll();
-        info.draw(clickKey);
-        break;
-
-      case 0:
-        info.clearAll();
-        //logic for playback controls visibility
-        if(intersects[0] != undefined && playbackControls.object3D.parent == scene) {
-          switch(intersects[0].object.parent) {
-            default:
-              playbackControls.object3D.visible = false;
-              break;
-
-            case playbackControls.object3D:
-              playbackControls.object3D.visible = true;
-              break;
-          };
-        };
-        break;
-    };
+      switch(clickCount) {
+        //clear to prevent trailer info flashing on video exit; this also prevents "sticky" info when intersects[0] is empty
+        case 0:
+          info.clearAll();
+          break;
+      
+        //clear trailer info and redraw if intersects[0] is empty; this prevents "sticky" highlighting
+        case 1:
+          info.clearAll();
+          info.draw(clickKey);
+          break;
+      };
   };
 };
 
@@ -308,7 +310,6 @@ function onMouseClick() {
 
     if(clickCount == 2) {
       //remove the trailer info and position the camera in front of the video
-      info.clearAll();
       camera.remove(info.object3D);
       camera.position.copy(trailers[clickKey].videoScreen.position);
       camera.position.z += .1;
@@ -347,9 +348,6 @@ function onMouseClick() {
   //logic for clicked objects if video is playing
   if(playbackControls.object3D.parent == scene) {
     switch(intersects[0].object) {
-      default:
-        break;
-
       case playbackControls.restartButton:      
         trailers[clickKey].video.currentTime = 0;
         if(playbackControls.pauseButton.visible == true) {
@@ -397,9 +395,19 @@ function onMouseClick() {
         break;
 
       case playbackControls.exitButton:
-        if(document.webkitIsFullScreen) { playbackControls.exitFullScreen() };
         if(playbackControls.playButton.visible == true) { playbackControls.pauseButtonSwap() };
-        
+        playbackControls.object3D.visible = false;
+        scene.remove(playbackControls.object3D);
+
+        trailers[clickKey].video.pause();
+        trailers[clickKey].video.currentTime = 0;
+        trailers[clickKey].context.clearRect(0, 0, trailers[clickKey].canvas.width, trailers[clickKey].canvas.height);
+        trailers[clickKey].videoScreen.material.map = trailers[clickKey].imageStill;
+        camera.position.set( trailers[clickKey].location.x+.1, trailers[clickKey].location.y-.125, trailers[clickKey].location.z+.45 );
+        camera.add(info.object3D);
+
+        if(document.webkitIsFullScreen) { playbackControls.exitFullScreen() };
+
         //reverse any trailer formatting
         if(trailers[clickKey].formatting.videoHeightError == true) {
             camera.position.y -= .0115;
@@ -410,21 +418,29 @@ function onMouseClick() {
             for(var name in playbackControls.params) { playbackControls[name].position.y += .0045 };
         };
 
-        playbackControls.object3D.visible = false;
-        scene.remove(playbackControls.object3D);
-        trailers[clickKey].video.pause();
-        trailers[clickKey].video.currentTime = 0;
-        trailers[clickKey].context.clearRect(0, 0, trailers[clickKey].canvas.width, trailers[clickKey].canvas.height);
-        trailers[clickKey].videoScreen.material.map = trailers[clickKey].imageStill;
-        camera.position.set( trailers[clickKey].location.x+.1, trailers[clickKey].location.y-.125, trailers[clickKey].location.z+.45 );
-        camera.add(info.object3D);
-
         //assign hoverKey to be undefined so that trailer info won't flash on exit 
         hoverKey = undefined;
         clickKey = null;
         break;
     };
   };
+};
+
+
+function imagesLoaded() {
+  //remove the loading screen
+  scene.remove(spinBox.mesh, loading.mesh);
+
+  //move camera to the home position and add to it the trailer info
+  camera.position.set( trailers[Object.keys(trailers)[0]].location.x+.3, trailers[Object.keys(trailers)[0]].location.y-.15, trailers[Object.keys(trailers)[0]].location.z+.5 );
+  camera.add(info.object3D);
+
+  //toggle object visibility
+  cube.mesh.visible = true;
+  info.object3D.visible = true;
+
+  //reset value of loaded images
+  loadedImages = 0;
 };
 
 
@@ -450,72 +466,40 @@ function init() {
   };
 };
 
-
-function imagesLoaded() {
-  //remove the loading screen
-  scene.remove(spinBox.mesh, loading.mesh);
-
-  //move camera to the home position and add to it the trailer info
-  camera.position.set( trailers[Object.keys(trailers)[0]].location.x+.3, trailers[Object.keys(trailers)[0]].location.y-.15, trailers[Object.keys(trailers)[0]].location.z+.5 );
-  camera.add(info.object3D);
-
-  //toggle object visibility
-  cube.mesh.visible = true;
-  info.object3D.visible = true;
-
-  //reset value of loaded images
-  loadedImages = 0;
-};
-
-
-function render() {
-  //remain at the loading screen until all images have loaded, then go to the home page
-  if(loading != undefined && loading.mesh.parent == scene) { 
-    spinBox.animation();
-    loading.progress();
-  };
-  
-  if(loadedImages == Object.keys(trailers).length) {
-    imagesLoaded();
-  };
-
+function animate() {
   //controls
-  /*
-  if(loading != undefined && loading.mesh.parent != scene//continue
-       && clickCount != 1                                //continue
-       && playbackControls != undefined && playbackControls.object3D.parent != scene) {
-    
-    switch(clickCount) {
-      default:
-        camera.position.z += - ( mouse.x + camera.position.x ) * .004;
-    };
-  };
-  */
+  //TO DO:
 
   //check for highlighted objects
   onMouseHover();
+  
+  //remain at the loading screen until all images have loaded, then go to the home page
+  if(loadedImages != 0) {
+    switch(loadedImages) {
+      default:
+        spinBox.animation();
+        loading.progress();
+        break;
 
-  //update the video if it's playing, and monitor fullscreen button during playback
-  if(clickKey != null && trailers[clickKey].video != undefined) {
-    trailers[clickKey].videoUpdate();
-    
-    if(trailers[clickKey].video.readyState > 0) {
-      playbackControls.trailerTimeUpdate();
+      case Object.keys(trailers).length:
+        imagesLoaded();
+        break;
     };
   };
 
+  //update a video if it's playing
+  if(clickKey != null && trailers[clickKey].video.readyState == 4) {
+    trailers[clickKey].videoUpdate();
+    playbackControls.trailerTimeUpdate();
+  };
+
+  //render the scene
+  renderer.render(scene, camera);  
   //update the scene
-  renderer.render(scene, camera);
+  requestAnimationFrame(animate);
 
   //console.log(variable name(s) here);
 };
-
-
-function animate() {
-  requestAnimationFrame(animate);
-  render();
-};
-
 
 init();
 animate();
