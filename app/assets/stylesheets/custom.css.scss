@@ -21,6 +21,7 @@ html {
 }
 
 #header {
+  -webkit-user-select: none;
   font-family: 'RicassoRegular';
   font-size: 1em;
   padding-left: 3px;
@@ -54,6 +55,7 @@ h1 {
 }
 
 #footer {
+  -webkit-user-select: none;
   font-family: 'RicassoRegular';
   font-size: 0.6em;
   padding-top: 4px;
