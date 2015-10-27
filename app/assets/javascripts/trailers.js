@@ -200,7 +200,7 @@ var trailers = {
 
                                  '03/25/2016',
 
-                                 { videoHeightError: true, aspectRatio: 'type1' }  )//,
+                                 { videoHeightError: true, aspectRatio: 'type1' }  ),
 };
 
 //the template/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -228,5 +228,5 @@ var trailers = {
 
                          //'release date',
 
-                         //{ videoHeightError: false, aspectRatio: 'type1' }  )//,
+                         //{ videoHeightError: false, aspectRatio: 'type1' }  ),
 

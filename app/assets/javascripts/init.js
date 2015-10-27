@@ -4,7 +4,7 @@ window.onload = function() {
 var light            = new pointLights(),
     spinBox          = new rhombicDodecahedron(.75),
     loading          = new loadBar(),
-    cube             = new wireFrameCube(10, 0x4B32AF),
+    cube             = new wireFrameCube(20, 0x000000),
     info             = new trailerInfo(),
     playbackControls = new videoPlaybackControls();
 
@@ -59,7 +59,7 @@ function onMouseHover() {
         if(intersects[0].object.parent == cube.mesh) {
           for(var key in trailers) {
             if(intersects[0].object == trailers[key].videoScreen && hoverKey !== undefined) {
-              info.clearAll();
+              info.clearAll();//change to debug trailer info position
               hoverKey = key;
               info.draw();
             };
@@ -162,8 +162,9 @@ function onMouseHover() {
 
           case info.clearingMesh:
             info.clearAll();
-            clickCount = 0;
-            clickKey = null;
+            info.textColors.thirteen = deepSkyBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.thirteen = t_cBlue;
             break;
         };
         break;
@@ -296,6 +297,12 @@ function onMouseClick() {
               window.open(trailers[clickKey].writing.three.link);
             };
             break;
+
+          case info.clearingMesh:
+            info.clearAll();
+            clickCount = 0;
+            clickKey = null;
+            break;
         };
     };
 
@@ -306,16 +313,14 @@ function onMouseClick() {
       camera.position.copy(trailers[clickKey].videoScreen.position);
       camera.position.z += .1;
 
-      //handle any trailer format issues
+      //handle any trailer formatting
       if(trailers[clickKey].formatting.videoHeightError == true) {
-        camera.position.y += .011;
-        for(var name in playbackControls.params) { playbackControls[name].position.y += .0106 };
-      };
-
-      if(trailers[clickKey].formatting.aspectRatio == 'type2') {
-        camera.position.z += .01;
-        camera.position.y -= .001;
-        for(var name in playbackControls.params) { playbackControls[name].position.y -= .0075 };
+          camera.position.y += .0115;
+          for(var name in playbackControls.params) { playbackControls[name].position.y += .0115 };
+      
+      } else if(trailers[clickKey].formatting.aspectRatio == 'type2') {
+          camera.position.z += .0075;
+          for(var name in playbackControls.params) { playbackControls[name].position.y -= .0045 };
       };
 
       //remove the image still and replace it with the video texture, then source, load and play the video
@@ -324,7 +329,7 @@ function onMouseClick() {
       trailers[clickKey].video.load();
       trailers[clickKey].video.play();
 
-      //mute for debugging
+      //mute for development
       trailers[clickKey].video.muted = true;
 
       //position and add the playback controls
@@ -376,29 +381,36 @@ function onMouseClick() {
         break;
 
       case playbackControls.enterFullscreenButton:
-        renderer.domElement.webkitRequestFullscreen();
+        playbackControls.enterFullScreen();        
+        //handle any fullscreen trailer formatting
+        if(trailers[clickKey].formatting.aspectRatio == 'type2') { 
+          camera.position.z -= .0075;
+        };
         break;
 
       case playbackControls.exitFullscreenButton:
-        document.webkitExitFullscreen();
+        playbackControls.exitFullScreen();
+        //reverse any fullscreen trailer formatting
+        if(trailers[clickKey].formatting.aspectRatio == 'type2') { 
+          camera.position.z += .0075;
+        };
         break;
 
       case playbackControls.exitButton:
+        if(document.webkitIsFullScreen) { playbackControls.exitFullScreen() };
         if(playbackControls.playButton.visible == true) { playbackControls.pauseButtonSwap() };
-        playbackControls.object3D.visible = false;
-    
-        //reverse any trailer format issues
+        
+        //reverse any trailer formatting
         if(trailers[clickKey].formatting.videoHeightError == true) {
-          camera.position.y -= .011;
-          for(var name in playbackControls.params) { playbackControls[name].position.y -= .0106 };
+            camera.position.y -= .0115;
+            for(var name in playbackControls.params) { playbackControls[name].position.y -= .0115 };
+        
+        } else if(trailers[clickKey].formatting.aspectRatio == 'type2') {
+            camera.position.z -= .0075;
+            for(var name in playbackControls.params) { playbackControls[name].position.y += .0045 };
         };
-      
-        if(trailers[clickKey].formatting.aspectRatio == 'type2') {
-          camera.position.z -= .01;
-          camera.position.y += .001;
-          for(var name in playbackControls.params) { playbackControls[name].position.y += .0075 };
-        };
-    
+
+        playbackControls.object3D.visible = false;
         scene.remove(playbackControls.object3D);
         trailers[clickKey].video.pause();
         trailers[clickKey].video.currentTime = 0;
@@ -406,7 +418,7 @@ function onMouseClick() {
         trailers[clickKey].videoScreen.material.map = trailers[clickKey].imageStill;
         camera.position.set( trailers[clickKey].location.x+.1, trailers[clickKey].location.y-.125, trailers[clickKey].location.z+.45 );
         camera.add(info.object3D);
-    
+
         //assign hoverKey to be undefined so that trailer info won't flash on exit 
         hoverKey = undefined;
         clickKey = null;
@@ -431,11 +443,10 @@ function init() {
     trailers[key].location = screenLocations[Object.keys(trailers).indexOf(key)];
     trailers[key].videoScreen.position.copy(trailers[key].location);
     trailers[key].videoScreen.position.z += .001;
-    
-    cube.mesh.add(trailers[key].videoScreen);
-
     trailers[key].imageStill = THREE.ImageUtils.loadTexture( 'public_assets/'+key+'.jpg', undefined, function(){loadedImages++} );
     trailers[key].videoScreen.material.map = trailers[key].imageStill;
+
+    cube.mesh.add(trailers[key].videoScreen);
   };
 };
 
@@ -469,14 +480,17 @@ function render() {
   };
 
   //controls
-  /*if(loading != undefined && loading.mesh.parent != scene//continue
+  /*
+  if(loading != undefined && loading.mesh.parent != scene//continue
+       && clickCount != 1                                //continue
        && playbackControls != undefined && playbackControls.object3D.parent != scene) {
     
     switch(clickCount) {
       default:
-        camera.position.z += - ( mouse.x + camera.position.x ) * .003;
+        camera.position.z += - ( mouse.x + camera.position.x ) * .004;
     };
-  };*/
+  };
+  */
 
   //check for highlighted objects
   onMouseHover();
@@ -487,7 +501,6 @@ function render() {
     
     if(trailers[clickKey].video.readyState > 0) {
       playbackControls.trailerTimeUpdate();
-      playbackControls.fullscreenButtonCheck();
     };
   };
 

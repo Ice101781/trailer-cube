@@ -13,16 +13,9 @@ var scene        = new THREE.Scene(),
     t_cBlue      = 'rgb(75, 50, 175)',
     deepSkyBlue  = 'rgb(0, 191, 255)',
 
-    screenLocations = {  0: new THREE.Vector3(-0.4, 0.4, 0.5),
-                         1: new THREE.Vector3(-0.2, 0.4, 0.5),
-                         2: new THREE.Vector3( 0.0, 0.4, 0.5),
-                         3: new THREE.Vector3( 0.2, 0.4, 0.5),
-                         4: new THREE.Vector3( 0.4, 0.4, 0.5),
-                         5: new THREE.Vector3(-0.4, 0.275, 0.5),
-                         6: new THREE.Vector3(-0.2, 0.275, 0.5),
-                         7: new THREE.Vector3( 0.0, 0.275, 0.5),
-                         8: new THREE.Vector3( 0.2, 0.275, 0.5),
-                         9: new THREE.Vector3( 0.4, 0.275, 0.5)  };
+    screenLocations = {  0: new THREE.Vector3(-0.4, 0.45, 0.5), 1: new THREE.Vector3(-0.2, 0.45, 0.5), 2: new THREE.Vector3( 0.0, 0.45, 0.5), 3: new THREE.Vector3( 0.2, 0.45, 0.5), 4: new THREE.Vector3( 0.4, 0.45, 0.5),//continue
+                         5: new THREE.Vector3(-0.4, 0.35, 0.5), 6: new THREE.Vector3(-0.2, 0.35, 0.5), 7: new THREE.Vector3( 0.0, 0.35, 0.5), 8: new THREE.Vector3( 0.2, 0.35, 0.5), 9: new THREE.Vector3( 0.4, 0.35, 0.5),//continue
+                      };
 
 /////////////////////////////////////////objects///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -166,7 +159,13 @@ function trailerInfo() {
 
     this.object3D.visible = false;
 
-  this.params = {   titleMesh: {  pixelength:    1280,
+  this.params = { dividerMesh: {  pixelength:    1280,
+                                  pixelwidth:      16,
+                                  meshlength:    .118,
+                                  meshwidth:  .001475,
+                                  posadjust:  { x: 0, y: -.01515, z: -.075 }  },
+
+                    titleMesh: {  pixelength:    1280,
                                   pixelwidth:     128,
                                   meshlength:   .0286,
                                   meshwidth:   .00286,
@@ -178,11 +177,17 @@ function trailerInfo() {
                                   meshwidth:   .00286,
                                   posadjust:  { x: -.0185, y: -.0175, z: -.075 }  },
 
+                  releaseMesh: {  pixelength:    1280,
+                                  pixelwidth:     340,
+                                  meshlength: .010725,
+                                  meshwidth:   .00286,
+                                  posadjust:  { x: -.001, y: -.0175, z: -.075 }  },
+
                      plotMesh: {  pixelength:    1280,
                                   pixelwidth:     220,
                                   meshlength:    .067,
                                   meshwidth:    .0115,
-                                  posadjust:  { x: -.02525, y: -.025, z: -.075 }  },
+                                  posadjust:  { x: -.02525, y: -.02485, z: -.075 }  },
 
              directorTextMesh: {  pixelength:    1280,
                                   pixelwidth:     320,
@@ -274,23 +279,11 @@ function trailerInfo() {
                                   meshwidth: .0017875,
                                   posadjust:  { x: .05195, y: -.0265, z: -.075 }  },
 
-                  releaseMesh: {  pixelength:    1280,
-                                  pixelwidth:     340,
-                                  meshlength: .010725,
-                                  meshwidth:   .00286,
-                                  posadjust:  { x: -.001, y: -.0175, z: -.075 }  },
-
-                  dividerMesh: {  pixelength:    1280,
-                                  pixelwidth:      16,
-                                  meshlength:    .118,
-                                  meshwidth:  .001475,
-                                  posadjust:  { x: 0, y: -.01515, z: -.075 }  },
-
                  clearingMesh: {  pixelength:    1280,
                                   pixelwidth:      16,
                                   meshlength:    .118,
                                   meshwidth:  .001475,
-                                  posadjust:  { x: 0, y: -.03175, z: -.075 }  }   };
+                                  posadjust:  { x: 0, y: -.0316, z: -.075 }  } };
 
   params = this.params;
   
@@ -321,16 +314,21 @@ trailerInfo.prototype = {
   draw: function(key, textColors) {
 
     key        = typeof key        !== 'undefined' ? key        : hoverKey;
-    textColors = typeof textColors !== 'undefined' ? textColors : { one:   t_cBlue,  two:    t_cBlue,  three:  t_cBlue,//continue
-                                                                    four:  t_cBlue,  five:   t_cBlue,  six:    t_cBlue,//continue
-                                                                    seven: t_cBlue,  eight:  t_cBlue,  nine:   t_cBlue,//continue
-                                                                    ten:   t_cBlue,  eleven: t_cBlue,  twelve: t_cBlue };
+    textColors = typeof textColors !== 'undefined' ? textColors : { one:      t_cBlue,  two:    t_cBlue,  three:  t_cBlue,//continue
+                                                                    four:     t_cBlue,  five:   t_cBlue,  six:    t_cBlue,//continue
+                                                                    seven:    t_cBlue,  eight:  t_cBlue,  nine:   t_cBlue,//continue
+                                                                    ten:      t_cBlue,  eleven: t_cBlue,  twelve: t_cBlue,//continue
+                                                                    thirteen: t_cBlue };
 
     this.textColors = textColors;
+
+    this.dynamicTextures.dividerMesh.drawText("___________________________________________________________________________________________________________________________________", 0, 10, 'white', '20px Corbel');
 
     this.dynamicTextures.titleMesh.drawText(trailers[key].title.name, 15, 80, textColors.one, ricasso('55'));
 
     this.dynamicTextures.genreMesh.drawText(trailers[key].genre, 90, 125, 'white', ricasso('75'));
+
+    this.dynamicTextures.releaseMesh.drawText(trailers[key].release, 40, 200, 'white', ricasso('125'));
 
     this.dynamicTextures.plotMesh.drawText(trailers[key].plot.line1, 5,  25, 'white', ricasso('17'))//method.chain
       .drawText(trailers[key].plot.line2, 5,  60, 'white', ricasso('17'))
@@ -358,9 +356,7 @@ trailerInfo.prototype = {
     this.dynamicTextures.writingMeshTwo.drawText(trailers[key].writing.two.name, 20, 105, textColors.eleven, ricasso('75'));
     this.dynamicTextures.writingMeshThree.drawText(trailers[key].writing.three.name, 20, 105, textColors.twelve, ricasso('75'));
 
-    this.dynamicTextures.releaseMesh.drawText(trailers[key].release, 40, 200, 'white', ricasso('125'));
-
-    this.dynamicTextures.dividerMesh.drawText("___________________________________________________________________________________________________________________________________", 0, 10, 'white', '20px Corbel');
+    this.dynamicTextures.clearingMesh.drawText("___________________________________________________________________________________________________________________________________", 0, 2, textColors.thirteen, '20px Corbel');
   },
 
   clearAll: function(col) {
@@ -381,12 +377,12 @@ function videoPlaybackControls() {
 
   this.params = {   backgroundMesh:  {  pixelength:      null,
                                         pixelwidth:      null,
-                                        meshlength:     .1575, 
+                                        meshlength:       .16, 
                                          meshwidth:      .005,
-                                             color:  0x000000,
+                                             color:  0x000000,//change to debug playback controls position
                                         dynamicmap:     false,     
                                         texturemap:      null, 
-                                         posadjust:  { x: 0.0, y: -0.036, z: 0.00005 }  },
+                                         posadjust:  { x: 0.0, y: -0.038, z: 0.00005 }  },
 
                       timelineMesh:  {  pixelength:      null,
                                         pixelwidth:      null,
@@ -395,7 +391,7 @@ function videoPlaybackControls() {
                                              color:  0x261958,
                                         dynamicmap:     false,     
                                         texturemap:      null, 
-                                         posadjust:  { x: -0.025, y: -0.036, z: 0.0001 }  },
+                                         posadjust:  { x: -0.025, y: -0.038, z: 0.0001 }  },
 
                       bufferedMesh:  {  pixelength:      null,
                                         pixelwidth:      null,
@@ -404,7 +400,7 @@ function videoPlaybackControls() {
                                              color:  0x9999CC,
                                         dynamicmap:     false,     
                                         texturemap:      null, 
-                                         posadjust:  { x: -0.046, y: -0.036, z: 0.000101 }  },
+                                         posadjust:  { x: -0.046, y: -0.038, z: 0.000101 }  },
 
                       progressMesh:  {  pixelength:      null,
                                         pixelwidth:      null,
@@ -413,7 +409,7 @@ function videoPlaybackControls() {
                                              color:  0x4B32AF,
                                         dynamicmap:     false,     
                                         texturemap:      null, 
-                                         posadjust:  { x: -0.046, y: -0.036, z: 0.000102 }  },
+                                         posadjust:  { x: -0.046, y: -0.038, z: 0.000102 }  },
 
                    timeElapsedMesh:  {  pixelength:      1280,
                                         pixelwidth:       720,
@@ -422,7 +418,7 @@ function videoPlaybackControls() {
                                              color:  0x4B32AF,
                                         dynamicmap:      true,
                                         texturemap:      null,   
-                                         posadjust:  { x: -0.075, y: -0.036, z: 0.0001 }  },
+                                         posadjust:  { x: -0.075, y: -0.038, z: 0.0001 }  },
 
                  timeRemainingMesh:  {  pixelength:      1280,
                                         pixelwidth:       720,
@@ -431,7 +427,7 @@ function videoPlaybackControls() {
                                              color:  0x4B32AF,
                                         dynamicmap:      true,
                                         texturemap:      null,
-                                         posadjust:  { x: 0.025, y: -0.036, z: 0.0001 }  },
+                                         posadjust:  { x: 0.025, y: -0.038, z: 0.0001 }  },
 
                      restartButton:  {  pixelength:      null,
                                         pixelwidth:      null,
@@ -440,7 +436,7 @@ function videoPlaybackControls() {
                                              color:  0xFFFFFF,
                                         dynamicmap:     false,
                                         texturemap:  THREE.ImageUtils.loadTexture('public_assets/restart_button.png'),
-                                         posadjust:  { x: 0.035, y: -0.036, z: 0.0001 }  },
+                                         posadjust:  { x: 0.035, y: -0.038, z: 0.0001 }  },
 
                       rewindButton:  {  pixelength:      null,
                                         pixelwidth:      null,
@@ -449,7 +445,7 @@ function videoPlaybackControls() {
                                              color:  0xFFFFFF,
                                         dynamicmap:     false,
                                         texturemap:  THREE.ImageUtils.loadTexture('public_assets/rewind_button.png'),
-                                         posadjust:  { x: 0.043, y: -0.036, z: 0.0001 }  },
+                                         posadjust:  { x: 0.043, y: -0.038, z: 0.0001 }  },
 
                         playButton:  {  pixelength:      null,
                                         pixelwidth:      null,
@@ -458,7 +454,7 @@ function videoPlaybackControls() {
                                              color:  0xFFFFFF,
                                         dynamicmap:     false,
                                         texturemap:  THREE.ImageUtils.loadTexture('public_assets/play_button.png'), 
-                                         posadjust:  { x: 0.051, y: -0.036, z: 0.00009 }  },
+                                         posadjust:  { x: 0.051, y: -0.038, z: 0.00009 }  },
 
                        pauseButton:  {  pixelength:      null,
                                         pixelwidth:      null,
@@ -467,7 +463,7 @@ function videoPlaybackControls() {
                                              color:  0xFFFFFF,
                                         dynamicmap:     false,     
                                         texturemap:  THREE.ImageUtils.loadTexture('public_assets/pause_button.png'), 
-                                         posadjust:  { x: 0.051, y: -0.036, z: 0.0001 }  },
+                                         posadjust:  { x: 0.051, y: -0.038, z: 0.0001 }  },
 
                  fastForwardButton:  {  pixelength:      null,
                                         pixelwidth:      null,
@@ -476,7 +472,7 @@ function videoPlaybackControls() {
                                              color:  0xFFFFFF,
                                         dynamicmap:     false,
                                         texturemap:  THREE.ImageUtils.loadTexture('public_assets/fastforward_button.png'),
-                                         posadjust:  { x: 0.059, y: -0.036, z: 0.0001 }  },
+                                         posadjust:  { x: 0.059, y: -0.038, z: 0.0001 }  },
 
               exitFullscreenButton:  {  pixelength:      null,
                                         pixelwidth:      null,
@@ -485,7 +481,7 @@ function videoPlaybackControls() {
                                              color:  0xFFFFFF,
                                         dynamicmap:     false,
                                         texturemap:  THREE.ImageUtils.loadTexture('public_assets/exit_fullscreen_button.png'),
-                                         posadjust:  { x: 0.067, y: -0.036, z: 0.00009 }  },
+                                         posadjust:  { x: 0.067, y: -0.038, z: 0.00009 }  },
 
              enterFullscreenButton:  {  pixelength:      null,
                                         pixelwidth:      null,
@@ -494,7 +490,7 @@ function videoPlaybackControls() {
                                              color:  0xFFFFFF,
                                         dynamicmap:     false,
                                         texturemap:  THREE.ImageUtils.loadTexture('public_assets/enter_fullscreen_button.png'),
-                                         posadjust:  { x: 0.067, y: -0.036, z: 0.0001 }  },
+                                         posadjust:  { x: 0.067, y: -0.038, z: 0.0001 }  },
 
                         exitButton:  {  pixelength:      null,
                                         pixelwidth:      null,
@@ -503,7 +499,7 @@ function videoPlaybackControls() {
                                              color:  0xFFFFFF,
                                         dynamicmap:     false,
                                         texturemap:  THREE.ImageUtils.loadTexture('public_assets/exit_button.png'),
-                                         posadjust:  { x: 0.075, y: -0.036, z: 0.0001 }  }   };
+                                         posadjust:  { x: 0.075, y: -0.038, z: 0.0001 }  }   };
 
   params = this.params;
 
@@ -519,7 +515,7 @@ function videoPlaybackControls() {
       params[name].texturemap = this.dynamicTextures[name].texture;
     };
 
-    this[name] = new THREE.Mesh( 
+    this[name] = new THREE.Mesh(
       new THREE.PlaneBufferGeometry(params[name].meshlength, params[name].meshwidth, 1, 1),
       new THREE.MeshBasicMaterial({map: params[name].texturemap, color: params[name].color})
     );
@@ -563,15 +559,18 @@ videoPlaybackControls.prototype = {
     this.object3D.add(this.playButton);
   },
 
-  fullscreenButtonCheck: function() {
-  
-    if(document.webkitIsFullScreen) {
-      this.object3D.remove(this.enterFullscreenButton);
-      this.object3D.add(this.exitFullscreenButton);
-    } else {
-      this.object3D.remove(this.exitFullscreenButton);
-      this.object3D.add(this.enterFullscreenButton);
-    };
+  enterFullScreen: function() {
+    
+    renderer.domElement.webkitRequestFullscreen();
+    this.object3D.remove(this.enterFullscreenButton);
+    this.object3D.add(this.exitFullscreenButton);
+  },
+
+  exitFullScreen: function() {
+
+    document.webkitExitFullscreen();
+    this.object3D.remove(this.exitFullscreenButton);
+    this.object3D.add(this.enterFullscreenButton);
   }
 };
 
