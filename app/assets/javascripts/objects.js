@@ -1,20 +1,22 @@
 /////////////////////////////////////////global vars///////////////////////////////////////////////////////////////////////////////////////////////
 
-var scene        = new THREE.Scene(),
-    renderer     = new THREE.WebGLRenderer({antialias: false, alpha: false}),
-    camera       = new THREE.PerspectiveCamera(48.5, (16/9), 0.01, 100),
+var scene          = new THREE.Scene(),
+    renderer       = new THREE.WebGLRenderer({antialias: false, alpha: false}),
+    camera         = new THREE.PerspectiveCamera(48.5, (16/9), 0.01, 100),
 
-    mouse        = {x: 0, y: 0},
+    mouse          = {x: 0, y: 0},
+    hoverRaycaster = new THREE.Raycaster(),
+    clickRaycaster = new THREE.Raycaster(),
 
-    loadedImages = 0,
-    clickCount   = 0,
-    hoverKey     = null,
-    clickKey     = null,
-    t_cBlue      = 'rgb(75, 50, 175)',
-    deepSkyBlue  = 'rgb(0, 191, 255)',
+    loadedImages   = 0,
+    clickCount     = 0,
+    hoverKey       = null,
+    clickKey       = null,
+    t_cBlue        = 'rgb(75, 50, 175)',
+    deepSkyBlue    = 'rgb(0, 191, 255)',
 
-    screenLocations = {  0: new THREE.Vector3(-0.4, 0.45, 0.5), 1: new THREE.Vector3(-0.2, 0.45, 0.5), 2: new THREE.Vector3( 0.0, 0.45, 0.5), 3: new THREE.Vector3( 0.2, 0.45, 0.5), 4: new THREE.Vector3( 0.4, 0.45, 0.5),//continue
-                         5: new THREE.Vector3(-0.4, 0.35, 0.5), 6: new THREE.Vector3(-0.2, 0.35, 0.5), 7: new THREE.Vector3( 0.0, 0.35, 0.5), 8: new THREE.Vector3( 0.2, 0.35, 0.5), 9: new THREE.Vector3( 0.4, 0.35, 0.5),//continue
+    screenLocations = {  0: new THREE.Vector3(-0.4, 0.45, 0.5), 1: new THREE.Vector3(-0.2, 0.45, 0.5), 2: new THREE.Vector3( 0.0, 0.45, 0.5), 3: new THREE.Vector3( 0.2, 0.45, 0.5), 4: new THREE.Vector3( 0.4, 0.45, 0.5),
+                         5: new THREE.Vector3(-0.4, 0.35, 0.5), 6: new THREE.Vector3(-0.2, 0.35, 0.5), 7: new THREE.Vector3( 0.0, 0.35, 0.5), 8: new THREE.Vector3( 0.2, 0.35, 0.5), 9: new THREE.Vector3( 0.4, 0.35, 0.5),
                       };
 
 /////////////////////////////////////////objects///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,13 +1,6 @@
 window.onload = function() {
 /////////////////////////////////////////scene objects, etc.///////////////////////////////////////////////////////////////////////////////////////
 
-var light            = new pointLights(),
-    spinBox          = new rhombicDodecahedron(.75),
-    loading          = new loadBar(),
-    cube             = new wireFrameCube(20, 0x222222),
-    info             = new trailerInfo(),
-    playbackControls = new videoPlaybackControls();
-
 //append the container to the document, then the renderer to the container
 if( document.body != null ) { 
   append( $("container"), document.body );
@@ -18,6 +11,14 @@ if( $("container") != null ) {
   renderer.setClearColor(0x111111);
   append( renderer.domElement, $("container") );
 };
+
+
+var light            = new pointLights(),
+    spinBox          = new rhombicDodecahedron(.75),
+    loading          = new loadBar(),
+    cube             = new wireFrameCube(20, 0x222222),
+    info             = new trailerInfo(),
+    playbackControls = new videoPlaybackControls();
 
 /////////////////////////////////////////user functions////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -41,12 +42,8 @@ function onMouseMove(event) {
 
 
 function onMouseHover() {
-  var hoverRaycaster = new THREE.Raycaster();
-
   hoverRaycaster.vector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
-
   hoverRaycaster.vector.unproject(camera);
-
   hoverRaycaster.set( camera.position, hoverRaycaster.vector.sub(camera.position).normalize() );
 
   var intersects = hoverRaycaster.intersectObjects(scene.children, true);
@@ -65,7 +62,7 @@ function onMouseHover() {
             };
           };
         } else {
-          info.clearAll();
+            info.clearAll();
         };
         break;
 
@@ -199,12 +196,8 @@ function onMouseHover() {
 
 
 function onMouseClick() {
-  var clickRaycaster = new THREE.Raycaster();
-
   clickRaycaster.vector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
-
   clickRaycaster.vector.unproject(camera);
-
   clickRaycaster.set( camera.position, clickRaycaster.vector.sub(camera.position).normalize() );
 
   var intersects = clickRaycaster.intersectObjects(scene.children, true);
@@ -317,11 +310,14 @@ function onMouseClick() {
       //handle any trailer formatting
       if(trailers[clickKey].formatting.videoHeightError == true) {
           camera.position.y += .0115;
-          for(var name in playbackControls.params) { playbackControls[name].position.y += .0115 };
-      
+          for(var name in playbackControls.params) { 
+            playbackControls[name].position.y += .0115; 
+          };
       } else if(trailers[clickKey].formatting.aspectRatio == 'type2') {
           camera.position.z += .0075;
-          for(var name in playbackControls.params) { playbackControls[name].position.y -= .0045 };
+          for(var name in playbackControls.params) { 
+            playbackControls[name].position.y -= .0045;
+          };
       };
 
       //remove the image still and replace it with the video texture, then source, load and play the video
@@ -406,21 +402,24 @@ function onMouseClick() {
         camera.position.set( trailers[clickKey].location.x+.1, trailers[clickKey].location.y-.125, trailers[clickKey].location.z+.45 );
         camera.add(info.object3D);
 
-        if(document.webkitIsFullScreen) { playbackControls.exitFullScreen() };
-
         //reverse any trailer formatting
         if(trailers[clickKey].formatting.videoHeightError == true) {
             camera.position.y -= .0115;
-            for(var name in playbackControls.params) { playbackControls[name].position.y -= .0115 };
-        
+            for(var name in playbackControls.params) { 
+              playbackControls[name].position.y -= .0115;
+            };        
         } else if(trailers[clickKey].formatting.aspectRatio == 'type2') {
             camera.position.z -= .0075;
-            for(var name in playbackControls.params) { playbackControls[name].position.y += .0045 };
+            for(var name in playbackControls.params) { 
+              playbackControls[name].position.y += .0045
+            };
         };
 
         //assign hoverKey to be undefined so that trailer info won't flash on exit 
         hoverKey = undefined;
         clickKey = null;
+
+        if(document.webkitIsFullScreen) { playbackControls.exitFullScreen() };
         break;
     };
   };
@@ -467,11 +466,15 @@ function init() {
 };
 
 function animate() {
-  //controls
-  //TO DO:
-
-  //check for highlighted objects
+  //check for highlighted objects; order onMouseHover() and //controls this way to prevent trailer info "flicker"
   onMouseHover();
+
+  //controls
+  if(loading.mesh.parent != scene && clickCount != 1 && playbackControls.object3D.parent != scene) {
+    //TO DO: make the following keyboard-dependent
+    camera.position.x = mouse.x;
+    camera.position.z = Math.pow(mouse.x, 2)+1;
+  };
   
   //remain at the loading screen until all images have loaded, then go to the home page
   if(loadedImages != 0) {
