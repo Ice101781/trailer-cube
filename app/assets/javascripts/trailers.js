@@ -1,3 +1,31 @@
+//the template/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  //key: new trailer(  { name: '', link: '' },
+
+                       //'genre',
+
+                       //{ line1: '',
+                         //line2: '',
+                         //line3: '',
+                         //line4: '',
+                         //line5: '',
+                         //line6: '' },
+
+                       //{ name: '', link: imdb('') },
+
+                       //{ one: { name: '', link: imdb('') }, two: { name: '', link: imdb('') }, three: { name: '', link: imdb('') }, four: { name: '', link: imdb('') }, five: { name: '', link: imdb('') } },
+
+                       //{ one: { name: '', link: imdb('') }, two: { name: '', link: imdb('') } },
+
+                       //{ one: { name: '', link: imdb('') }, two: { name: '', link: imdb('') }, three: { name: '', link: imdb('') } },
+
+                       //'release date',
+
+                       //{ videoHeightError: false, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 //the trailer data/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var trailers = {
@@ -26,6 +54,56 @@ var trailers = {
                        '11/25/2015',
 
                        { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  thedanishgirl: new trailer(  { name: 'The Danish Girl', link: 'http://www.rottentomatoes.com/m/the_danish_girl_2015/' },
+
+                               'Drama',
+
+                               { line1: '   The remarkable love story inspired by the lives of artists Lili Elbe and Gerda',
+                                 line2: 'Wegener. Lili and Gerda\'s marriage and work evolve as they navigate Lili\'s',
+                                 line3: 'groundbreaking journey as a transgender pioneer.',
+                                 line4: '',
+                                 line5: '',
+                                 line6: '' },
+
+                               { name: 'Tom Hooper', link: imdb('0393799') },
+
+                               { one: { name: 'Eddie Redmayne', link: imdb('1519666') }, two: { name: 'Alicia Vikander', link: imdb('2539953') }, three: { name: 'Amber Heard', link: imdb('1720028') }, four: { name: 'Ben Whishaw', link: imdb('0924210') }, five: { name: 'M. Schoenaerts', link: imdb('0774386') } },
+
+                               { one: { name: 'Danny Cohen', link: imdb('0169299') }, two: { name: '', link: '' } },
+
+                               { one: { name: 'David Ebershoff', link: imdb('2286442') }, two: { name: 'Lucinda Coxon', link: imdb('0185309') }, three: { name: '', link: '' } },
+
+                               '11/27/2015',
+
+                               { videoHeightError: false, aspectRatio: 'type2' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  macbeth: new trailer(  { name: 'Macbeth', link: 'http://www.rottentomatoes.com/m/macbeth_2015/' },
+
+                         'Drama',
+
+                         { line1: '   Macbeth is the story of a fearless warrior and inspiring leader brought low by',
+                           line2: 'ambition and desire. A thrilling interpretation of the dramatic realities of the',
+                           line3: 'times and a reimagining of what wartime must have been like for one of literature\'s',
+                           line4: 'most famous and compelling characters, a story of all-consuming passion and ambition',
+                           line5: 'set in war torn Scotland.',
+                           line6: '' },
+
+                         { name: 'Justin Kurzel', link: imdb('2355933') },
+
+                         { one: { name: 'Michael Fassbender', link: imdb('1055413') }, two: { name: 'Marion Cotillard', link: imdb('0182839') }, three: { name: 'Sean Harris', link: imdb('0365317') }, four: { name: 'Elizabeth Debicki', link: imdb('4456120') }, five: { name: 'David Thewlis', link: imdb('0000667') } },
+
+                         { one: { name: 'Adam Arkapaw', link: imdb('1714622') }, two: { name: '', link: '' } },
+
+                         { one: { name: 'Jacob Koskoff', link: imdb('1105617') }, two: { name: 'Michael Lesslie', link: imdb('2078681') }, three: { name: 'Todd Louiso', link: imdb('0521974') } },
+
+                         '12/04/2015',
+
+                         { videoHeightError: true, aspectRatio: 'type1' }  ),
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -202,31 +280,4 @@ var trailers = {
 
                                  { videoHeightError: true, aspectRatio: 'type1' }  ),
 };
-
-//the template/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-      //key: new trailer(  { name: '', link: '' },
-
-                         //'genre',
-
-                         //{ line1: '',
-                           //line2: '',
-                           //line3: '',
-                           //line4: '',
-                           //line5: '',
-                           //line6: '' },
-
-                         //{ name: '', link: imdb('') },
-
-                         //{ one: { name: '', link: imdb('') }, two: { name: '', link: imdb('') }, three: { name: '', link: imdb('') }, four: { name: '', link: imdb('') }, five: { name: '', link: imdb('') } },
-
-                         //{ one: { name: '', link: imdb('') }, two: { name: '', link: imdb('') } },
-
-                         //{ one: { name: '', link: imdb('') }, two: { name: '', link: imdb('') }, three: { name: '', link: imdb('') } },
-
-                         //'release date',
-
-                         //{ videoHeightError: false, aspectRatio: 'type1' }  ),
 
