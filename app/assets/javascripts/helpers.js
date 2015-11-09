@@ -83,6 +83,8 @@
       this.context.fillStyle = '0#000000';
       this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
+    this.imageStill = null;
+
     this.videoScreen = new THREE.Mesh( 
       new THREE.PlaneBufferGeometry(.16, .09, 1, 1), 
       new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture("/public_assets/t_c.png"), overdraw: true} )
@@ -95,11 +97,22 @@
 
     constructor: trailer,
 
-    videoUpdate: function() {
+    loadVideo: function() {
+      this.videoScreen.material.map = this.texture;
+      this.video.load();
+      this.video.play();
+    },
 
-      if(this.video.readyState === this.video.HAVE_ENOUGH_DATA) { this.context.drawImage(this.video, 0, 0) };
-
+    updateVideo: function() {
+      this.context.drawImage(this.video, 0, 0);
       this.texture.needsUpdate = true;
+    },
+
+    unloadVideo: function() {
+      this.video.pause();
+      this.video.currentTime = 0;
+      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.videoScreen.material.map = this.imageStill;
     }
   };
 

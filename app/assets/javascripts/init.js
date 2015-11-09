@@ -26,6 +26,32 @@ var light            = new pointLights(),
 window.addEventListener('resize', onWindowResize);
 window.addEventListener('mousemove', onMouseMove);
 window.addEventListener('mousedown', onMouseClick);
+document.addEventListener('keydown', preventFEleven);
+renderer.domElement.addEventListener('webkitfullscreenchange', onFullScreenChange);
+
+
+//prevent the F11 key from allowing the user to enter fullscreen mode
+function preventFEleven(event) {
+  if(event.keyCode == 122) {
+    event.preventDefault();
+    //event.stopPropagation();
+  };
+};
+
+
+function onFullScreenChange() {
+  if (!window.screenTop && !window.screenY) {
+      //reverse any fullscreen trailer formatting
+      if(clickKey != null && trailers[clickKey].formatting.aspectRatio == 'type2') { 
+        camera.position.z += .0075;
+      };     
+  } else {
+      //handle any fullscreen trailer formatting
+      if(trailers[clickKey].formatting.aspectRatio == 'type2') { 
+        camera.position.z -= .0075;
+      };      
+  };
+};
 
 
 function onWindowResize() {
@@ -320,11 +346,9 @@ function onMouseClick() {
           };
       };
 
-      //remove the image still and replace it with the video texture, then source, load and play the video
-      trailers[clickKey].videoScreen.material.map = trailers[clickKey].texture;
+      //source the video, then load and play
       trailers[clickKey].video.src = "https://files9.s3-us-west-2.amazonaws.com/hd_trailers/"+clickKey+"/"+clickKey+".mp4";
-      trailers[clickKey].video.load();
-      trailers[clickKey].video.play();
+      trailers[clickKey].loadVideo();
 
       //mute for development
       trailers[clickKey].video.muted = true;
@@ -375,32 +399,15 @@ function onMouseClick() {
         break;
 
       case playbackControls.enterFullscreenButton:
-        playbackControls.enterFullScreen();        
-        //handle any fullscreen trailer formatting
-        if(trailers[clickKey].formatting.aspectRatio == 'type2') { 
-          camera.position.z -= .0075;
-        };
+        renderer.domElement.webkitRequestFullscreen();
         break;
 
       case playbackControls.exitFullscreenButton:
-        playbackControls.exitFullScreen();
-        //reverse any fullscreen trailer formatting
-        if(trailers[clickKey].formatting.aspectRatio == 'type2') { 
-          camera.position.z += .0075;
-        };
+        document.webkitExitFullscreen();
         break;
 
       case playbackControls.exitButton:
-        if(playbackControls.playButton.visible == true) { playbackControls.pauseButtonSwap() };
-        playbackControls.object3D.visible = false;
-        scene.remove(playbackControls.object3D);
-
-        trailers[clickKey].video.pause();
-        trailers[clickKey].video.currentTime = 0;
-        trailers[clickKey].context.clearRect(0, 0, trailers[clickKey].canvas.width, trailers[clickKey].canvas.height);
-        trailers[clickKey].videoScreen.material.map = trailers[clickKey].imageStill;
-        camera.position.set( trailers[clickKey].location.x+.1, trailers[clickKey].location.y-.125, trailers[clickKey].location.z+.45 );
-        camera.add(info.object3D);
+        trailers[clickKey].unloadVideo();
 
         //reverse any trailer formatting
         if(trailers[clickKey].formatting.videoHeightError == true) {
@@ -415,11 +422,18 @@ function onMouseClick() {
             };
         };
 
+        if(playbackControls.playButton.visible == true) { playbackControls.pauseButtonSwap() };
+        playbackControls.object3D.visible = false;
+        scene.remove(playbackControls.object3D);
+        
+        camera.position.set( trailers[clickKey].location.x+.1, trailers[clickKey].location.y-.125, trailers[clickKey].location.z+.45 );
+        camera.add(info.object3D);
+
+        if(document.webkitIsFullScreen) { document.webkitExitFullscreen() };
+
         //assign hoverKey to be undefined so that trailer info won't flash on exit 
         hoverKey = undefined;
         clickKey = null;
-
-        if(document.webkitIsFullScreen) { playbackControls.exitFullScreen() };
         break;
     };
   };
@@ -490,10 +504,14 @@ function animate() {
     };
   };
 
-  //update a video if it's playing
+  //update a video if it's playing, and verify the correct fullscreen button is visible
   if(clickKey != null && trailers[clickKey].video.readyState == 4) {
-    trailers[clickKey].videoUpdate();
+    trailers[clickKey].updateVideo();
     playbackControls.trailerTimeUpdate();
+  };
+
+  if(playbackControls.object3D.parent == scene) {
+    playbackControls.fullscreenButtonCheck();
   };
 
   //render the scene

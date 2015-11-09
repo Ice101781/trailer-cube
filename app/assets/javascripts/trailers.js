@@ -182,6 +182,81 @@ var trailers = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  thehatefuleight: new trailer(  { name: 'The Hateful 8', link: 'http://www.rottentomatoes.com/m/the_hateful_eight/' },
+
+                                 'Western',
+
+                                 { line1: '   Set six or eight or twelve years after the Civil War, a stagecoach hurtles',
+                                   line2: 'through the wintry Wyoming landscape. The passengers, bounty hunter John Ruth',
+                                   line3: '(Russell) and his fugitive Daisy Domergue (Leigh), race towards the town of Red',
+                                   line4: 'Rock where Ruth, known in these parts as "The Hangman", will bring Domergue to',
+                                   line5: 'justice.',
+                                   line6: '' },
+
+                                 { name: 'Quentin Tarantino', link: imdb('0000233') },
+
+                                 { one: { name: 'Kurt Russell', link: imdb('0000621') }, two: { name: 'Jennifer J. Leigh', link: imdb('0000492') }, three: { name: 'Samuel L. Jackson', link: imdb('0000168') }, four: { name: 'Walton Goggins', link: imdb('0324658') }, five: { name: 'Channing Tatum', link: imdb('1475594') } },
+
+                                 { one: { name: 'Robert Richardson', link: imdb('0724744') }, two: { name: '', link: '' } },
+
+                                 { one: { name: 'Quentin Tarantino', link: imdb('0000233') }, two: { name: '', link: '' }, three: { name: '', link: '' } },
+
+                                 '12/25/2015',
+
+                                 { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  therevenant: new trailer(  { name: 'The Revenant', link: 'http://www.rottentomatoes.com/m/the_revenant_2015/' },
+
+                             'Drama',
+
+                             { line1: '   Inspired by true events, THE REVENANT is an immersive and visceral cinematic',
+                               line2: 'experience capturing one man\'s epic adventure of survival and the extraordinary',
+                               line3: 'power of the human spirit. In an expedition of the uncharted American wilderness,',
+                               line4: 'legendary explorer Hugh Glass (DiCaprio) is brutally attacked by a bear and left',
+                               line5: 'for dead by members of his own hunting team. In a quest to survive, Glass endures',
+                               line6: 'unimaginable grief as well as the betrayal of his confidant John Fitzgerald (Hardy).' },
+
+                             { name: 'A. G. Iñárritu', link: imdb('0327944') },
+
+                             { one: { name: 'Leonardo DiCaprio', link: imdb('0000138') }, two: { name: 'Tom Hardy', link: imdb('0362766') }, three: { name: 'Domhnall Gleeson', link: imdb('1727304') }, four: { name: 'Will Poulter', link: imdb('2401020') }, five: { name: 'Paul Anderson', link: imdb('2167957') } },
+
+                             { one: { name: 'Emmanuel Lubezki', link: imdb('0523881') }, two: { name: '', link: '' } },
+
+                             { one: { name: 'Michael Punke', link: imdb('3488559') }, two: { name: 'A. G. Iñárritu', link: imdb('0327944') }, three: { name: 'Mark L. Smith', link: imdb('1872664') } },
+
+                             '12/25/2015',
+
+                             { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  anomalisa: new trailer(  { name: 'Anomalisa', link: 'http://www.rottentomatoes.com/m/anomalisa/' },
+
+                           'Comedy',
+
+                           { line1: '   Charlie Kaufman\'s first stop-motion film about a man crippled by the',
+                             line2: 'mundanity of his life.',
+                             line3: '',
+                             line4: '',
+                             line5: '',
+                             line6: '' },
+
+                           { name: 'Duke Johnson', link: imdb('2122478') },
+
+                           { one: { name: 'Jennifer J. Leigh', link: imdb('0000492') }, two: { name: 'David Thewlis', link: imdb('0000667') }, three: { name: 'Tom Noonan', link: imdb('0006888') }, four: { name: '', link: '' }, five: { name: '', link: '' } },
+
+                           { one: { name: 'Joe Passarelli', link: imdb('2026060') }, two: { name: '', link: '' } },
+
+                           { one: { name: 'Charlie Kaufman', link: imdb('0442109') }, two: { name: '', link: '' }, three: { name: '', link: '' } },
+
+                           '12/30/2015',
+
+                           { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   theforest: new trailer(  { name: 'The Forest', link: 'http://www.rottentomatoes.com/m/the_forest_2016/' },
 
                            'Horror',
@@ -204,6 +279,56 @@ var trailers = {
                            '01/08/2016',
 
                            { videoHeightError: false, aspectRatio: 'type2' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  dirtygrandpa: new trailer(  { name: 'Dirty Grandpa', link: 'http://www.rottentomatoes.com/m/dirty_grandpa/' },
+
+                              'Comedy',
+
+                              { line1: '   A recently widowed veteran tricks his adult grandson into going on a road trip',
+                                line2: 'for Spring Break in Florida.',
+                                line3: '',
+                                line4: '',
+                                line5: '',
+                                line6: '' },
+
+                              { name: 'Dan Mazer', link: imdb('0563243') },
+
+                              { one: { name: 'Zac Efron', link: imdb('1374980') }, two: { name: 'Robert De Niro', link: imdb('0000134') }, three: { name: 'Julianne Hough', link: imdb('2584600') }, four: { name: 'Dermot Mulroney', link: imdb('0000551') }, five: { name: 'Aubrey Plaza', link: imdb('2201555') } },
+
+                              { one: { name: 'Eric Alan Edwards', link: imdb('0004090') }, two: { name: '', link: '' } },
+
+                              { one: { name: 'John Phillips', link: imdb('4740370') }, two: { name: '', link: '' }, three: { name: '', link: '' } },
+
+                              '01/22/2016',
+
+                              { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  risen: new trailer(  { name: 'Risen', link: 'http://www.rottentomatoes.com/m/risen_2016/' },
+
+                       'Drama',
+
+                       { line1: '   RISEN follows the epic Biblical story of the Resurrection, as told through the',
+                         line2: 'eyes of a non-believer. Clavius, a powerful Roman Military Tribune, and his aide',
+                         line3: 'Lucius, are tasked with solving the mystery of what happened to Jesus in the weeks',
+                         line4: 'following the crucifixion, in order to disprove the rumors of a risen Messiah and',
+                         line5: 'prevent an uprising in Jerusalem.',
+                         line6: '' },
+
+                         { name: 'Kevin Reynolds', link: imdb('0721817') },
+
+                         { one: { name: 'Joseph Fiennes', link: imdb('0001212') }, two: { name: 'Tom Felton', link: imdb('0271657') }, three: { name: 'Peter Firth', link: imdb('0278752') }, four: { name: 'Cliff Curtis', link: imdb('0193295') }, five: { name: 'María Botto', link: imdb('0098710') } },
+
+                         { one: { name: 'Lorenzo Senatore', link: imdb('1062923') }, two: { name: '', link: '' } },
+
+                         { one: { name: 'Paul Aiello', link: imdb('2594149') }, two: { name: 'Kevin Reynolds', link: imdb('0721817') }, three: { name: '', link: '' } },
+
+                         '01/22/2016',
+
+                         { videoHeightError: false, aspectRatio: 'type1' }  ),
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -15,8 +15,9 @@ var scene          = new THREE.Scene(),
     t_cBlue        = 'rgb(75, 50, 175)',
     deepSkyBlue    = 'rgb(0, 191, 255)',
 
-    screenLocations = {  0: new THREE.Vector3(-0.4, 0.45, 0.5), 1: new THREE.Vector3(-0.2, 0.45, 0.5), 2: new THREE.Vector3( 0.0, 0.45, 0.5), 3: new THREE.Vector3( 0.2, 0.45, 0.5), 4: new THREE.Vector3( 0.4, 0.45, 0.5),
-                         5: new THREE.Vector3(-0.4, 0.35, 0.5), 6: new THREE.Vector3(-0.2, 0.35, 0.5), 7: new THREE.Vector3( 0.0, 0.35, 0.5), 8: new THREE.Vector3( 0.2, 0.35, 0.5), 9: new THREE.Vector3( 0.4, 0.35, 0.5),
+    screenLocations = {  0: new THREE.Vector3(-0.4, 0.45, 0.5),  1: new THREE.Vector3(-0.2, 0.45, 0.5),  2: new THREE.Vector3( 0.0, 0.45, 0.5),  3: new THREE.Vector3( 0.2, 0.45, 0.5),  4: new THREE.Vector3( 0.4, 0.45, 0.5),
+                         5: new THREE.Vector3(-0.4, 0.35, 0.5),  6: new THREE.Vector3(-0.2, 0.35, 0.5),  7: new THREE.Vector3( 0.0, 0.35, 0.5),  8: new THREE.Vector3( 0.2, 0.35, 0.5),  9: new THREE.Vector3( 0.4, 0.35, 0.5),
+                        10: new THREE.Vector3(-0.4, 0.25, 0.5), 11: new THREE.Vector3(-0.2, 0.25, 0.5), 12: new THREE.Vector3( 0.0, 0.25, 0.5), 13: new THREE.Vector3( 0.2, 0.25, 0.5), 14: new THREE.Vector3( 0.4, 0.25, 0.5),
                       };
 
 /////////////////////////////////////////objects///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -326,7 +327,7 @@ trailerInfo.prototype = {
 
     this.dynamicTextures.dividerMesh.drawText("___________________________________________________________________________________________________________________________________", 0, 10, 'white', '20px Corbel');
 
-    this.dynamicTextures.titleMesh.drawText(trailers[key].title.name, 15, 80, textColors.one, ricasso('55'));
+    this.dynamicTextures.titleMesh.drawText(trailers[key].title.name, 15, 80, textColors.one, '100px Corbel');
 
     this.dynamicTextures.genreMesh.drawText(trailers[key].genre, 90, 125, 'white', ricasso('75'));
 
@@ -561,18 +562,15 @@ videoPlaybackControls.prototype = {
     this.object3D.add(this.playButton);
   },
 
-  enterFullScreen: function() {
-    
-    renderer.domElement.webkitRequestFullscreen();
-    this.object3D.remove(this.enterFullscreenButton);
-    this.object3D.add(this.exitFullscreenButton);
-  },
+  fullscreenButtonCheck: function() {
 
-  exitFullScreen: function() {
-
-    document.webkitExitFullscreen();
-    this.object3D.remove(this.exitFullscreenButton);
-    this.object3D.add(this.enterFullscreenButton);
+    if (!window.screenTop && !window.screenY) {
+        this.object3D.remove(this.exitFullscreenButton);
+        this.object3D.add(this.enterFullscreenButton);
+    } else {
+        this.object3D.remove(this.enterFullscreenButton);
+        this.object3D.add(this.exitFullscreenButton);
+    };
   }
 };
 
