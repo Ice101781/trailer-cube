@@ -16,7 +16,7 @@ if( $("container") != null ) {
 var light            = new pointLights(),
     spinBox          = new rhombicDodecahedron(.75),
     loading          = new loadBar(),
-    cube             = new wireFrameCube(20, 0x222222),
+    cube             = new wireFrameCube(20, 0x000000),
     info             = new trailerInfo(),
     playbackControls = new videoPlaybackControls();
 
@@ -26,33 +26,8 @@ var light            = new pointLights(),
 window.addEventListener('resize', onWindowResize);
 window.addEventListener('mousemove', onMouseMove);
 window.addEventListener('mousedown', onMouseClick);
-document.addEventListener('keydown', preventFEleven);
+document.addEventListener('keydown', preventHotKey);
 renderer.domElement.addEventListener('webkitfullscreenchange', onFullScreenChange);
-
-
-//prevent the F11 key from allowing the user to enter fullscreen mode
-function preventFEleven(event) {
-  if(event.keyCode == 122) {
-    event.preventDefault();
-    //event.stopPropagation();
-  };
-};
-
-
-function onFullScreenChange() {
-  if (!window.screenTop && !window.screenY) {
-      //reverse any fullscreen trailer formatting
-      if(clickKey != null && trailers[clickKey].formatting.aspectRatio == 'type2') { 
-        camera.position.z += .0075;
-      };     
-  } else {
-      //handle any fullscreen trailer formatting
-      if(trailers[clickKey].formatting.aspectRatio == 'type2') { 
-        camera.position.z -= .0075;
-      };      
-  };
-};
-
 
 function onWindowResize() {
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -100,6 +75,7 @@ function onMouseHover() {
             info.draw(clickKey);
             break;
 
+          //trailer info highlighting
           case info.titleMesh:
             info.clearAll();
             info.textColors.one = deepSkyBlue;
@@ -328,6 +304,9 @@ function onMouseClick() {
     };
 
     if(clickCount == 2) {
+      //darken the background for video playback
+      renderer.setClearColor(0x000000);
+
       //remove the trailer info and position the camera in front of the video
       camera.remove(info.object3D);
       camera.position.copy(trailers[clickKey].videoScreen.position);
@@ -425,6 +404,9 @@ function onMouseClick() {
         if(playbackControls.playButton.visible == true) { playbackControls.pauseButtonSwap() };
         playbackControls.object3D.visible = false;
         scene.remove(playbackControls.object3D);
+
+        //lighten the background for app navigation
+        renderer.setClearColor(0x111111);
         
         camera.position.set( trailers[clickKey].location.x+.1, trailers[clickKey].location.y-.125, trailers[clickKey].location.z+.45 );
         camera.add(info.object3D);
@@ -436,6 +418,29 @@ function onMouseClick() {
         clickKey = null;
         break;
     };
+  };
+};
+
+
+//prevent the F11 key from allowing the user to enter fullscreen mode
+function preventHotKey(event) {
+  if(event.keyCode == 122) {
+    event.preventDefault();
+    //event.stopPropagation();
+  };
+};
+
+
+//handle any fullscreen trailer formatting
+function onFullScreenChange() {
+  if (!window.screenTop && !window.screenY) {
+      if(clickKey != null && trailers[clickKey].formatting.aspectRatio == 'type2') { 
+        camera.position.z += .0075;
+      };     
+  } else {
+      if(trailers[clickKey].formatting.aspectRatio == 'type2') { 
+        camera.position.z -= .0075;
+      };      
   };
 };
 

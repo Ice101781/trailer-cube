@@ -327,39 +327,40 @@ trailerInfo.prototype = {
 
     this.dynamicTextures.dividerMesh.drawText("___________________________________________________________________________________________________________________________________", 0, 10, 'white', '20px Corbel');
 
-    this.dynamicTextures.titleMesh.drawText(trailers[key].title.name, 15, 80, textColors.one, '100px Corbel');
+    this.dynamicTextures.titleMesh.drawText(trailers[key].title.name, 15, 95, textColors.one, '100px Times New Roman');
 
-    this.dynamicTextures.genreMesh.drawText(trailers[key].genre, 90, 125, 'white', ricasso('75'));
+    this.dynamicTextures.genreMesh.drawText(trailers[key].genre, 30, 150, 'white', '125px Times New Roman');
 
-    this.dynamicTextures.releaseMesh.drawText(trailers[key].release, 40, 200, 'white', ricasso('125'));
+    this.dynamicTextures.releaseMesh.drawText(trailers[key].release, 40, 250, 'white', '180px Times New Roman');
 
-    this.dynamicTextures.plotMesh.drawText(trailers[key].plot.line1, 5,  25, 'white', ricasso('17'))//method.chain
-      .drawText(trailers[key].plot.line2, 5,  60, 'white', ricasso('17'))
-      .drawText(trailers[key].plot.line3, 5,  95, 'white', ricasso('17'))
-      .drawText(trailers[key].plot.line4, 5, 130, 'white', ricasso('17'))
-      .drawText(trailers[key].plot.line5, 5, 165, 'white', ricasso('17'))
-      .drawText(trailers[key].plot.line6, 5, 200, 'white', ricasso('17'));
+    this.dynamicTextures.plotMesh.drawText(trailers[key].plot.line1, 10,  30, 'white', '25px Corbel')//method.chain
+      .drawText(trailers[key].plot.line2, 10,  65, 'white', '25px Corbel')
+      .drawText(trailers[key].plot.line3, 10, 100, 'white', '25px Corbel')
+      .drawText(trailers[key].plot.line4, 10, 135, 'white', '25px Corbel')
+      .drawText(trailers[key].plot.line5, 10, 170, 'white', '25px Corbel')
+      .drawText(trailers[key].plot.line6, 10, 205, 'white', '25px Corbel');
 
-    this.dynamicTextures.directorTextMesh.drawText("Director:", 20, 215, 'white', ricasso('170'));
-    this.dynamicTextures.directorMesh.drawText(trailers[key].director.name, 20, 110, textColors.two, ricasso('75'));
+    this.dynamicTextures.directorTextMesh.drawText("Director:", 135, 245, 'white', '260px Times New Roman');
+    this.dynamicTextures.directorMesh.drawText(trailers[key].director.name, 20, 130, textColors.two, '125px Corbel');
 
-    this.dynamicTextures.castTextMesh.drawText("Cast:", 540, 215, 'white', ricasso('170'));
-    this.dynamicTextures.castMeshOne.drawText(trailers[key].cast.one.name, 20, 105, textColors.three, ricasso('75'));
-    this.dynamicTextures.castMeshTwo.drawText(trailers[key].cast.two.name, 20, 105, textColors.four, ricasso('75'));
-    this.dynamicTextures.castMeshThree.drawText(trailers[key].cast.three.name, 20, 105, textColors.five, ricasso('75'));
-    this.dynamicTextures.castMeshFour.drawText(trailers[key].cast.four.name, 20, 105, textColors.six, ricasso('75'));
-    this.dynamicTextures.castMeshFive.drawText(trailers[key].cast.five.name, 20, 105, textColors.seven, ricasso('75'));
+    this.dynamicTextures.castTextMesh.drawText("Cast:", 540, 245, 'white', '260px Times New Roman');
+    this.dynamicTextures.castMeshOne.drawText(trailers[key].cast.one.name, 20, 130, textColors.three, '125px Corbel');
+    this.dynamicTextures.castMeshTwo.drawText(trailers[key].cast.two.name, 20, 130, textColors.four, '125px Corbel');
+    this.dynamicTextures.castMeshThree.drawText(trailers[key].cast.three.name, 20, 130, textColors.five, '125px Corbel');
+    this.dynamicTextures.castMeshFour.drawText(trailers[key].cast.four.name, 20, 130, textColors.six, '125px Corbel');
+    this.dynamicTextures.castMeshFive.drawText(trailers[key].cast.five.name, 20, 130, textColors.seven, '125px Corbel');
 
-    this.dynamicTextures.cinematographyTextMesh.drawText("Cinematography:", 105, 100, 'white', ricasso('85'));
-    this.dynamicTextures.cinematographyMeshOne.drawText(trailers[key].cinematography.one.name, 20, 105, textColors.eight, ricasso('75'));
-    this.dynamicTextures.cinematographyMeshTwo.drawText(trailers[key].cinematography.two.name, 20, 105, textColors.nine, ricasso('75'));
+    this.dynamicTextures.cinematographyTextMesh.drawText("Cinematography:", 350, 120, 'white', '120px Times New Roman');
+    this.dynamicTextures.cinematographyMeshOne.drawText(trailers[key].cinematography.one.name, 20, 130, textColors.eight, '125px Corbel');
+    this.dynamicTextures.cinematographyMeshTwo.drawText(trailers[key].cinematography.two.name, 20, 130, textColors.nine, '125px Corbel');
 
-    this.dynamicTextures.writingTextMesh.drawText("Writing:", 740, 105, 'white', ricasso('85'));
-    this.dynamicTextures.writingMeshOne.drawText(trailers[key].writing.one.name, 20, 105, textColors.ten, ricasso('75'));
-    this.dynamicTextures.writingMeshTwo.drawText(trailers[key].writing.two.name, 20, 105, textColors.eleven, ricasso('75'));
-    this.dynamicTextures.writingMeshThree.drawText(trailers[key].writing.three.name, 20, 105, textColors.twelve, ricasso('75'));
+    this.dynamicTextures.writingTextMesh.drawText("Writing:", 775, 120, 'white', '120px Times New Roman');
+    this.dynamicTextures.writingMeshOne.drawText(trailers[key].writing.one.name, 20, 130, textColors.ten, '125px Corbel');
+    this.dynamicTextures.writingMeshTwo.drawText(trailers[key].writing.two.name, 20, 130, textColors.eleven, '125px Corbel');
+    this.dynamicTextures.writingMeshThree.drawText(trailers[key].writing.three.name, 20, 130, textColors.twelve, '125px Corbel');
 
-    this.dynamicTextures.clearingMesh.drawText("___________________________________________________________________________________________________________________________________", 0, 2, textColors.thirteen, '20px Corbel');
+    this.dynamicTextures.clearingMesh.drawText("___________________________________________________________________________________________________________________________________", 0, 1, textColors.thirteen, '20px Corbel')//method.chain
+                                     .drawText("___________________________________________________________________________________________________________________________________", 0, 4, textColors.thirteen, '20px Corbel');
   },
 
   clearAll: function(col) {

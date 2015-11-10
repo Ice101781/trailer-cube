@@ -36,12 +36,12 @@ var trailers = {
 
                        'Drama',
 
-                       { line1: '   Adonis Johnson never knew his famous father, world heavy weight champion',
-                         line2: 'Apollo Creed, who died before he was born. Still, there\'s no denying that',
-                         line3: 'boxing is in his blood, so Adonis heads to Philadelphia, the site of Apollo',
-                         line4: 'Creed\'s legendary match with a tough upstart named Rocky Balboa. Rocky sees',
-                         line5: 'in Adonis the strength and determination he had known in Apollo - the fierce',
-                         line6: 'rival who became his closest friend.' },
+                       { line1: '   Adonis Johnson never knew his famous father, world heavy weight champion Apollo Creed, who died',
+                         line2: 'before he was born. Still, there\'s no denying that boxing is in his blood, so Adonis heads to',
+                         line3: 'Philadelphia, the site of Apollo Creed\'s legendary match with a tough upstart named Rocky Balboa.',
+                         line4: 'Rocky sees in Adonis the strength and determination he had known in Apollo - the fierce rival who',
+                         line5: 'became his closest friend.',
+                         line6: '' },
 
                        { name: 'Ryan Coogler', link: imdb('3363032') },
 
@@ -61,9 +61,9 @@ var trailers = {
 
                                'Drama',
 
-                               { line1: '   The remarkable love story inspired by the lives of artists Lili Elbe and Gerda',
-                                 line2: 'Wegener. Lili and Gerda\'s marriage and work evolve as they navigate Lili\'s',
-                                 line3: 'groundbreaking journey as a transgender pioneer.',
+                               { line1: '   The remarkable love story inspired by the lives of artists Lili Elbe and Gerda Wegener. Lili and',
+                                 line2: 'Gerda\'s marriage and work evolve as they navigate Lili\'s groundbreaking journey as a transgender',
+                                 line3: 'pioneer.',
                                  line4: '',
                                  line5: '',
                                  line6: '' },
@@ -86,11 +86,11 @@ var trailers = {
 
                          'Drama',
 
-                         { line1: '   Macbeth is the story of a fearless warrior and inspiring leader brought low by',
-                           line2: 'ambition and desire. A thrilling interpretation of the dramatic realities of the',
-                           line3: 'times and a reimagining of what wartime must have been like for one of literature\'s',
-                           line4: 'most famous and compelling characters, a story of all-consuming passion and ambition',
-                           line5: 'set in war torn Scotland.',
+                         { line1: '   Macbeth is the story of a fearless warrior and inspiring leader brought low by ambition and desire.',
+                           line2: 'A thrilling interpretation of the dramatic realities of the times and a reimagining of what wartime',
+                           line3: 'must have been like for one of literature\'s most famous and compelling characters, a story of',
+                           line4: 'all-consuming passion and ambition set in war-torn Scotland.',
+                           line5: '',
                            line6: '' },
 
                          { name: 'Justin Kurzel', link: imdb('2355933') },
@@ -111,9 +111,9 @@ var trailers = {
 
                              'Drama',
 
-                             { line1: '   Writer and director Adam McKay joins forces with Paramount Pictures and Plan B',
-                               line2: 'Entertainment to adapt Michael Lewis\' best-seller, The Big Short: Inside the',
-                               line3: 'Doomsday Machine, which centers on the housing and credit bubble of the 2000\'s.',
+                             { line1: '   Writer and director Adam McKay joins forces with Paramount Pictures and Plan B Entertainment to adapt',
+                               line2: 'Michael Lewis\' best-seller, The Big Short: Inside the Doomsday Machine, which centers on the housing',
+                               line3: 'and credit bubble of the 2000\'s.',
                                line4: '',
                                line5: '',
                                line6: '' },
@@ -161,9 +161,9 @@ var trailers = {
 
                      'Drama',
 
-                     { line1: '   Joy is the wild story of a family across four generations centered on the girl',
-                       line2: 'who becomes the woman who founds a business dynasty and becomes a matriarch in',
-                       line3: 'her own right.',
+                     { line1: '   Joy is the wild story of a family across four generations centered on the girl who becomes the woman',
+                       line2: 'who founds a business dynasty and becomes a matriarch in her own right.',
+                       line3: '',
                        line4: '',
                        line5: '',
                        line6: '' },
@@ -186,11 +186,11 @@ var trailers = {
 
                                  'Western',
 
-                                 { line1: '   Set six or eight or twelve years after the Civil War, a stagecoach hurtles',
-                                   line2: 'through the wintry Wyoming landscape. The passengers, bounty hunter John Ruth',
-                                   line3: '(Russell) and his fugitive Daisy Domergue (Leigh), race towards the town of Red',
-                                   line4: 'Rock where Ruth, known in these parts as "The Hangman", will bring Domergue to',
-                                   line5: 'justice.',
+                                 { line1: '   Set six or eight or twelve years after the Civil War, a stagecoach hurtles through the wintry Wyoming',
+                                   line2: 'landscape. The passengers, bounty hunter John Ruth (Russell) and his fugitive Daisy Domergue (Leigh),',
+                                   line3: 'race towards the town of Red Rock where Ruth, known in these parts as "The Hangman", will bring',
+                                   line4: 'Domergue to justice.',
+                                   line5: '',
                                    line6: '' },
 
                                  { name: 'Quentin Tarantino', link: imdb('0000233') },
@@ -211,12 +211,12 @@ var trailers = {
 
                              'Drama',
 
-                             { line1: '   Inspired by true events, THE REVENANT is an immersive and visceral cinematic',
-                               line2: 'experience capturing one man\'s epic adventure of survival and the extraordinary',
-                               line3: 'power of the human spirit. In an expedition of the uncharted American wilderness,',
-                               line4: 'legendary explorer Hugh Glass (DiCaprio) is brutally attacked by a bear and left',
-                               line5: 'for dead by members of his own hunting team. In a quest to survive, Glass endures',
-                               line6: 'unimaginable grief as well as the betrayal of his confidant John Fitzgerald (Hardy).' },
+                             { line1: '   Inspired by true events, THE REVENANT is an immersive and visceral cinematic experience capturing one',
+                               line2: 'man\'s epic adventure of survival and the extraordinary power of the human spirit. In an expedition of',
+                               line3: 'the uncharted American wilderness, legendary explorer Hugh Glass (DiCaprio) is brutally attacked by a',
+                               line4: 'bear and left for dead by members of his own hunting team. In a quest to survive, Glass endures',
+                               line5: 'unimaginable grief, as well as the betrayal of his confidant John Fitzgerald (Hardy).',
+                               line6: '' },
 
                              { name: 'A. G. Iñárritu', link: imdb('0327944') },
 
@@ -236,8 +236,8 @@ var trailers = {
 
                            'Comedy',
 
-                           { line1: '   Charlie Kaufman\'s first stop-motion film about a man crippled by the',
-                             line2: 'mundanity of his life.',
+                           { line1: '   Charlie Kaufman\'s first stop-motion film about a man crippled by the mundanity of his life.',
+                             line2: '',
                              line3: '',
                              line4: '',
                              line5: '',
@@ -261,9 +261,9 @@ var trailers = {
 
                            'Horror',
 
-                           { line1: '   Against the backdrop of Japan\'s Aokigahara forest, where people go to end',
-                             line2: 'their lives, an American woman braves the mysterious, uncharted terrain to search',
-                             line3: 'for her missing sister.',
+                           { line1: '   Against the backdrop of Japan\'s Aokigahara forest, where people go to end their lives, an American',
+                             line2: 'woman braves the mysterious, uncharted terrain to search for her missing sister.',
+                             line3: '',
                              line4: '',
                              line5: '',
                              line6: '' },
@@ -286,8 +286,8 @@ var trailers = {
 
                               'Comedy',
 
-                              { line1: '   A recently widowed veteran tricks his adult grandson into going on a road trip',
-                                line2: 'for Spring Break in Florida.',
+                              { line1: '   A recently widowed veteran tricks his adult grandson into going on a road trip for Spring Break in',
+                                line2: 'Florida.',
                                 line3: '',
                                 line4: '',
                                 line5: '',
@@ -311,11 +311,11 @@ var trailers = {
 
                        'Drama',
 
-                       { line1: '   RISEN follows the epic Biblical story of the Resurrection, as told through the',
-                         line2: 'eyes of a non-believer. Clavius, a powerful Roman Military Tribune, and his aide',
-                         line3: 'Lucius, are tasked with solving the mystery of what happened to Jesus in the weeks',
-                         line4: 'following the crucifixion, in order to disprove the rumors of a risen Messiah and',
-                         line5: 'prevent an uprising in Jerusalem.',
+                       { line1: '   RISEN follows the epic Biblical story of the Resurrection, as told through the eyes of a non-believer.',
+                         line2: 'Clavius, a powerful Roman Military Tribune, and his aide Lucius, are tasked with solving the mystery of',
+                         line3: 'what happened to Jesus in the weeks following the crucifixion, in order to disprove the rumors of a risen',
+                         line4: 'Messiah and prevent an uprising in Jerusalem.',
+                         line5: '',
                          line6: '' },
 
                          { name: 'Kevin Reynolds', link: imdb('0721817') },
@@ -336,9 +336,9 @@ var trailers = {
 
                             'Comedy',
 
-                            { line1: '   George Clooney and Josh Brolin headline the Coen Brothers comic tale of a',
-                              line2: '1950\'s-era Hollywood fixer tasked by the major studios with safeguarding',
-                              line3: 'their biggest stars.',
+                            { line1: '   George Clooney and Josh Brolin headline the Coen Brothers comic tale of a 1950\'s-era Hollywood',
+                              line2: 'fixer tasked by the major studios with safeguarding their biggest stars.',
+                              line3: '',
                               line4: '',
                               line5: '',
                               line6: '' },
@@ -361,10 +361,10 @@ var trailers = {
 
                       'Drama',
 
-                      { line1: '   Race is based on the incredible true story of Jesse Owens, the legendary',
-                        line2: 'athletic superstar whose quest to become the greatest track and field athlete',
-                        line3: 'in history thrusts him onto the world stage of the 1936 Olympics, where he',
-                        line4: 'faces off against Adolf Hitler\'s vision of Aryan supremacy.',
+                      { line1: '   Race is based on the incredible true story of Jesse Owens, the legendary athletic superstar whose quest',
+                        line2: 'to become the greatest track and field athlete in history thrusts him onto the world stage of the 1936',
+                        line3: 'Olympics, where he faces off against Adolf Hitler\'s vision of Aryan supremacy.',
+                        line4: '',
                         line5: '',
                         line6: '' },
 
@@ -386,8 +386,8 @@ var trailers = {
 
                                  'Action/Adventure',
 
-                                 { line1: '   Following the detruction of Metropolis, Batman (Ben Affleck) embarks on a ',
-                                   line2: 'personal vendetta against Superman (Henry Cavill).',
+                                 { line1: '   Following the detruction of Metropolis, Batman (Ben Affleck) embarks on a personal vendetta against',
+                                   line2: 'Superman (Henry Cavill).',
                                    line3: '',
                                    line4: '',
                                    line5: '',
