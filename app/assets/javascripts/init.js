@@ -8,7 +8,7 @@ if( document.body != null ) {
 
 if( $("container") != null ) {
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor(0x111111);
+  renderer.setClearColor(0x000000);
   append( renderer.domElement, $("container") );
 };
 
@@ -57,7 +57,7 @@ function onMouseHover() {
         if(intersects[0].object.parent == cube.mesh) {
           for(var key in trailers) {
             if(intersects[0].object == trailers[key].videoScreen && hoverKey !== undefined) {
-              info.clearAll();//change to debug trailer info position
+              info.clearAll();//change to debug trailer info position(s)
               hoverKey = key;
               info.draw();
             };
@@ -408,7 +408,7 @@ function onMouseClick() {
         //lighten the background for app navigation
         renderer.setClearColor(0x111111);
         
-        camera.position.set( trailers[clickKey].location.x+.1, trailers[clickKey].location.y-.125, trailers[clickKey].location.z+.45 );
+        camera.position.set(0, 0, 2);
         camera.add(info.object3D);
 
         if(document.webkitIsFullScreen) { document.webkitExitFullscreen() };
@@ -449,8 +449,10 @@ function imagesLoaded() {
   //remove the loading screen
   scene.remove(spinBox.mesh, loading.mesh);
 
-  //move camera to the home position and add to it the trailer info
-  camera.position.set( trailers[Object.keys(trailers)[0]].location.x+.3, trailers[Object.keys(trailers)[0]].location.y-.15, trailers[Object.keys(trailers)[0]].location.z+.5 );
+  //set background color to gray
+  renderer.setClearColor(0x111111);
+
+  //add trailer info to the camera
   camera.add(info.object3D);
 
   //toggle object visibility
@@ -490,9 +492,14 @@ function animate() {
 
   //controls
   if(loading.mesh.parent != scene && clickCount != 1 && playbackControls.object3D.parent != scene) {
-    //TO DO: make the following keyboard-dependent
-    camera.position.x = mouse.x;
-    camera.position.z = Math.pow(mouse.x, 2)+1;
+    
+    //PARABOLIC CONTROLS IN THE X-Z PLANE
+    //camera.position.x = mouse.x;
+    //camera.position.z = Math.pow(mouse.x, 2)+1;
+
+    //LINEAR CONTROLS
+    camera.position.x = mouse.x/2;
+    camera.position.z = Math.abs(mouse.y)+1;
   };
   
   //remain at the loading screen until all images have loaded, then go to the home page

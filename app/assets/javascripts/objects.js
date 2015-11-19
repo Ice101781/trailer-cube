@@ -15,9 +15,10 @@ var scene          = new THREE.Scene(),
     t_cBlue        = 'rgb(75, 50, 175)',
     deepSkyBlue    = 'rgb(0, 191, 255)',
 
-    screenLocations = {  0: new THREE.Vector3(-0.4, 0.45, 0.5),  1: new THREE.Vector3(-0.2, 0.45, 0.5),  2: new THREE.Vector3( 0.0, 0.45, 0.5),  3: new THREE.Vector3( 0.2, 0.45, 0.5),  4: new THREE.Vector3( 0.4, 0.45, 0.5),
-                         5: new THREE.Vector3(-0.4, 0.35, 0.5),  6: new THREE.Vector3(-0.2, 0.35, 0.5),  7: new THREE.Vector3( 0.0, 0.35, 0.5),  8: new THREE.Vector3( 0.2, 0.35, 0.5),  9: new THREE.Vector3( 0.4, 0.35, 0.5),
-                        10: new THREE.Vector3(-0.4, 0.25, 0.5), 11: new THREE.Vector3(-0.2, 0.25, 0.5), 12: new THREE.Vector3( 0.0, 0.25, 0.5), 13: new THREE.Vector3( 0.2, 0.25, 0.5), 14: new THREE.Vector3( 0.4, 0.25, 0.5),
+    screenLocations = {
+                         0: new THREE.Vector3(-0.4, 0.4525, 0.5),  1: new THREE.Vector3(-0.2, 0.4525, 0.5),  2: new THREE.Vector3( 0.0, 0.4525, 0.5),  3: new THREE.Vector3( 0.2, 0.4525, 0.5),  4: new THREE.Vector3( 0.4, 0.4525, 0.5),
+                         5: new THREE.Vector3(-0.4, 0.3475, 0.5),  6: new THREE.Vector3(-0.2, 0.3475, 0.5),  7: new THREE.Vector3( 0.0, 0.3475, 0.5),  8: new THREE.Vector3( 0.2, 0.3475, 0.5),  9: new THREE.Vector3( 0.4, 0.3475, 0.5),
+                        10: new THREE.Vector3(-0.4, 0.2425, 0.5), 11: new THREE.Vector3(-0.2, 0.2425, 0.5), 12: new THREE.Vector3( 0.0, 0.2425, 0.5), 13: new THREE.Vector3( 0.2, 0.2425, 0.5), 14: new THREE.Vector3( 0.4, 0.2425, 0.5),
                       };
 
 /////////////////////////////////////////objects///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,7 +90,7 @@ function rhombicDodecahedron(scalar, hex) {
   this.mesh = new THREE.Mesh(this.geometry, this.material);
     
     this.mesh.visible = true;
-    this.mesh.position.set(0, 10, 0);
+    this.mesh.position.set(0, 5, 0);
 
   this.link = 'http://en.wikipedia.org/wiki/Rhombic_dodecahedron';
 };
@@ -118,7 +119,7 @@ function loadBar() {
     
     this.mesh.maxsize = 95.5;
     this.mesh.visible = true;
-    this.mesh.position.set(-10, -24.5, 0);
+    this.mesh.position.set(-10, -25, 0);
 };
 
 loadBar.prototype = {
@@ -162,134 +163,135 @@ function trailerInfo() {
 
     this.object3D.visible = false;
 
-  this.params = { dividerMesh: {  pixelength:    1280,
-                                  pixelwidth:      16,
-                                  meshlength:    .118,
-                                  meshwidth:  .001475,
-                                  posadjust:  { x: 0, y: -.01515, z: -.075 }  },
+  this.params =    {   dividerMesh: {  pixelength:    1280,
+                                       pixelwidth:      16,
+                                       meshlength:    .118,
+                                       meshwidth:  .001475,
+                                       posadjust:  { x: 0, y: -.01515, z: -.075 }  },
 
-                    titleMesh: {  pixelength:    1280,
-                                  pixelwidth:     128,
-                                  meshlength:   .0286,
-                                  meshwidth:   .00286,
-                                  posadjust:  { x: -.04475, y: -.0175, z: -.075 }  },
+                         titleMesh: {  pixelength:    1280,
+                                       pixelwidth:     128,
+                                       meshlength:   .0286,
+                                       meshwidth:   .00286,
+                                       posadjust:  { x: -.04475, y: -.0175, z: -.075 }  },
 
-                    genreMesh: {  pixelength:    1280,
-                                  pixelwidth:     205,
-                                  meshlength: .017875,
-                                  meshwidth:   .00286,
-                                  posadjust:  { x: -.0185, y: -.0175, z: -.075 }  },
+                         genreMesh: {  pixelength:    1280,
+                                       pixelwidth:     205,
+                                       meshlength: .017875,
+                                       meshwidth:   .00286,
+                                       posadjust:  { x: -.0185, y: -.0175, z: -.075 }  },
 
-                  releaseMesh: {  pixelength:    1280,
-                                  pixelwidth:     340,
-                                  meshlength: .010725,
-                                  meshwidth:   .00286,
-                                  posadjust:  { x: -.001, y: -.0175, z: -.075 }  },
+                       releaseMesh: {  pixelength:    1280,
+                                       pixelwidth:     340,
+                                       meshlength: .010725,
+                                       meshwidth:   .00286,
+                                       posadjust:  { x: -.001, y: -.0175, z: -.075 }  },
 
-                     plotMesh: {  pixelength:    1280,
-                                  pixelwidth:     220,
-                                  meshlength:    .067,
-                                  meshwidth:    .0115,
-                                  posadjust:  { x: -.02525, y: -.02485, z: -.075 }  },
+                          plotMesh: {  pixelength:    1280,
+                                       pixelwidth:     220,
+                                       meshlength:    .067,
+                                       meshwidth:    .0115,
+                                       posadjust:  { x: -.02525, y: -.02485, z: -.075 }  },
 
-             directorTextMesh: {  pixelength:    1280,
-                                  pixelwidth:     320,
-                                  meshlength:  .00715,
-                                  meshwidth: .0017875,
-                                  posadjust:  { x: .012175, y: -.0175, z: -.075 }  },
+                  directorTextMesh: {  pixelength:    1280,
+                                       pixelwidth:     320,
+                                       meshlength:  .00715,
+                                       meshwidth: .0017875,
+                                       posadjust:  { x: .012175, y: -.0175, z: -.075 }  },
 
-                 directorMesh: {  pixelength:    1280,
-                                  pixelwidth:     160,
-                                  meshlength:   .0143,
-                                  meshwidth: .0017875,
-                                  posadjust:  { x: .02305, y: -.0175, z: -.075 }  },
+                      directorMesh: {  pixelength:    1280,
+                                       pixelwidth:     160,
+                                       meshlength:   .0143,
+                                       meshwidth: .0017875,
+                                       posadjust:  { x: .02305, y: -.0175, z: -.075 }  },
 
-                 castTextMesh: {  pixelength:    1280,
-                                  pixelwidth:     320,
-                                  meshlength:  .00715,
-                                  meshwidth: .0017875,
-                                  posadjust:  { x: .012175, y: -.0205, z: -.075 }  },
+                      castTextMesh: {  pixelength:    1280,
+                                       pixelwidth:     320,
+                                       meshlength:  .00715,
+                                       meshwidth: .0017875,
+                                       posadjust:  { x: .012175, y: -.0205, z: -.075 }  },
 
-                  castMeshOne: {  pixelength:    1280,
-                                  pixelwidth:     160,
-                                  meshlength:   .0143,
-                                  meshwidth: .0017875,
-                                  posadjust:  { x: .02305, y: -.0205, z: -.075 }  },
+                       castMeshOne: {  pixelength:    1280,
+                                       pixelwidth:     160,
+                                       meshlength:   .0143,
+                                       meshwidth: .0017875,
+                                       posadjust:  { x: .02305, y: -.0205, z: -.075 }  },
 
-                  castMeshTwo: {  pixelength:    1280,
-                                  pixelwidth:     160,
-                                  meshlength:   .0143,
-                                  meshwidth: .0017875,
-                                  posadjust:  { x: .02305, y: -.0225, z: -.075 }  },
+                       castMeshTwo: {  pixelength:    1280,
+                                       pixelwidth:     160,
+                                       meshlength:   .0143,
+                                       meshwidth: .0017875,
+                                       posadjust:  { x: .02305, y: -.0225, z: -.075 }  },
 
-                castMeshThree: {  pixelength:    1280,
-                                  pixelwidth:     160,
-                                  meshlength:   .0143,
-                                  meshwidth: .0017875,
-                                  posadjust:  { x: .02305, y: -.0245, z: -.075 }  },
+                     castMeshThree: {  pixelength:    1280,
+                                       pixelwidth:     160,
+                                       meshlength:   .0143,
+                                       meshwidth: .0017875,
+                                       posadjust:  { x: .02305, y: -.0245, z: -.075 }  },
 
-                 castMeshFour: {  pixelength:    1280,
-                                  pixelwidth:     160,
-                                  meshlength:   .0143,
-                                  meshwidth: .0017875,
-                                  posadjust:  { x: .02305, y: -.0265, z: -.075 }  },
+                      castMeshFour: {  pixelength:    1280,
+                                       pixelwidth:     160,
+                                       meshlength:   .0143,
+                                       meshwidth: .0017875,
+                                       posadjust:  { x: .02305, y: -.0265, z: -.075 }  },
 
-                 castMeshFive: {  pixelength:    1280,
-                                  pixelwidth:     160,
-                                  meshlength:   .0143,
-                                  meshwidth: .0017875,
-                                  posadjust:  { x: .02305, y: -.0285, z: -.075 }  },
+                      castMeshFive: {  pixelength:    1280,
+                                       pixelwidth:     160,
+                                       meshlength:   .0143,
+                                       meshwidth: .0017875,
+                                       posadjust:  { x: .02305, y: -.0285, z: -.075 }  },
 
-       cinematographyTextMesh: {  pixelength:    1280,
-                                  pixelwidth:     160,
-                                  meshlength:   .0143,
-                                  meshwidth: .0017875,
-                                  posadjust:  { x: .0375, y: -.0175, z: -.075 }  },
+            cinematographyTextMesh: {  pixelength:    1280,
+                                       pixelwidth:     160,
+                                       meshlength:   .0143,
+                                       meshwidth: .0017875,
+                                       posadjust:  { x: .0375, y: -.0175, z: -.075 }  },
 
-        cinematographyMeshOne: {  pixelength:    1280,
-                                  pixelwidth:     160,
-                                  meshlength:   .0143,
-                                  meshwidth: .0017875,
-                                  posadjust:  { x: .05195, y: -.0175, z: -.075 }  },
+             cinematographyMeshOne: {  pixelength:    1280,
+                                       pixelwidth:     160,
+                                       meshlength:   .0143,
+                                       meshwidth: .0017875,
+                                       posadjust:  { x: .05195, y: -.0175, z: -.075 }  },
 
-        cinematographyMeshTwo: {  pixelength:    1280,
-                                  pixelwidth:     160,
-                                  meshlength:   .0143,
-                                  meshwidth: .0017875,
-                                  posadjust:  { x: .05195, y: -.0195, z: -.075 }  },
+             cinematographyMeshTwo: {  pixelength:    1280,
+                                       pixelwidth:     160,
+                                       meshlength:   .0143,
+                                       meshwidth: .0017875,
+                                       posadjust:  { x: .05195, y: -.0195, z: -.075 }  },
 
-              writingTextMesh: {  pixelength:    1280,
-                                  pixelwidth:     160,
-                                  meshlength:   .0143,
-                                  meshwidth: .0017875,
-                                  posadjust:  { x: .0375, y: -.0225, z: -.075 }  },
+                   writingTextMesh: {  pixelength:    1280,
+                                       pixelwidth:     160,
+                                       meshlength:   .0143,
+                                       meshwidth: .0017875,
+                                       posadjust:  { x: .0375, y: -.0225, z: -.075 }  },
 
-               writingMeshOne: {  pixelength:    1280,
-                                  pixelwidth:     160,
-                                  meshlength:   .0143,
-                                  meshwidth: .0017875,
-                                  posadjust:  { x: .05195, y: -.0225, z: -.075 }  },
+                    writingMeshOne: {  pixelength:    1280,
+                                       pixelwidth:     160,
+                                       meshlength:   .0143,
+                                       meshwidth: .0017875,
+                                       posadjust:  { x: .05195, y: -.0225, z: -.075 }  },
 
-               writingMeshTwo: {  pixelength:    1280,
-                                  pixelwidth:     160,
-                                  meshlength:   .0143,
-                                  meshwidth: .0017875,
-                                  posadjust:  { x: .05195, y: -.0245, z: -.075 }  },
+                    writingMeshTwo: {  pixelength:    1280,
+                                       pixelwidth:     160,
+                                       meshlength:   .0143,
+                                       meshwidth: .0017875,
+                                       posadjust:  { x: .05195, y: -.0245, z: -.075 }  },
 
-             writingMeshThree: {  pixelength:    1280,
-                                  pixelwidth:     160,
-                                  meshlength:   .0143,
-                                  meshwidth: .0017875,
-                                  posadjust:  { x: .05195, y: -.0265, z: -.075 }  },
+                  writingMeshThree: {  pixelength:    1280,
+                                       pixelwidth:     160,
+                                       meshlength:   .0143,
+                                       meshwidth: .0017875,
+                                       posadjust:  { x: .05195, y: -.0265, z: -.075 }  },
 
-                 clearingMesh: {  pixelength:    1280,
-                                  pixelwidth:      16,
-                                  meshlength:    .118,
-                                  meshwidth:  .001475,
-                                  posadjust:  { x: 0, y: -.0316, z: -.075 }  } };
+                      clearingMesh: {  pixelength:    1280,
+                                       pixelwidth:      16,
+                                       meshlength:    .118,
+                                       meshwidth:  .001475,
+                                       posadjust:  { x: 0, y: -.0316, z: -.075 }  }   };
 
   params = this.params;
-  
+
+  //info elements
   this.dynamicTextures = {};
 
   for(var name in params) {
@@ -301,13 +303,23 @@ function trailerInfo() {
       new THREE.PlaneBufferGeometry(params[name].meshlength, params[name].meshwidth, 1, 1),
       new THREE.MeshBasicMaterial({map: this.dynamicTextures[name].texture, transparent: true})
     );
-    
+
     this[name].position.set( camera.position.x + params[name].posadjust.x,
-                             camera.position.y + params[name].posadjust.y, 
+                             camera.position.y + params[name].posadjust.y,
                              camera.position.z + params[name].posadjust.z );
     
     this.object3D.add(this[name]);
   };
+
+  //info background
+  this.backgroundMesh = new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(.1195, .01725, 1, 1),
+    new THREE.MeshBasicMaterial({color: 0x000000, transparent: true, opacity: .4})
+  );
+
+  this.backgroundMesh.position.set(0, -.0235, -.075);
+
+  this.object3D.add(this.backgroundMesh);
 };
 
 trailerInfo.prototype = {
@@ -325,7 +337,8 @@ trailerInfo.prototype = {
 
     this.textColors = textColors;
 
-    this.dynamicTextures.dividerMesh.drawText("___________________________________________________________________________________________________________________________________", 0, 10, 'white', '20px Corbel');
+    this.dynamicTextures.dividerMesh.drawText("___________________________________________________________________________________________________________________________________", 0, 7, 'white', '22px Corbel')//method.chain
+                                    .drawText("___________________________________________________________________________________________________________________________________", 1, 7, 'white', '22px Corbel');
 
     this.dynamicTextures.titleMesh.drawText(trailers[key].title.name, 15, 95, textColors.one, '100px Times New Roman');
 
@@ -359,8 +372,8 @@ trailerInfo.prototype = {
     this.dynamicTextures.writingMeshTwo.drawText(trailers[key].writing.two.name, 20, 130, textColors.eleven, '125px Corbel');
     this.dynamicTextures.writingMeshThree.drawText(trailers[key].writing.three.name, 20, 130, textColors.twelve, '125px Corbel');
 
-    this.dynamicTextures.clearingMesh.drawText("___________________________________________________________________________________________________________________________________", 0, 1, textColors.thirteen, '20px Corbel')//method.chain
-                                     .drawText("___________________________________________________________________________________________________________________________________", 0, 4, textColors.thirteen, '20px Corbel');
+    this.dynamicTextures.clearingMesh.drawText("___________________________________________________________________________________________________________________________________", 0, 4, textColors.thirteen, '25px Corbel')//method.chain
+                                     .drawText("___________________________________________________________________________________________________________________________________", 1, 4, textColors.thirteen, '25px Corbel');
   },
 
   clearAll: function(col) {
