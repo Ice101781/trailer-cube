@@ -492,14 +492,19 @@ function animate() {
 
   //controls
   if(loading.mesh.parent != scene && clickCount != 1 && playbackControls.object3D.parent != scene) {
-    
+
     //PARABOLIC CONTROLS IN THE X-Z PLANE
     //camera.position.x = mouse.x;
     //camera.position.z = Math.pow(mouse.x, 2)+1;
 
-    //LINEAR CONTROLS
-    camera.position.x = mouse.x/2;
-    camera.position.z = Math.abs(mouse.y)+1;
+    //MORE OLD CONTROLS
+    //camera.position.x = mouse.x/2;
+    //camera.position.z = Math.abs(mouse.y)+1;
+
+    //EXPONENTIAL CONTROLS
+    camera.position.x = mouse.x/4;
+    camera.position.y = mouse.y/2.5;
+    camera.position.z = Math.pow(2, -3*Math.abs(mouse.y))+.75;
   };
   
   //remain at the loading screen until all images have loaded, then go to the home page

@@ -313,8 +313,8 @@ function trailerInfo() {
 
   //info background
   this.backgroundMesh = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(.1195, .01725, 1, 1),
-    new THREE.MeshBasicMaterial({color: 0x000000, transparent: true, opacity: .4})
+    new THREE.PlaneBufferGeometry(.1205, .01725, 1, 1),
+    new THREE.MeshBasicMaterial({color: 0x000000, transparent: true, opacity: .85})
   );
 
   this.backgroundMesh.position.set(0, -.0235, -.075);
