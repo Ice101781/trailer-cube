@@ -502,9 +502,9 @@ function animate() {
     //camera.position.z = Math.abs(mouse.y)+1;
 
     //EXPONENTIAL CONTROLS
-    camera.position.x = mouse.x/4;
-    camera.position.y = mouse.y/2.5;
-    camera.position.z = Math.pow(2, -3*Math.abs(mouse.y))+.75;
+    camera.position.x = (1/4)*mouse.x;
+    camera.position.y = (2/5)*mouse.y;
+    camera.position.z = (1/(2*(1/2)))*Math.pow(Math.E, -Math.abs(mouse.y)/(1/2))+(7/10);//the pdf of the Laplace distribution translated by a constant...works great here!
   };
   
   //remain at the loading screen until all images have loaded, then go to the home page

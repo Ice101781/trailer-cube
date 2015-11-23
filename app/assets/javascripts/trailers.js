@@ -111,9 +111,9 @@ var trailers = {
 
                              'Drama',
 
-                             { line1: '   Writer and director Adam McKay joins forces with Paramount Pictures and Plan B Entertainment to adapt',
-                               line2: 'Michael Lewis\' best-seller, The Big Short: Inside the Doomsday Machine, which centers on the housing',
-                               line3: 'and credit bubble of the 2000\'s.',
+                             { line1: '   Writer and director Adam McKay joins forces with Paramount Pictures and Plan B Entertainment to',
+                               line2: 'adapt Michael Lewis\' best-seller, The Big Short: Inside the Doomsday Machine, which centers on the',
+                               line3: 'housing and credit bubble of the 2000\'s.',
                                line4: '',
                                line5: '',
                                line6: '' },
@@ -211,11 +211,11 @@ var trailers = {
 
                              'Drama',
 
-                             { line1: '   Inspired by true events, THE REVENANT is an immersive and visceral cinematic experience capturing one',
-                               line2: 'man\'s epic adventure of survival and the extraordinary power of the human spirit. In an expedition of',
-                               line3: 'the uncharted American wilderness, legendary explorer Hugh Glass (DiCaprio) is brutally attacked by a',
-                               line4: 'bear and left for dead by members of his own hunting team. In a quest to survive, Glass endures',
-                               line5: 'unimaginable grief, as well as the betrayal of his confidant John Fitzgerald (Hardy).',
+                             { line1: '   Inspired by true events, THE REVENANT is an immersive and visceral cinematic experience capturing',
+                               line2: 'one man\'s epic adventure of survival and the extraordinary power of the human spirit. In an',
+                               line3: 'expedition of the uncharted American wilderness, legendary explorer Hugh Glass (DiCaprio) is brutally',
+                               line4: 'attacked by a bear and left for dead by members of his own hunting team. In a quest to survive, Glass',
+                               line5: 'endures unimaginable grief, as well as the betrayal of his confidant John Fitzgerald (Hardy).',
                                line6: '' },
 
                              { name: 'A. G. Iñárritu', link: imdb('0327944') },
@@ -313,22 +313,22 @@ var trailers = {
 
                        { line1: '   RISEN follows the epic Biblical story of the Resurrection, as told through the eyes of a non-believer.',
                          line2: 'Clavius, a powerful Roman Military Tribune, and his aide Lucius, are tasked with solving the mystery of',
-                         line3: 'what happened to Jesus in the weeks following the crucifixion, in order to disprove the rumors of a risen',
-                         line4: 'Messiah and prevent an uprising in Jerusalem.',
+                         line3: 'what happened to Jesus in the weeks following the crucifixion, in order to disprove the rumors of a',
+                         line4: 'risen Messiah and prevent an uprising in Jerusalem.',
                          line5: '',
                          line6: '' },
 
-                         { name: 'Kevin Reynolds', link: imdb('0721817') },
+                       { name: 'Kevin Reynolds', link: imdb('0721817') },
 
-                         { one: { name: 'Joseph Fiennes', link: imdb('0001212') }, two: { name: 'Tom Felton', link: imdb('0271657') }, three: { name: 'Peter Firth', link: imdb('0278752') }, four: { name: 'Cliff Curtis', link: imdb('0193295') }, five: { name: 'María Botto', link: imdb('0098710') } },
+                       { one: { name: 'Joseph Fiennes', link: imdb('0001212') }, two: { name: 'Tom Felton', link: imdb('0271657') }, three: { name: 'Peter Firth', link: imdb('0278752') }, four: { name: 'Cliff Curtis', link: imdb('0193295') }, five: { name: 'María Botto', link: imdb('0098710') } },
 
-                         { one: { name: 'Lorenzo Senatore', link: imdb('1062923') }, two: { name: '', link: '' } },
+                       { one: { name: 'Lorenzo Senatore', link: imdb('1062923') }, two: { name: '', link: '' } },
 
-                         { one: { name: 'Paul Aiello', link: imdb('2594149') }, two: { name: 'Kevin Reynolds', link: imdb('0721817') }, three: { name: '', link: '' } },
+                       { one: { name: 'Paul Aiello', link: imdb('2594149') }, two: { name: 'Kevin Reynolds', link: imdb('0721817') }, three: { name: '', link: '' } },
 
-                         '01/22/2016',
+                       '01/22/2016',
 
-                         { videoHeightError: false, aspectRatio: 'type1' }  ),
+                       { videoHeightError: false, aspectRatio: 'type1' }  ),
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -361,9 +361,9 @@ var trailers = {
 
                       'Drama',
 
-                      { line1: '   Race is based on the incredible true story of Jesse Owens, the legendary athletic superstar whose quest',
-                        line2: 'to become the greatest track and field athlete in history thrusts him onto the world stage of the 1936',
-                        line3: 'Olympics, where he faces off against Adolf Hitler\'s vision of Aryan supremacy.',
+                      { line1: '   Race is based on the incredible true story of Jesse Owens, the legendary athletic superstar whose',
+                        line2: 'quest to become the greatest track and field athlete in history thrusts him onto the world stage of',
+                        line3: 'the 1936 Olympics, where he faces off against Adolf Hitler\'s vision of Aryan supremacy.',
                         line4: '',
                         line5: '',
                         line6: '' },

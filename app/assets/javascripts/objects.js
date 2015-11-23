@@ -147,7 +147,7 @@ function wireFrameCube(segments, hex) {
   hex      = typeof hex      !== 'undefined' ? hex      : 0x4B32AF;
   
   this.mesh = new THREE.Mesh(
-    new THREE.BoxGeometry(1, 1, 1, segments, segments, segments), 
+    new THREE.BoxGeometry(1, 1, 1, segments, segments, segments),
     new THREE.MeshBasicMaterial({color: hex, wireframe: true})
   );
 
@@ -165,128 +165,128 @@ function trailerInfo() {
 
   this.params =    {   dividerMesh: {  pixelength:    1280,
                                        pixelwidth:      16,
-                                       meshlength:    .118,
-                                       meshwidth:  .001475,
-                                       posadjust:  { x: 0, y: -.01515, z: -.075 }  },
+                                       meshlength:   .1201,
+                                       meshwidth:    .0015,
+                                       posadjust:  { x: 0, y: -.01075, z: -.075 }  },
 
                          titleMesh: {  pixelength:    1280,
-                                       pixelwidth:     128,
-                                       meshlength:   .0286,
-                                       meshwidth:   .00286,
-                                       posadjust:  { x: -.04475, y: -.0175, z: -.075 }  },
+                                       pixelwidth:      80,
+                                       meshlength:     .04,
+                                       meshwidth:    .0025,
+                                       posadjust:  { x: -.04, y: -.01285, z: -.075 }  },
 
                          genreMesh: {  pixelength:    1280,
-                                       pixelwidth:     205,
-                                       meshlength: .017875,
-                                       meshwidth:   .00286,
-                                       posadjust:  { x: -.0185, y: -.0175, z: -.075 }  },
+                                       pixelwidth:     160,
+                                       meshlength:     .02,
+                                       meshwidth:    .0025,
+                                       posadjust:  { x: -.05, y: -.0087, z: -.075 }  },
 
                        releaseMesh: {  pixelength:    1280,
-                                       pixelwidth:     340,
-                                       meshlength: .010725,
-                                       meshwidth:   .00286,
-                                       posadjust:  { x: -.001, y: -.0175, z: -.075 }  },
+                                       pixelwidth:     320,
+                                       meshlength:     .01,
+                                       meshwidth:    .0025,
+                                       posadjust:  { x: .05475, y: -.0087, z: -.075 }  },
 
                           plotMesh: {  pixelength:    1280,
-                                       pixelwidth:     220,
-                                       meshlength:    .067,
-                                       meshwidth:    .0115,
-                                       posadjust:  { x: -.02525, y: -.02485, z: -.075 }  },
+                                       pixelwidth:     256,
+                                       meshlength:    .077,
+                                       meshwidth:    .0154,
+                                       posadjust:  { x: -.0215, y: -.022, z: -.075 }  },
 
                   directorTextMesh: {  pixelength:    1280,
                                        pixelwidth:     320,
-                                       meshlength:  .00715,
-                                       meshwidth: .0017875,
-                                       posadjust:  { x: .012175, y: -.0175, z: -.075 }  },
+                                       meshlength:    .008,
+                                       meshwidth:     .002,
+                                       posadjust:  { x: .0215, y: -.01275, z: -.075 }  },
 
                       directorMesh: {  pixelength:    1280,
                                        pixelwidth:     160,
-                                       meshlength:   .0143,
-                                       meshwidth: .0017875,
-                                       posadjust:  { x: .02305, y: -.0175, z: -.075 }  },
+                                       meshlength:    .016,
+                                       meshwidth:     .002,
+                                       posadjust:  { x: .0275, y: -.015, z: -.075 }  },
 
                       castTextMesh: {  pixelength:    1280,
                                        pixelwidth:     320,
-                                       meshlength:  .00715,
-                                       meshwidth: .0017875,
-                                       posadjust:  { x: .012175, y: -.0205, z: -.075 }  },
+                                       meshlength:    .008,
+                                       meshwidth:     .002,
+                                       posadjust:  { x: .0215, y: -.018, z: -.075 }  },
 
                        castMeshOne: {  pixelength:    1280,
                                        pixelwidth:     160,
-                                       meshlength:   .0143,
-                                       meshwidth: .0017875,
-                                       posadjust:  { x: .02305, y: -.0205, z: -.075 }  },
+                                       meshlength:    .016,
+                                       meshwidth:     .002,
+                                       posadjust:  { x: .0275, y: -.02025, z: -.075 }  },
 
                        castMeshTwo: {  pixelength:    1280,
                                        pixelwidth:     160,
-                                       meshlength:   .0143,
-                                       meshwidth: .0017875,
-                                       posadjust:  { x: .02305, y: -.0225, z: -.075 }  },
+                                       meshlength:    .016,
+                                       meshwidth:     .002,
+                                       posadjust:  { x: .0275, y: -.0225, z: -.075 }  },
 
                      castMeshThree: {  pixelength:    1280,
                                        pixelwidth:     160,
-                                       meshlength:   .0143,
-                                       meshwidth: .0017875,
-                                       posadjust:  { x: .02305, y: -.0245, z: -.075 }  },
+                                       meshlength:    .016,
+                                       meshwidth:     .002,
+                                       posadjust:  { x: .0275, y: -.02475, z: -.075 }  },
 
                       castMeshFour: {  pixelength:    1280,
                                        pixelwidth:     160,
-                                       meshlength:   .0143,
-                                       meshwidth: .0017875,
-                                       posadjust:  { x: .02305, y: -.0265, z: -.075 }  },
+                                       meshlength:    .016,
+                                       meshwidth:     .002,
+                                       posadjust:  { x: .0275, y: -.027, z: -.075 }  },
 
                       castMeshFive: {  pixelength:    1280,
                                        pixelwidth:     160,
-                                       meshlength:   .0143,
-                                       meshwidth: .0017875,
-                                       posadjust:  { x: .02305, y: -.0285, z: -.075 }  },
+                                       meshlength:    .016,
+                                       meshwidth:     .002,
+                                       posadjust:  { x: .0275, y: -.02925, z: -.075 }  },
 
             cinematographyTextMesh: {  pixelength:    1280,
-                                       pixelwidth:     160,
-                                       meshlength:   .0143,
-                                       meshwidth: .0017875,
-                                       posadjust:  { x: .0375, y: -.0175, z: -.075 }  },
+                                       pixelwidth:     256,
+                                       meshlength:    .013,
+                                       meshwidth:    .0026,
+                                       posadjust:  { x: .04375, y: -.0129, z: -.075 }  },
 
              cinematographyMeshOne: {  pixelength:    1280,
                                        pixelwidth:     160,
-                                       meshlength:   .0143,
-                                       meshwidth: .0017875,
-                                       posadjust:  { x: .05195, y: -.0175, z: -.075 }  },
+                                       meshlength:    .016,
+                                       meshwidth:     .002,
+                                       posadjust:  { x: .04675, y: -.0153, z: -.075 }  },
 
              cinematographyMeshTwo: {  pixelength:    1280,
                                        pixelwidth:     160,
-                                       meshlength:   .0143,
-                                       meshwidth: .0017875,
-                                       posadjust:  { x: .05195, y: -.0195, z: -.075 }  },
+                                       meshlength:    .016,
+                                       meshwidth:     .002,
+                                       posadjust:  { x: .04675, y: -.01755, z: -.075 }  },
 
                    writingTextMesh: {  pixelength:    1280,
-                                       pixelwidth:     160,
-                                       meshlength:   .0143,
-                                       meshwidth: .0017875,
-                                       posadjust:  { x: .0375, y: -.0225, z: -.075 }  },
+                                       pixelwidth:     256,
+                                       meshlength:    .013,
+                                       meshwidth:    .0026,
+                                       posadjust:  { x: .04375, y: -.0205, z: -.075 }  },
 
                     writingMeshOne: {  pixelength:    1280,
                                        pixelwidth:     160,
-                                       meshlength:   .0143,
-                                       meshwidth: .0017875,
-                                       posadjust:  { x: .05195, y: -.0225, z: -.075 }  },
+                                       meshlength:    .016,
+                                       meshwidth:     .002,
+                                       posadjust:  { x: .04675, y: -.0229, z: -.075 }  },
 
                     writingMeshTwo: {  pixelength:    1280,
                                        pixelwidth:     160,
-                                       meshlength:   .0143,
-                                       meshwidth: .0017875,
-                                       posadjust:  { x: .05195, y: -.0245, z: -.075 }  },
+                                       meshlength:    .016,
+                                       meshwidth:     .002,
+                                       posadjust:  { x: .04675, y: -.02515, z: -.075 }  },
 
                   writingMeshThree: {  pixelength:    1280,
                                        pixelwidth:     160,
-                                       meshlength:   .0143,
-                                       meshwidth: .0017875,
-                                       posadjust:  { x: .05195, y: -.0265, z: -.075 }  },
+                                       meshlength:    .016,
+                                       meshwidth:     .002,
+                                       posadjust:  { x: .04675, y: -.0274, z: -.075 }  },
 
                       clearingMesh: {  pixelength:    1280,
                                        pixelwidth:      16,
-                                       meshlength:    .118,
-                                       meshwidth:  .001475,
+                                       meshlength:   .1201,
+                                       meshwidth:    .0015,
                                        posadjust:  { x: 0, y: -.0316, z: -.075 }  }   };
 
   params = this.params;
@@ -304,20 +304,20 @@ function trailerInfo() {
       new THREE.MeshBasicMaterial({map: this.dynamicTextures[name].texture, transparent: true})
     );
 
-    this[name].position.set( camera.position.x + params[name].posadjust.x,
-                             camera.position.y + params[name].posadjust.y,
-                             camera.position.z + params[name].posadjust.z );
-    
+      this[name].position.set( camera.position.x + params[name].posadjust.x,
+                               camera.position.y + params[name].posadjust.y,
+                               camera.position.z + params[name].posadjust.z );
+
     this.object3D.add(this[name]);
   };
 
   //info background
   this.backgroundMesh = new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(.1205, .01725, 1, 1),
-    new THREE.MeshBasicMaterial({color: 0x000000, transparent: true, opacity: .85})
+    new THREE.PlaneBufferGeometry(.1201, .025, 1, 1),
+    new THREE.MeshBasicMaterial({color: 0x111111, transparent: true, opacity: .85})//change color to debug background position
   );
 
-  this.backgroundMesh.position.set(0, -.0235, -.075);
+    this.backgroundMesh.position.set(0, -.0199, -.07501);
 
   this.object3D.add(this.backgroundMesh);
 };
@@ -329,51 +329,49 @@ trailerInfo.prototype = {
   draw: function(key, textColors) {
 
     key        = typeof key        !== 'undefined' ? key        : hoverKey;
-    textColors = typeof textColors !== 'undefined' ? textColors : { one:      t_cBlue,  two:    t_cBlue,  three:  t_cBlue,//continue
-                                                                    four:     t_cBlue,  five:   t_cBlue,  six:    t_cBlue,//continue
-                                                                    seven:    t_cBlue,  eight:  t_cBlue,  nine:   t_cBlue,//continue
-                                                                    ten:      t_cBlue,  eleven: t_cBlue,  twelve: t_cBlue,//continue
-                                                                    thirteen: t_cBlue };
+    textColors = typeof textColors !== 'undefined' ? textColors : {  one:      t_cBlue,  two:    t_cBlue,  three:  t_cBlue,  four: t_cBlue,  five:   t_cBlue,  six:    t_cBlue,
+                                                                     seven:    t_cBlue,  eight:  t_cBlue,  nine:   t_cBlue,  ten:  t_cBlue,  eleven: t_cBlue,  twelve: t_cBlue,
+                                                                     thirteen: t_cBlue  };
 
     this.textColors = textColors;
 
-    this.dynamicTextures.dividerMesh.drawText("___________________________________________________________________________________________________________________________________", 0, 7, 'white', '22px Corbel')//method.chain
-                                    .drawText("___________________________________________________________________________________________________________________________________", 1, 7, 'white', '22px Corbel');
+    this.dynamicTextures.dividerMesh.drawText("_______________________________________________________________________________________________________________________", 0, 3, 'white', '22px Corbel')//method.chain
+                                    .drawText("_______________________________________________________________________________________________________________________", 1, 3, 'white', '22px Corbel');
 
-    this.dynamicTextures.titleMesh.drawText(trailers[key].title.name, 15, 95, textColors.one, '100px Times New Roman');
+    this.dynamicTextures.titleMesh.drawText(trailers[key].title.name, 15, 60, textColors.one, ricasso('55'));
 
-    this.dynamicTextures.genreMesh.drawText(trailers[key].genre, 30, 150, 'white', '125px Times New Roman');
+    this.dynamicTextures.genreMesh.drawText(trailers[key].genre, 15, 130, 'white', '140px Corbel');
 
-    this.dynamicTextures.releaseMesh.drawText(trailers[key].release, 40, 250, 'white', '180px Times New Roman');
+    this.dynamicTextures.releaseMesh.drawText(trailers[key].release, 100, 235, 'white', '250px Corbel');
 
-    this.dynamicTextures.plotMesh.drawText(trailers[key].plot.line1, 10,  30, 'white', '25px Corbel')//method.chain
-      .drawText(trailers[key].plot.line2, 10,  65, 'white', '25px Corbel')
-      .drawText(trailers[key].plot.line3, 10, 100, 'white', '25px Corbel')
-      .drawText(trailers[key].plot.line4, 10, 135, 'white', '25px Corbel')
-      .drawText(trailers[key].plot.line5, 10, 170, 'white', '25px Corbel')
-      .drawText(trailers[key].plot.line6, 10, 205, 'white', '25px Corbel');
+    this.dynamicTextures.plotMesh.drawText(trailers[key].plot.line1, 20,  30, 'white', '28px Corbel')//method.chain
+      .drawText(trailers[key].plot.line2, 20,  65, 'white', '28px Corbel')
+      .drawText(trailers[key].plot.line3, 20, 100, 'white', '28px Corbel')
+      .drawText(trailers[key].plot.line4, 20, 135, 'white', '28px Corbel')
+      .drawText(trailers[key].plot.line5, 20, 170, 'white', '28px Corbel')
+      .drawText(trailers[key].plot.line6, 20, 205, 'white', '28px Corbel');
 
-    this.dynamicTextures.directorTextMesh.drawText("Director:", 135, 245, 'white', '260px Times New Roman');
-    this.dynamicTextures.directorMesh.drawText(trailers[key].director.name, 20, 130, textColors.two, '125px Corbel');
+    this.dynamicTextures.directorTextMesh.drawText("Director:", 150, 245, 'white', '275px Corbel');
+    this.dynamicTextures.directorMesh.drawText(trailers[key].director.name, 20, 120, textColors.two, '135px Corbel');
 
-    this.dynamicTextures.castTextMesh.drawText("Cast:", 540, 245, 'white', '260px Times New Roman');
-    this.dynamicTextures.castMeshOne.drawText(trailers[key].cast.one.name, 20, 130, textColors.three, '125px Corbel');
-    this.dynamicTextures.castMeshTwo.drawText(trailers[key].cast.two.name, 20, 130, textColors.four, '125px Corbel');
-    this.dynamicTextures.castMeshThree.drawText(trailers[key].cast.three.name, 20, 130, textColors.five, '125px Corbel');
-    this.dynamicTextures.castMeshFour.drawText(trailers[key].cast.four.name, 20, 130, textColors.six, '125px Corbel');
-    this.dynamicTextures.castMeshFive.drawText(trailers[key].cast.five.name, 20, 130, textColors.seven, '125px Corbel');
+    this.dynamicTextures.castTextMesh.drawText("Cast:", 150, 245, 'white', '275px Corbel');
+    this.dynamicTextures.castMeshOne.drawText(trailers[key].cast.one.name, 20, 120, textColors.three, '135px Corbel');
+    this.dynamicTextures.castMeshTwo.drawText(trailers[key].cast.two.name, 20, 120, textColors.four, '135px Corbel');
+    this.dynamicTextures.castMeshThree.drawText(trailers[key].cast.three.name, 20, 120, textColors.five, '135px Corbel');
+    this.dynamicTextures.castMeshFour.drawText(trailers[key].cast.four.name, 20, 120, textColors.six, '135px Corbel');
+    this.dynamicTextures.castMeshFive.drawText(trailers[key].cast.five.name, 20, 120, textColors.seven, '135px Corbel');
 
-    this.dynamicTextures.cinematographyTextMesh.drawText("Cinematography:", 350, 120, 'white', '120px Times New Roman');
-    this.dynamicTextures.cinematographyMeshOne.drawText(trailers[key].cinematography.one.name, 20, 130, textColors.eight, '125px Corbel');
-    this.dynamicTextures.cinematographyMeshTwo.drawText(trailers[key].cinematography.two.name, 20, 130, textColors.nine, '125px Corbel');
+    this.dynamicTextures.cinematographyTextMesh.drawText("Cinematography:", 25, 175, 'white', '170px Corbel');
+    this.dynamicTextures.cinematographyMeshOne.drawText(trailers[key].cinematography.one.name, 20, 120, textColors.eight, '135px Corbel');
+    this.dynamicTextures.cinematographyMeshTwo.drawText(trailers[key].cinematography.two.name, 20, 120, textColors.nine, '135px Corbel');
 
-    this.dynamicTextures.writingTextMesh.drawText("Writing:", 775, 120, 'white', '120px Times New Roman');
-    this.dynamicTextures.writingMeshOne.drawText(trailers[key].writing.one.name, 20, 130, textColors.ten, '125px Corbel');
-    this.dynamicTextures.writingMeshTwo.drawText(trailers[key].writing.two.name, 20, 130, textColors.eleven, '125px Corbel');
-    this.dynamicTextures.writingMeshThree.drawText(trailers[key].writing.three.name, 20, 130, textColors.twelve, '125px Corbel');
+    this.dynamicTextures.writingTextMesh.drawText("Writing:", 25, 175, 'white', '170px Corbel');
+    this.dynamicTextures.writingMeshOne.drawText(trailers[key].writing.one.name, 20, 120, textColors.ten, '135px Corbel');
+    this.dynamicTextures.writingMeshTwo.drawText(trailers[key].writing.two.name, 20, 120, textColors.eleven, '135px Corbel');
+    this.dynamicTextures.writingMeshThree.drawText(trailers[key].writing.three.name, 20, 120, textColors.twelve, '135px Corbel');
 
-    this.dynamicTextures.clearingMesh.drawText("___________________________________________________________________________________________________________________________________", 0, 4, textColors.thirteen, '25px Corbel')//method.chain
-                                     .drawText("___________________________________________________________________________________________________________________________________", 1, 4, textColors.thirteen, '25px Corbel');
+    this.dynamicTextures.clearingMesh.drawText("_________________________________________________________________________________________________________", 0, 4, textColors.thirteen, '25px Corbel')//method.chain
+                                     .drawText("_________________________________________________________________________________________________________", 1, 4, textColors.thirteen, '25px Corbel');
   },
 
   clearAll: function(col) {
@@ -537,9 +535,9 @@ function videoPlaybackControls() {
       new THREE.MeshBasicMaterial({map: params[name].texturemap, color: params[name].color})
     );
 
-    this[name].position.set( this.object3D.position.x + params[name].posadjust.x,
-                             this.object3D.position.y + params[name].posadjust.y,
-                             this.object3D.position.z + params[name].posadjust.z );
+      this[name].position.set( this.object3D.position.x + params[name].posadjust.x,
+                               this.object3D.position.y + params[name].posadjust.y,
+                               this.object3D.position.z + params[name].posadjust.z );
 
     this.object3D.add(this[name]);
   };
