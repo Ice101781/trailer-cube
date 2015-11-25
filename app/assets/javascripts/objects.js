@@ -426,8 +426,8 @@ function videoPlaybackControls() {
                                         texturemap:      null, 
                                          posadjust:  { x: -0.046, y: -0.038, z: 0.000102 }  },
 
-                   timeElapsedMesh:  {  pixelength:      1280,
-                                        pixelwidth:       720,
+                   timeElapsedMesh:  {  pixelength:       128,
+                                        pixelwidth:        72,
                                         meshlength:     .0072,
                                          meshwidth:    .00405,
                                              color:  0x4B32AF,
@@ -435,8 +435,8 @@ function videoPlaybackControls() {
                                         texturemap:      null,   
                                          posadjust:  { x: -0.075, y: -0.038, z: 0.0001 }  },
 
-                 timeRemainingMesh:  {  pixelength:      1280,
-                                        pixelwidth:       720,
+                 timeRemainingMesh:  {  pixelength:       128,
+                                        pixelwidth:        72,
                                         meshlength:     .0072, 
                                          meshwidth:    .00405,
                                              color:  0x4B32AF,
@@ -550,7 +550,7 @@ videoPlaybackControls.prototype = {
   trailerTimeUpdate: function() {
         
     this.dynamicTextures.timeElapsedMesh.clear('black');
-    this.dynamicTextures.timeElapsedMesh.drawText(sec_to_string(Math.round(trailers[clickKey].video.currentTime)), undefined, 475, 'white', '500px Corbel');
+    this.dynamicTextures.timeElapsedMesh.drawText(sec_to_string(Math.round(trailers[clickKey].video.currentTime)), 20, 45, 'white', '50px Corbel');
 
     this.bufferedMesh.scale.x = (this.timelineMesh.geometry.parameters.width*(Math.round(trailers[clickKey].video.buffered.end(0))/Math.round(trailers[clickKey].video.duration))-this.bufferedMesh.geometry.parameters.width)/this.bufferedMesh.geometry.parameters.width;
     this.bufferedMesh.position.x = (2*this.timelineMesh.position.x-params.timelineMesh.meshlength+this.bufferedMesh.scale.x*this.bufferedMesh.geometry.parameters.width)/2;
@@ -559,7 +559,7 @@ videoPlaybackControls.prototype = {
     this.progressMesh.position.x = (2*this.timelineMesh.position.x-params.timelineMesh.meshlength+this.progressMesh.scale.x*this.progressMesh.geometry.parameters.width)/2;
 
     this.dynamicTextures.timeRemainingMesh.clear('black');
-    this.dynamicTextures.timeRemainingMesh.drawText(sec_to_string(Math.round(trailers[clickKey].video.duration)-Math.round(trailers[clickKey].video.currentTime)), undefined, 475, 'white', '500px Corbel');
+    this.dynamicTextures.timeRemainingMesh.drawText(sec_to_string(Math.round(trailers[clickKey].video.duration)-Math.round(trailers[clickKey].video.currentTime)), 20, 45, 'white', '50px Corbel');
   },
 
   pauseButtonSwap: function() {
