@@ -221,6 +221,7 @@ function onMouseClick() {
             clickCount++;
           } else {
             clickCount = 1;
+            //TO DO: ADD LOGIC TO DARKEN ALL OTHER SCREENS WHEN A SCREEN HAS BEEN CLICKED
           };
 
           //retrieve a global-scope key

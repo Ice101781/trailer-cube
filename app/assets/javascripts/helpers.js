@@ -87,7 +87,7 @@
 
     this.videoScreen = new THREE.Mesh( 
       new THREE.PlaneBufferGeometry(.16, .09, 1, 1), 
-      new THREE.MeshBasicMaterial( {map: THREE.ImageUtils.loadTexture("/public_assets/t_c.png"), overdraw: true} )
+      new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture("/public_assets/t_c.png"), overdraw: true})
     );
 
       this.videoScreen.visible = true;

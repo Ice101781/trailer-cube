@@ -175,14 +175,14 @@ function trailerInfo() {
                                        meshwidth:    .0025,
                                        posadjust:  { x: -.04, y: -.01285, z: -.075 }  },
 
-                         genreMesh: {  pixelength:    1280,
-                                       pixelwidth:     160,
+                         genreMesh: {  pixelength:     480,
+                                       pixelwidth:      60,
                                        meshlength:     .02,
                                        meshwidth:    .0025,
                                        posadjust:  { x: -.05, y: -.0087, z: -.075 }  },
 
-                       releaseMesh: {  pixelength:    1280,
-                                       pixelwidth:     320,
+                       releaseMesh: {  pixelength:     240,
+                                       pixelwidth:      60,
                                        meshlength:     .01,
                                        meshwidth:    .0025,
                                        posadjust:  { x: .05475, y: -.0087, z: -.075 }  },
@@ -193,95 +193,95 @@ function trailerInfo() {
                                        meshwidth:    .0154,
                                        posadjust:  { x: -.0215, y: -.022, z: -.075 }  },
 
-                  directorTextMesh: {  pixelength:    1280,
-                                       pixelwidth:     320,
+                  directorTextMesh: {  pixelength:     200,
+                                       pixelwidth:      50,
                                        meshlength:    .008,
                                        meshwidth:     .002,
                                        posadjust:  { x: .0215, y: -.01275, z: -.075 }  },
 
-                      directorMesh: {  pixelength:    1280,
-                                       pixelwidth:     160,
+                      directorMesh: {  pixelength:     400,
+                                       pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
                                        posadjust:  { x: .0275, y: -.015, z: -.075 }  },
 
-                      castTextMesh: {  pixelength:    1280,
-                                       pixelwidth:     320,
+                      castTextMesh: {  pixelength:     200,
+                                       pixelwidth:      50,
                                        meshlength:    .008,
                                        meshwidth:     .002,
                                        posadjust:  { x: .0215, y: -.018, z: -.075 }  },
 
-                       castMeshOne: {  pixelength:    1280,
-                                       pixelwidth:     160,
+                       castMeshOne: {  pixelength:     400,
+                                       pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
                                        posadjust:  { x: .0275, y: -.02025, z: -.075 }  },
 
-                       castMeshTwo: {  pixelength:    1280,
-                                       pixelwidth:     160,
+                       castMeshTwo: {  pixelength:     400,
+                                       pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
                                        posadjust:  { x: .0275, y: -.0225, z: -.075 }  },
 
-                     castMeshThree: {  pixelength:    1280,
-                                       pixelwidth:     160,
+                     castMeshThree: {  pixelength:     400,
+                                       pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
                                        posadjust:  { x: .0275, y: -.02475, z: -.075 }  },
 
-                      castMeshFour: {  pixelength:    1280,
-                                       pixelwidth:     160,
+                      castMeshFour: {  pixelength:     400,
+                                       pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
                                        posadjust:  { x: .0275, y: -.027, z: -.075 }  },
 
-                      castMeshFive: {  pixelength:    1280,
-                                       pixelwidth:     160,
+                      castMeshFive: {  pixelength:     400,
+                                       pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
                                        posadjust:  { x: .0275, y: -.02925, z: -.075 }  },
 
-            cinematographyTextMesh: {  pixelength:    1280,
-                                       pixelwidth:     256,
-                                       meshlength:    .013,
-                                       meshwidth:    .0026,
-                                       posadjust:  { x: .04375, y: -.0129, z: -.075 }  },
-
-             cinematographyMeshOne: {  pixelength:    1280,
-                                       pixelwidth:     160,
+            cinematographyTextMesh: {  pixelength:     400,
+                                       pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
-                                       posadjust:  { x: .04675, y: -.0153, z: -.075 }  },
+                                       posadjust:  { x: .04425, y: -.01285, z: -.075 }  },
 
-             cinematographyMeshTwo: {  pixelength:    1280,
-                                       pixelwidth:     160,
+             cinematographyMeshOne: {  pixelength:     400,
+                                       pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
-                                       posadjust:  { x: .04675, y: -.01755, z: -.075 }  },
+                                       posadjust:  { x: .0465, y: -.0151, z: -.075 }  },
 
-                   writingTextMesh: {  pixelength:    1280,
-                                       pixelwidth:     256,
-                                       meshlength:    .013,
-                                       meshwidth:    .0026,
-                                       posadjust:  { x: .04375, y: -.0205, z: -.075 }  },
-
-                    writingMeshOne: {  pixelength:    1280,
-                                       pixelwidth:     160,
+             cinematographyMeshTwo: {  pixelength:     400,
+                                       pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
-                                       posadjust:  { x: .04675, y: -.0229, z: -.075 }  },
+                                       posadjust:  { x: .0465, y: -.01735, z: -.075 }  },
 
-                    writingMeshTwo: {  pixelength:    1280,
-                                       pixelwidth:     160,
+                   writingTextMesh: {  pixelength:     400,
+                                       pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
-                                       posadjust:  { x: .04675, y: -.02515, z: -.075 }  },
+                                       posadjust:  { x: .04425, y: -.02025, z: -.075 }  },
 
-                  writingMeshThree: {  pixelength:    1280,
-                                       pixelwidth:     160,
+                    writingMeshOne: {  pixelength:     400,
+                                       pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
-                                       posadjust:  { x: .04675, y: -.0274, z: -.075 }  },
+                                       posadjust:  { x: .0465, y: -.0225, z: -.075 }  },
+
+                    writingMeshTwo: {  pixelength:     400,
+                                       pixelwidth:      50,
+                                       meshlength:    .016,
+                                       meshwidth:     .002,
+                                       posadjust:  { x: .0465, y: -.02475, z: -.075 }  },
+
+                  writingMeshThree: {  pixelength:     400,
+                                       pixelwidth:      50,
+                                       meshlength:    .016,
+                                       meshwidth:     .002,
+                                       posadjust:  { x: .0465, y: -.027, z: -.075 }  },
 
                       clearingMesh: {  pixelength:    1280,
                                        pixelwidth:      16,
@@ -314,7 +314,7 @@ function trailerInfo() {
   //info background
   this.backgroundMesh = new THREE.Mesh(
     new THREE.PlaneBufferGeometry(.1201, .025, 1, 1),
-    new THREE.MeshBasicMaterial({color: 0x111111, transparent: true, opacity: .85})//change color to debug background position
+    new THREE.MeshBasicMaterial({color: 0x111111, transparent: true, opacity: .9})//change color to debug background position
   );
 
     this.backgroundMesh.position.set(0, -.0199, -.07501);
@@ -340,9 +340,9 @@ trailerInfo.prototype = {
 
     this.dynamicTextures.titleMesh.drawText(trailers[key].title.name, 15, 60, textColors.one, ricasso('55'));
 
-    this.dynamicTextures.genreMesh.drawText(trailers[key].genre, 15, 130, 'white', '140px Corbel');
+    this.dynamicTextures.genreMesh.drawText(trailers[key].genre, 10, 45, 'white', '50px Corbel');
 
-    this.dynamicTextures.releaseMesh.drawText(trailers[key].release, 100, 235, 'white', '250px Corbel');
+    this.dynamicTextures.releaseMesh.drawText(trailers[key].release, 50, 40, 'white', '40px Corbel');
 
     this.dynamicTextures.plotMesh.drawText(trailers[key].plot.line1, 20,  30, 'white', '28px Corbel')//method.chain
       .drawText(trailers[key].plot.line2, 20,  65, 'white', '28px Corbel')
@@ -351,24 +351,24 @@ trailerInfo.prototype = {
       .drawText(trailers[key].plot.line5, 20, 170, 'white', '28px Corbel')
       .drawText(trailers[key].plot.line6, 20, 205, 'white', '28px Corbel');
 
-    this.dynamicTextures.directorTextMesh.drawText("Director:", 150, 245, 'white', '275px Corbel');
-    this.dynamicTextures.directorMesh.drawText(trailers[key].director.name, 20, 120, textColors.two, '135px Corbel');
+    this.dynamicTextures.directorTextMesh.drawText("Director:", 15, 38, 'white', '40px Corbel');
+    this.dynamicTextures.directorMesh.drawText(trailers[key].director.name, 10, 37, textColors.two, '40px Corbel');
 
-    this.dynamicTextures.castTextMesh.drawText("Cast:", 150, 245, 'white', '275px Corbel');
-    this.dynamicTextures.castMeshOne.drawText(trailers[key].cast.one.name, 20, 120, textColors.three, '135px Corbel');
-    this.dynamicTextures.castMeshTwo.drawText(trailers[key].cast.two.name, 20, 120, textColors.four, '135px Corbel');
-    this.dynamicTextures.castMeshThree.drawText(trailers[key].cast.three.name, 20, 120, textColors.five, '135px Corbel');
-    this.dynamicTextures.castMeshFour.drawText(trailers[key].cast.four.name, 20, 120, textColors.six, '135px Corbel');
-    this.dynamicTextures.castMeshFive.drawText(trailers[key].cast.five.name, 20, 120, textColors.seven, '135px Corbel');
+    this.dynamicTextures.castTextMesh.drawText("Cast:", 15, 38, 'white', '40px Corbel');
+    this.dynamicTextures.castMeshOne.drawText(trailers[key].cast.one.name, 10, 37, textColors.three, '40px Corbel');
+    this.dynamicTextures.castMeshTwo.drawText(trailers[key].cast.two.name, 10, 37, textColors.four, '40px Corbel');
+    this.dynamicTextures.castMeshThree.drawText(trailers[key].cast.three.name, 10, 37, textColors.five, '40px Corbel');
+    this.dynamicTextures.castMeshFour.drawText(trailers[key].cast.four.name, 10, 37, textColors.six, '40px Corbel');
+    this.dynamicTextures.castMeshFive.drawText(trailers[key].cast.five.name, 10, 37, textColors.seven, '40px Corbel');
 
-    this.dynamicTextures.cinematographyTextMesh.drawText("Cinematography:", 25, 175, 'white', '170px Corbel');
-    this.dynamicTextures.cinematographyMeshOne.drawText(trailers[key].cinematography.one.name, 20, 120, textColors.eight, '135px Corbel');
-    this.dynamicTextures.cinematographyMeshTwo.drawText(trailers[key].cinematography.two.name, 20, 120, textColors.nine, '135px Corbel');
+    this.dynamicTextures.cinematographyTextMesh.drawText("Cinematography:", 10, 37, 'white', '40px Corbel');
+    this.dynamicTextures.cinematographyMeshOne.drawText(trailers[key].cinematography.one.name, 10, 37, textColors.eight, '40px Corbel');
+    this.dynamicTextures.cinematographyMeshTwo.drawText(trailers[key].cinematography.two.name, 10, 37, textColors.nine, '40px Corbel');
 
-    this.dynamicTextures.writingTextMesh.drawText("Writing:", 25, 175, 'white', '170px Corbel');
-    this.dynamicTextures.writingMeshOne.drawText(trailers[key].writing.one.name, 20, 120, textColors.ten, '135px Corbel');
-    this.dynamicTextures.writingMeshTwo.drawText(trailers[key].writing.two.name, 20, 120, textColors.eleven, '135px Corbel');
-    this.dynamicTextures.writingMeshThree.drawText(trailers[key].writing.three.name, 20, 120, textColors.twelve, '135px Corbel');
+    this.dynamicTextures.writingTextMesh.drawText("Writing:", 10, 38, 'white', '40px Corbel');
+    this.dynamicTextures.writingMeshOne.drawText(trailers[key].writing.one.name, 10, 37, textColors.ten, '40px Corbel');
+    this.dynamicTextures.writingMeshTwo.drawText(trailers[key].writing.two.name, 10, 37, textColors.eleven, '40px Corbel');
+    this.dynamicTextures.writingMeshThree.drawText(trailers[key].writing.three.name, 10, 37, textColors.twelve, '40px Corbel');
 
     this.dynamicTextures.clearingMesh.drawText("_________________________________________________________________________________________________________", 0, 4, textColors.thirteen, '25px Corbel')//method.chain
                                      .drawText("_________________________________________________________________________________________________________", 1, 4, textColors.thirteen, '25px Corbel');
