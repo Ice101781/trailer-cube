@@ -35,7 +35,11 @@
   };
 
 
-//RicassoRegular text helper
+//font helpers
+  function corbel(textSize) {
+    return textSize + 'px Corbel';
+  };
+
   function ricasso(textSize) {
     return textSize + 'px RicassoRegular';
   };
@@ -47,7 +51,13 @@
   };
 
 
-//the trailer object (placed here for compile reasons)
+//video source helper
+  function source(filename) {
+    return "https://files9.s3-us-west-2.amazonaws.com/hd_trailers/"+filename+"/"+filename+".mp4";
+  };
+
+
+//the trailer object; placed here for compile reasons
   function trailer(title, genre, plot, director, cast, cinematography, writing, release, formatting) {
   
     title          = typeof title          !== 'undefined' ? title          : { name:'', link:'' };
@@ -97,7 +107,7 @@
 
     constructor: trailer,
 
-    loadVideo: function() {
+    playVideo: function() {
       this.videoScreen.material.map = this.texture;
       this.video.load();
       this.video.play();
@@ -108,11 +118,19 @@
       this.texture.needsUpdate = true;
     },
 
-    unloadVideo: function() {
+    stopVideo: function() {
       this.video.pause();
       this.video.currentTime = 0;
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.videoScreen.material.map = this.imageStill;
+    },
+
+    darkenScreen: function() {
+      this.videoScreen.material.color.setHex(0x333333);
+    },
+
+    lightenScreen: function() {
+      this.videoScreen.material.color.setHex(0xFFFFFF);
     }
   };
 

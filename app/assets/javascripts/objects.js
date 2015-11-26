@@ -163,19 +163,7 @@ function trailerInfo() {
 
     this.object3D.visible = false;
 
-  this.params =    {   dividerMesh: {  pixelength:    1280,
-                                       pixelwidth:      16,
-                                       meshlength:   .1201,
-                                       meshwidth:    .0015,
-                                       posadjust:  { x: 0, y: -.01075, z: -.075 }  },
-
-                         titleMesh: {  pixelength:    1280,
-                                       pixelwidth:      80,
-                                       meshlength:     .04,
-                                       meshwidth:    .0025,
-                                       posadjust:  { x: -.04, y: -.01285, z: -.075 }  },
-
-                         genreMesh: {  pixelength:     480,
+  this.params =      {   genreMesh: {  pixelength:     480,
                                        pixelwidth:      60,
                                        meshlength:     .02,
                                        meshwidth:    .0025,
@@ -186,6 +174,18 @@ function trailerInfo() {
                                        meshlength:     .01,
                                        meshwidth:    .0025,
                                        posadjust:  { x: .05475, y: -.0087, z: -.075 }  },
+
+                      clearingMesh: {  pixelength:    1280,
+                                       pixelwidth:      16,
+                                       meshlength:   .1201,
+                                       meshwidth:    .0015,
+                                       posadjust:  { x: 0, y: -.01075, z: -.075 }  },
+
+                         titleMesh: {  pixelength:    1280,
+                                       pixelwidth:      80,
+                                       meshlength:     .04,
+                                       meshwidth:    .0025,
+                                       posadjust:  { x: -.04, y: -.01285, z: -.075 }  },
 
                           plotMesh: {  pixelength:    1280,
                                        pixelwidth:     256,
@@ -283,7 +283,7 @@ function trailerInfo() {
                                        meshwidth:     .002,
                                        posadjust:  { x: .0465, y: -.027, z: -.075 }  },
 
-                      clearingMesh: {  pixelength:    1280,
+                       dividerMesh: {  pixelength:    1280,
                                        pixelwidth:      16,
                                        meshlength:   .1201,
                                        meshwidth:    .0015,
@@ -335,43 +335,43 @@ trailerInfo.prototype = {
 
     this.textColors = textColors;
 
-    this.dynamicTextures.dividerMesh.drawText("_______________________________________________________________________________________________________________________", 0, 3, 'white', '22px Corbel')//method.chain
-                                    .drawText("_______________________________________________________________________________________________________________________", 1, 3, 'white', '22px Corbel');
+    this.dynamicTextures.genreMesh.drawText(trailers[key].genre, 10, 45, 'white', corbel('50'));
+
+    this.dynamicTextures.releaseMesh.drawText(trailers[key].release, 50, 40, 'white', corbel('40'));
+
+    this.dynamicTextures.clearingMesh.drawText("_________________________________________________________________________________________________________", 0, 2, textColors.thirteen, corbel('25'))//method.chain
+                                     .drawText("_________________________________________________________________________________________________________", 1, 2, textColors.thirteen, corbel('25'));
 
     this.dynamicTextures.titleMesh.drawText(trailers[key].title.name, 15, 60, textColors.one, ricasso('55'));
 
-    this.dynamicTextures.genreMesh.drawText(trailers[key].genre, 10, 45, 'white', '50px Corbel');
+    this.dynamicTextures.plotMesh.drawText(trailers[key].plot.line1, 20,  30, 'white', corbel('28'))//method.chain
+      .drawText(trailers[key].plot.line2, 20,  65, 'white', corbel('28'))
+      .drawText(trailers[key].plot.line3, 20, 100, 'white', corbel('28'))
+      .drawText(trailers[key].plot.line4, 20, 135, 'white', corbel('28'))
+      .drawText(trailers[key].plot.line5, 20, 170, 'white', corbel('28'))
+      .drawText(trailers[key].plot.line6, 20, 205, 'white', corbel('28'));
 
-    this.dynamicTextures.releaseMesh.drawText(trailers[key].release, 50, 40, 'white', '40px Corbel');
+    this.dynamicTextures.directorTextMesh.drawText("Director:", 15, 38, 'white', corbel('40'));
+    this.dynamicTextures.directorMesh.drawText(trailers[key].director.name, 10, 37, textColors.two, corbel('40'));
 
-    this.dynamicTextures.plotMesh.drawText(trailers[key].plot.line1, 20,  30, 'white', '28px Corbel')//method.chain
-      .drawText(trailers[key].plot.line2, 20,  65, 'white', '28px Corbel')
-      .drawText(trailers[key].plot.line3, 20, 100, 'white', '28px Corbel')
-      .drawText(trailers[key].plot.line4, 20, 135, 'white', '28px Corbel')
-      .drawText(trailers[key].plot.line5, 20, 170, 'white', '28px Corbel')
-      .drawText(trailers[key].plot.line6, 20, 205, 'white', '28px Corbel');
+    this.dynamicTextures.castTextMesh.drawText("Cast:", 15, 38, 'white', corbel('40'));
+    this.dynamicTextures.castMeshOne.drawText(trailers[key].cast.one.name, 10, 37, textColors.three, corbel('40'));
+    this.dynamicTextures.castMeshTwo.drawText(trailers[key].cast.two.name, 10, 37, textColors.four, corbel('40'));
+    this.dynamicTextures.castMeshThree.drawText(trailers[key].cast.three.name, 10, 37, textColors.five, corbel('40'));
+    this.dynamicTextures.castMeshFour.drawText(trailers[key].cast.four.name, 10, 37, textColors.six, corbel('40'));
+    this.dynamicTextures.castMeshFive.drawText(trailers[key].cast.five.name, 10, 37, textColors.seven, corbel('40'));
 
-    this.dynamicTextures.directorTextMesh.drawText("Director:", 15, 38, 'white', '40px Corbel');
-    this.dynamicTextures.directorMesh.drawText(trailers[key].director.name, 10, 37, textColors.two, '40px Corbel');
+    this.dynamicTextures.cinematographyTextMesh.drawText("Cinematography:", 10, 37, 'white', corbel('40'));
+    this.dynamicTextures.cinematographyMeshOne.drawText(trailers[key].cinematography.one.name, 10, 37, textColors.eight, corbel('40'));
+    this.dynamicTextures.cinematographyMeshTwo.drawText(trailers[key].cinematography.two.name, 10, 37, textColors.nine, corbel('40'));
 
-    this.dynamicTextures.castTextMesh.drawText("Cast:", 15, 38, 'white', '40px Corbel');
-    this.dynamicTextures.castMeshOne.drawText(trailers[key].cast.one.name, 10, 37, textColors.three, '40px Corbel');
-    this.dynamicTextures.castMeshTwo.drawText(trailers[key].cast.two.name, 10, 37, textColors.four, '40px Corbel');
-    this.dynamicTextures.castMeshThree.drawText(trailers[key].cast.three.name, 10, 37, textColors.five, '40px Corbel');
-    this.dynamicTextures.castMeshFour.drawText(trailers[key].cast.four.name, 10, 37, textColors.six, '40px Corbel');
-    this.dynamicTextures.castMeshFive.drawText(trailers[key].cast.five.name, 10, 37, textColors.seven, '40px Corbel');
+    this.dynamicTextures.writingTextMesh.drawText("Writing:", 10, 38, 'white', corbel('40'));
+    this.dynamicTextures.writingMeshOne.drawText(trailers[key].writing.one.name, 10, 37, textColors.ten, corbel('40'));
+    this.dynamicTextures.writingMeshTwo.drawText(trailers[key].writing.two.name, 10, 37, textColors.eleven, corbel('40'));
+    this.dynamicTextures.writingMeshThree.drawText(trailers[key].writing.three.name, 10, 37, textColors.twelve, corbel('40'));
 
-    this.dynamicTextures.cinematographyTextMesh.drawText("Cinematography:", 10, 37, 'white', '40px Corbel');
-    this.dynamicTextures.cinematographyMeshOne.drawText(trailers[key].cinematography.one.name, 10, 37, textColors.eight, '40px Corbel');
-    this.dynamicTextures.cinematographyMeshTwo.drawText(trailers[key].cinematography.two.name, 10, 37, textColors.nine, '40px Corbel');
-
-    this.dynamicTextures.writingTextMesh.drawText("Writing:", 10, 38, 'white', '40px Corbel');
-    this.dynamicTextures.writingMeshOne.drawText(trailers[key].writing.one.name, 10, 37, textColors.ten, '40px Corbel');
-    this.dynamicTextures.writingMeshTwo.drawText(trailers[key].writing.two.name, 10, 37, textColors.eleven, '40px Corbel');
-    this.dynamicTextures.writingMeshThree.drawText(trailers[key].writing.three.name, 10, 37, textColors.twelve, '40px Corbel');
-
-    this.dynamicTextures.clearingMesh.drawText("_________________________________________________________________________________________________________", 0, 4, textColors.thirteen, '25px Corbel')//method.chain
-                                     .drawText("_________________________________________________________________________________________________________", 1, 4, textColors.thirteen, '25px Corbel');
+    this.dynamicTextures.dividerMesh.drawText("_________________________________________________________________________________________________________", 0, 6, 'white', corbel('25'))//method.chain
+                                    .drawText("_________________________________________________________________________________________________________", 1, 6, 'white', corbel('25'));
 
     this.backgroundMesh.visible = true;
   },
@@ -386,7 +386,7 @@ trailerInfo.prototype = {
   },
 
   positionChange: function() {
-    
+    //TO DO:    
   }
 };
 

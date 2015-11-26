@@ -1,6 +1,13 @@
 window.onload = function() {
 /////////////////////////////////////////scene objects, etc.///////////////////////////////////////////////////////////////////////////////////////
 
+var light            = new pointLights(),
+    spinBox          = new rhombicDodecahedron(.75),
+    loading          = new loadBar(),
+    cube             = new wireFrameCube(20, 0x000000),
+    info             = new trailerInfo(),
+    playbackControls = new videoPlaybackControls();
+
 //append the container to the document, then the renderer to the container
 if( document.body != null ) { 
   append( $("container"), document.body );
@@ -8,17 +15,10 @@ if( document.body != null ) {
 
 if( $("container") != null ) {
   renderer.setSize(window.innerWidth, window.innerHeight);
+  //black background during loading
   renderer.setClearColor(0x000000);
   append( renderer.domElement, $("container") );
 };
-
-
-var light            = new pointLights(),
-    spinBox          = new rhombicDodecahedron(.75),
-    loading          = new loadBar(),
-    cube             = new wireFrameCube(20, 0x000000),
-    info             = new trailerInfo(),
-    playbackControls = new videoPlaybackControls();
 
 /////////////////////////////////////////user functions////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -69,13 +69,14 @@ function onMouseHover() {
 
       case 1:
         switch(intersects[0].object) {
-          //clear trailer info and redraw when another video screen's been clicked
-          default:
+          //trailer info highlighting
+          case info.clearingMesh:
             info.clearAll();
-            info.draw(clickKey);
+            info.textColors.thirteen = deepSkyBlue;
+            info.draw(clickKey, info.textColors);
+            info.textColors.thirteen = t_cBlue;
             break;
 
-          //trailer info highlighting
           case info.titleMesh:
             info.clearAll();
             info.textColors.one = deepSkyBlue;
@@ -160,11 +161,10 @@ function onMouseHover() {
             info.textColors.twelve = t_cBlue;
             break;
 
-          case info.clearingMesh:
+          //clear trailer info and redraw when another video screen's been clicked
+          default:
             info.clearAll();
-            info.textColors.thirteen = deepSkyBlue;
-            info.draw(clickKey, info.textColors);
-            info.textColors.thirteen = t_cBlue;
+            info.draw(clickKey);
             break;
         };
         break;
@@ -215,13 +215,18 @@ function onMouseClick() {
   if(spinBox.mesh.parent != scene && playbackControls.object3D.parent != scene) {
     if(intersects[0].object.parent == cube.mesh) {
       for(var key in trailers) {
+        //darken all screens on video screen click
+        trailers[key].darkenScreen();
+
         if(intersects[0].object == trailers[key].videoScreen) {
+          //highlight the screen that's been clicked
+          trailers[key].lightenScreen();
+
           //update the click count 
           if(key == clickKey) {
-            clickCount++;
+              clickCount++;
           } else {
-            clickCount = 1;
-            //TO DO: ADD LOGIC TO DARKEN ALL OTHER SCREENS WHEN A SCREEN HAS BEEN CLICKED
+              clickCount = 1;
           };
 
           //retrieve a global-scope key
@@ -230,6 +235,16 @@ function onMouseClick() {
       };
     } else if(intersects[0].object.parent = info.object3D) {
         switch(intersects[0].object) {
+          case info.clearingMesh:
+            //remove trailer info from view
+            info.clearAll();
+            //reset brightness of all other video screens
+            for(var key in trailers) { if(key != clickKey) {trailers[key].lightenScreen()} };
+            //reset relevant vars
+            clickCount = 0;
+            clickKey = null;
+            break;
+
           case info.titleMesh:
             window.open(trailers[clickKey].title.link);
             break;
@@ -295,12 +310,6 @@ function onMouseClick() {
               window.open(trailers[clickKey].writing.three.link);
             };
             break;
-
-          case info.clearingMesh:
-            info.clearAll();
-            clickCount = 0;
-            clickKey = null;
-            break;
         };
     };
 
@@ -326,9 +335,9 @@ function onMouseClick() {
           };
       };
 
-      //source the video, then load and play
-      trailers[clickKey].video.src = "https://files9.s3-us-west-2.amazonaws.com/hd_trailers/"+clickKey+"/"+clickKey+".mp4";
-      trailers[clickKey].loadVideo();
+      //source and play the video
+      trailers[clickKey].video.src = source(clickKey);
+      trailers[clickKey].playVideo();
 
       //mute for development
       trailers[clickKey].video.muted = true;
@@ -339,6 +348,9 @@ function onMouseClick() {
 
       //swap for play button at video end
       trailers[clickKey].video.addEventListener('ended', function(event) { if(playbackControls.pauseButton.visible == true) {playbackControls.playButtonSwap()} });
+
+      //reset brightness of all other video screens
+      for(var key in trailers) { if(key != clickKey) {trailers[key].lightenScreen()} };
 
       //reset the click count
       clickCount = 0;
@@ -387,7 +399,7 @@ function onMouseClick() {
         break;
 
       case playbackControls.exitButton:
-        trailers[clickKey].unloadVideo();
+        trailers[clickKey].stopVideo();
 
         //reverse any trailer formatting
         if(trailers[clickKey].formatting.videoHeightError == true) {
@@ -486,6 +498,7 @@ function init() {
     cube.mesh.add(trailers[key].videoScreen);
   };
 };
+
 
 function animate() {
   //check for highlighted objects; order onMouseHover() and //controls this way to prevent trailer info "flicker"
