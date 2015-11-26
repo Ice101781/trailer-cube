@@ -372,13 +372,21 @@ trailerInfo.prototype = {
 
     this.dynamicTextures.clearingMesh.drawText("_________________________________________________________________________________________________________", 0, 4, textColors.thirteen, '25px Corbel')//method.chain
                                      .drawText("_________________________________________________________________________________________________________", 1, 4, textColors.thirteen, '25px Corbel');
+
+    this.backgroundMesh.visible = true;
   },
 
   clearAll: function(col) {
 
     for(var name in this.params) {this.dynamicTextures[name].clear(col)};
 
+    this.backgroundMesh.visible = false;
+
     hoverKey = null;
+  },
+
+  positionChange: function() {
+    
   }
 };
 

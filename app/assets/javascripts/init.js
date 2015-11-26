@@ -505,7 +505,12 @@ function animate() {
     //EXPONENTIAL CONTROLS
     camera.position.x = (1/4)*mouse.x;
     camera.position.y = (2/5)*mouse.y;
-    camera.position.z = (1/(2*(1/2)))*Math.pow(Math.E, -Math.abs(mouse.y)/(1/2))+(7/10);//the pdf of the Laplace distribution translated by a constant...works great here!
+    camera.position.z = (1/(2*(1/2)))*Math.pow(Math.E, -Math.abs(mouse.y)/(1/2))+(7/10);//the pdf of the Laplace distribution translated by a constant
+
+    //TO DO: LOGNORMAL CONTROLS
+    //camera.position.x = (1/1)*mouse.x;
+    //camera.position.y = (1/1)*mouse.y;
+    //camera.position.z = 
   };
   
   //remain at the loading screen until all images have loaded, then go to the home page
