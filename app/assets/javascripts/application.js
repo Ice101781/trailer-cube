@@ -13,4 +13,12 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require detector
+//= require three_r69
+//= require dynamic_textures
+//= require objects
+//= require helpers
+//= require trailers
+//= require init
 //= require_tree .
+

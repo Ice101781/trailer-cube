@@ -23,6 +23,84 @@ var scene          = new THREE.Scene(),
 
 /////////////////////////////////////////objects///////////////////////////////////////////////////////////////////////////////////////////////////
 
+//the trailer object
+function trailer(title, genre, plot, director, cast, cinematography, writing, release, formatting) {
+   
+  title          = typeof title          !== 'undefined' ? title          : { name:'', link:'' };
+  genre          = typeof genre          !== 'undefined' ? genre          : '';
+  plot           = typeof plot           !== 'undefined' ? plot           : { line1:'', line2:'', line3:'', line4:'', line5:'', line6:'' };
+  director       = typeof director       !== 'undefined' ? director       : { name:'', link:'' };
+  cast           = typeof cast           !== 'undefined' ? cast           : { one: { name:'', link:'' }, two: { name:'', link:'' }, three: { name:'', link:'' }, four: { name:'', link:'' }, five: { name:'', link:'' } };
+  cinematography = typeof cinematography !== 'undefined' ? cinematography : { one: { name:'', link:'' }, two: { name:'', link:'' } };
+  writing        = typeof writing        !== 'undefined' ? writing        : { one: { name:'', link:'' }, two: { name:'', link:'' }, three: { name:'', link:'' } };
+  release        = typeof release        !== 'undefined' ? release        : '';
+  formatting     = typeof formatting     !== 'undefined' ? formatting     : { videoHeightError: false, aspectRatio: 'type1' };
+
+  this.title          = title;
+  this.genre          = genre;
+  this.plot           = plot;
+  this.director       = director;
+  this.cast           = cast;
+  this.cinematography = cinematography;
+  this.writing        = writing;
+  this.release        = release;
+  this.formatting     = formatting; 
+
+  this.video = create("video");
+    this.video.crossOrigin = 'anonymous';
+
+  this.canvas = create("canvas");
+    this.canvas.width  = 1280;
+    this.canvas.height = 720;
+
+  this.texture = new THREE.Texture(this.canvas);
+
+  this.context = this.canvas.getContext('2d');
+    this.context.fillStyle = '0#000000';
+    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+  this.imageStill = null;
+
+  this.videoScreen = new THREE.Mesh( 
+    new THREE.PlaneBufferGeometry(.16, .09, 1, 1), 
+    new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture("/public_assets/t_c.png"), overdraw: true})
+  );
+
+    this.videoScreen.visible = true;
+};
+
+trailer.prototype = {
+
+  constructor: trailer,
+
+  playVideo: function() {
+    this.videoScreen.material.map = this.texture;
+    this.video.load();
+    this.video.play();
+  },
+
+  updateVideo: function() {
+    this.context.drawImage(this.video, 0, 0);
+    this.texture.needsUpdate = true;
+  },
+
+  stopVideo: function() {
+    this.video.pause();
+    this.video.currentTime = 0;
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.videoScreen.material.map = this.imageStill;
+  },
+
+  darkenScreen: function() {
+    this.videoScreen.material.color.setHex(0x333333);
+  },
+
+  lightenScreen: function() {
+    this.videoScreen.material.color.setHex(0xFFFFFF);
+  }
+};
+
+
 //lights
 function pointLights() {
   
@@ -167,13 +245,13 @@ function trailerInfo() {
                                        pixelwidth:      60,
                                        meshlength:     .02,
                                        meshwidth:    .0025,
-                                       posadjust:  { x: -.05, y: -.0087, z: -.075 }  },
+                                       posadjust:    { low: { x: -.05, y: -.0087, z: -.075 }, high: { x: -.05, y: +.0087, z: -.075 } }  },
 
                        releaseMesh: {  pixelength:     240,
                                        pixelwidth:      60,
                                        meshlength:     .01,
                                        meshwidth:    .0025,
-                                       posadjust:  { x: .05475, y: -.0087, z: -.075 }  },
+                                       posadjust:    { low: { x: .05475, y: -.0087, z: -.075 }, high: { x: .05475, y: +.0087, z: -.075 } }  },
 
                       clearingMesh: {  pixelength:    1280,
                                        pixelwidth:      16,
@@ -405,7 +483,7 @@ function videoPlaybackControls() {
                                              color:  0x000000,//change to debug playback controls position
                                         dynamicmap:     false,     
                                         texturemap:      null, 
-                                         posadjust:  { x: 0.0, y: -0.038, z: 0.00005 }  },
+                                         posadjust:  { x: 0.0, y: -0.03880, z: 0.00005 }  },
 
                       timelineMesh:  {  pixelength:      null,
                                         pixelwidth:      null,
@@ -414,7 +492,7 @@ function videoPlaybackControls() {
                                              color:  0x261958,
                                         dynamicmap:     false,     
                                         texturemap:      null, 
-                                         posadjust:  { x: -0.025, y: -0.038, z: 0.0001 }  },
+                                         posadjust:  { x: -0.025, y: -0.03880, z: 0.0001 }  },
 
                       bufferedMesh:  {  pixelength:      null,
                                         pixelwidth:      null,
@@ -422,8 +500,8 @@ function videoPlaybackControls() {
                                          meshwidth:     .0005,
                                              color:  0x9999CC,
                                         dynamicmap:     false,     
-                                        texturemap:      null, 
-                                         posadjust:  { x: -0.046, y: -0.038, z: 0.000101 }  },
+                                        texturemap:      null,
+                                         posadjust:  { x: -0.046, y: -0.03880, z: 0.000101 }  },
 
                       progressMesh:  {  pixelength:      null,
                                         pixelwidth:      null,
@@ -432,7 +510,7 @@ function videoPlaybackControls() {
                                              color:  0x4B32AF,
                                         dynamicmap:     false,     
                                         texturemap:      null, 
-                                         posadjust:  { x: -0.046, y: -0.038, z: 0.000102 }  },
+                                         posadjust:  { x: -0.046, y: -0.03880, z: 0.000102 }  },
 
                    timeElapsedMesh:  {  pixelength:       128,
                                         pixelwidth:        72,
@@ -440,8 +518,8 @@ function videoPlaybackControls() {
                                          meshwidth:    .00405,
                                              color:  0x4B32AF,
                                         dynamicmap:      true,
-                                        texturemap:      null,   
-                                         posadjust:  { x: -0.075, y: -0.038, z: 0.0001 }  },
+                                        texturemap:      null,
+                                         posadjust:  { x: -0.075, y: -0.03880, z: 0.0001 }  },
 
                  timeRemainingMesh:  {  pixelength:       128,
                                         pixelwidth:        72,
@@ -450,7 +528,7 @@ function videoPlaybackControls() {
                                              color:  0x4B32AF,
                                         dynamicmap:      true,
                                         texturemap:      null,
-                                         posadjust:  { x: 0.025, y: -0.038, z: 0.0001 }  },
+                                         posadjust:  { x: 0.025, y: -0.03880, z: 0.0001 }  },
 
                      restartButton:  {  pixelength:      null,
                                         pixelwidth:      null,
@@ -459,7 +537,7 @@ function videoPlaybackControls() {
                                              color:  0xFFFFFF,
                                         dynamicmap:     false,
                                         texturemap:  THREE.ImageUtils.loadTexture('public_assets/restart_button.png'),
-                                         posadjust:  { x: 0.035, y: -0.038, z: 0.0001 }  },
+                                         posadjust:  { x: 0.035, y: -0.03880, z: 0.0001 }  },
 
                       rewindButton:  {  pixelength:      null,
                                         pixelwidth:      null,
@@ -468,7 +546,7 @@ function videoPlaybackControls() {
                                              color:  0xFFFFFF,
                                         dynamicmap:     false,
                                         texturemap:  THREE.ImageUtils.loadTexture('public_assets/rewind_button.png'),
-                                         posadjust:  { x: 0.043, y: -0.038, z: 0.0001 }  },
+                                         posadjust:  { x: 0.043, y: -0.03880, z: 0.0001 }  },
 
                         playButton:  {  pixelength:      null,
                                         pixelwidth:      null,
@@ -477,16 +555,16 @@ function videoPlaybackControls() {
                                              color:  0xFFFFFF,
                                         dynamicmap:     false,
                                         texturemap:  THREE.ImageUtils.loadTexture('public_assets/play_button.png'), 
-                                         posadjust:  { x: 0.051, y: -0.038, z: 0.00009 }  },
+                                         posadjust:  { x: 0.051, y: -0.03880, z: 0.00009 }  },
 
                        pauseButton:  {  pixelength:      null,
                                         pixelwidth:      null,
                                         meshlength:     .0072,
                                          meshwidth:    .00405,
                                              color:  0xFFFFFF,
-                                        dynamicmap:     false,     
+                                        dynamicmap:     false,
                                         texturemap:  THREE.ImageUtils.loadTexture('public_assets/pause_button.png'), 
-                                         posadjust:  { x: 0.051, y: -0.038, z: 0.0001 }  },
+                                         posadjust:  { x: 0.051, y: -0.03880, z: 0.0001 }  },
 
                  fastForwardButton:  {  pixelength:      null,
                                         pixelwidth:      null,
@@ -495,7 +573,7 @@ function videoPlaybackControls() {
                                              color:  0xFFFFFF,
                                         dynamicmap:     false,
                                         texturemap:  THREE.ImageUtils.loadTexture('public_assets/fastforward_button.png'),
-                                         posadjust:  { x: 0.059, y: -0.038, z: 0.0001 }  },
+                                         posadjust:  { x: 0.059, y: -0.03880, z: 0.0001 }  },
 
               exitFullscreenButton:  {  pixelength:      null,
                                         pixelwidth:      null,
@@ -504,7 +582,7 @@ function videoPlaybackControls() {
                                              color:  0xFFFFFF,
                                         dynamicmap:     false,
                                         texturemap:  THREE.ImageUtils.loadTexture('public_assets/exit_fullscreen_button.png'),
-                                         posadjust:  { x: 0.067, y: -0.038, z: 0.00009 }  },
+                                         posadjust:  { x: 0.067, y: -0.03880, z: 0.00009 }  },
 
              enterFullscreenButton:  {  pixelength:      null,
                                         pixelwidth:      null,
@@ -513,7 +591,7 @@ function videoPlaybackControls() {
                                              color:  0xFFFFFF,
                                         dynamicmap:     false,
                                         texturemap:  THREE.ImageUtils.loadTexture('public_assets/enter_fullscreen_button.png'),
-                                         posadjust:  { x: 0.067, y: -0.038, z: 0.0001 }  },
+                                         posadjust:  { x: 0.067, y: -0.03880, z: 0.0001 }  },
 
                         exitButton:  {  pixelength:      null,
                                         pixelwidth:      null,
@@ -522,7 +600,7 @@ function videoPlaybackControls() {
                                              color:  0xFFFFFF,
                                         dynamicmap:     false,
                                         texturemap:  THREE.ImageUtils.loadTexture('public_assets/exit_button.png'),
-                                         posadjust:  { x: 0.075, y: -0.038, z: 0.0001 }  }   };
+                                         posadjust:  { x: 0.075, y: -0.03880, z: 0.0001 }  }   };
 
   params = this.params;
 
@@ -558,7 +636,7 @@ videoPlaybackControls.prototype = {
   trailerTimeUpdate: function() {
         
     this.dynamicTextures.timeElapsedMesh.clear('black');
-    this.dynamicTextures.timeElapsedMesh.drawText(sec_to_string(Math.round(trailers[clickKey].video.currentTime)), 20, 45, 'white', '50px Corbel');
+    this.dynamicTextures.timeElapsedMesh.drawText(sec_to_string(Math.round(trailers[clickKey].video.currentTime)), 20, 45, 'white', corbel('50'));
 
     this.bufferedMesh.scale.x = (this.timelineMesh.geometry.parameters.width*(Math.round(trailers[clickKey].video.buffered.end(0))/Math.round(trailers[clickKey].video.duration))-this.bufferedMesh.geometry.parameters.width)/this.bufferedMesh.geometry.parameters.width;
     this.bufferedMesh.position.x = (2*this.timelineMesh.position.x-params.timelineMesh.meshlength+this.bufferedMesh.scale.x*this.bufferedMesh.geometry.parameters.width)/2;
@@ -567,7 +645,7 @@ videoPlaybackControls.prototype = {
     this.progressMesh.position.x = (2*this.timelineMesh.position.x-params.timelineMesh.meshlength+this.progressMesh.scale.x*this.progressMesh.geometry.parameters.width)/2;
 
     this.dynamicTextures.timeRemainingMesh.clear('black');
-    this.dynamicTextures.timeRemainingMesh.drawText(sec_to_string(Math.round(trailers[clickKey].video.duration)-Math.round(trailers[clickKey].video.currentTime)), 20, 45, 'white', '50px Corbel');
+    this.dynamicTextures.timeRemainingMesh.drawText(sec_to_string(Math.round(trailers[clickKey].video.duration)-Math.round(trailers[clickKey].video.currentTime)), 20, 45, 'white', corbel('50'));
   },
 
   pauseButtonSwap: function() {
@@ -590,6 +668,41 @@ videoPlaybackControls.prototype = {
     } else {
         this.object3D.remove(this.enterFullscreenButton);
         this.object3D.add(this.exitFullscreenButton);
+    };
+  },
+
+  formatAdjustments: function() {
+    if(trailers[clickKey].formatting.videoHeightError == true) {
+        camera.position.y += .0115;
+      
+        for(var name in this.params) { 
+          this[name].position.y += .0115; 
+        };
+      
+    } else if(trailers[clickKey].formatting.aspectRatio == 'type2') {
+      
+        camera.position.z += .0075;
+      
+        for(var name in this.params) { 
+          this[name].position.y -= .0045;
+        };
+    };
+  },
+
+  formatAdjustmentsUndo: function() {
+    if(trailers[clickKey].formatting.videoHeightError == true) {
+        camera.position.y -= .0115;
+          
+        for(var name in this.params) {
+          this[name].position.y -= .0115;
+        };        
+        
+    } else if(trailers[clickKey].formatting.aspectRatio == 'type2') {
+        camera.position.z -= .0075;
+          
+        for(var name in this.params) {
+          this[name].position.y += .0045;
+        };
     };
   }
 };

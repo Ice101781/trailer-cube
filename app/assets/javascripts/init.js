@@ -54,14 +54,14 @@ function onMouseHover() {
   if(intersects[0] != undefined && playbackControls.object3D.parent != scene) {
     switch(clickCount) {
       case 0:
-        if(intersects[0].object.parent == cube.mesh) {
-          for(var key in trailers) {
-            if(intersects[0].object == trailers[key].videoScreen && hoverKey !== undefined) {
-              info.clearAll();//change to debug trailer info position(s)
-              hoverKey = key;
-              info.draw();
+        if(intersects[0].object.parent == cube.mesh || intersects[0].object == cube.mesh) {
+            for(var key in trailers) {
+              if(intersects[0].object == trailers[key].videoScreen && hoverKey !== undefined) {
+                info.clearAll();//change to debug trailer info position(s)
+                hoverKey = key;
+                info.draw();
+              };
             };
-          };
         } else {
             info.clearAll();
         };
@@ -322,18 +322,8 @@ function onMouseClick() {
       camera.position.copy(trailers[clickKey].videoScreen.position);
       camera.position.z += .1;
 
-      //handle any trailer formatting
-      if(trailers[clickKey].formatting.videoHeightError == true) {
-          camera.position.y += .0115;
-          for(var name in playbackControls.params) { 
-            playbackControls[name].position.y += .0115; 
-          };
-      } else if(trailers[clickKey].formatting.aspectRatio == 'type2') {
-          camera.position.z += .0075;
-          for(var name in playbackControls.params) { 
-            playbackControls[name].position.y -= .0045;
-          };
-      };
+      //handle any trailer-specific formatting
+      playbackControls.formatAdjustments();
 
       //source and play the video
       trailers[clickKey].video.src = source(clickKey);
@@ -401,18 +391,8 @@ function onMouseClick() {
       case playbackControls.exitButton:
         trailers[clickKey].stopVideo();
 
-        //reverse any trailer formatting
-        if(trailers[clickKey].formatting.videoHeightError == true) {
-            camera.position.y -= .0115;
-            for(var name in playbackControls.params) { 
-              playbackControls[name].position.y -= .0115;
-            };        
-        } else if(trailers[clickKey].formatting.aspectRatio == 'type2') {
-            camera.position.z -= .0075;
-            for(var name in playbackControls.params) { 
-              playbackControls[name].position.y += .0045
-            };
-        };
+        //reverse any trailer-specific formatting
+        playbackControls.formatAdjustmentsUndo();
 
         if(playbackControls.playButton.visible == true) { playbackControls.pauseButtonSwap() };
         playbackControls.object3D.visible = false;
