@@ -481,29 +481,31 @@ function init() {
 
 
 function animate() {
-  //check for highlighted objects; order onMouseHover() and //controls this way to prevent trailer info "flicker"
+  //check for highlighted objects; order onMouseHover() and controls this way to prevent trailer info "flicker"
   onMouseHover();
 
-  //controls
   if(loading.mesh.parent != scene && clickCount != 1 && playbackControls.object3D.parent != scene) {
+    //maintain correct position of trailer info
+    info.positionCheck();
 
-    //PARABOLIC CONTROLS IN THE X-Z PLANE
-    //camera.position.x = mouse.x;
-    //camera.position.z = Math.pow(mouse.x, 2)+1;
+    //controls
+      //OLD
+      //camera.position.x = mouse.x/2;
+      //camera.position.z = Math.abs(mouse.y)+1;
 
-    //MORE OLD CONTROLS
-    //camera.position.x = mouse.x/2;
-    //camera.position.z = Math.abs(mouse.y)+1;
+      //PARABOLIC IN THE X-Z PLANE
+      //camera.position.x = mouse.x;
+      //camera.position.z = Math.pow(mouse.x, 2)+1;
 
-    //EXPONENTIAL CONTROLS
-    camera.position.x = (1/4)*mouse.x;
-    camera.position.y = (2/5)*mouse.y;
-    camera.position.z = (1/(2*(1/2)))*Math.pow(Math.E, -Math.abs(mouse.y)/(1/2))+(7/10);//the pdf of the Laplace distribution translated by a constant
+      //EXPONENTIAL
+      camera.position.x = (1/4)*mouse.x;
+      camera.position.y = (2/5)*mouse.y;
+      camera.position.z = (1/(2*(1/2)))*Math.pow(Math.E, -Math.abs(mouse.y)/(1/2))+(7/10);//the pdf of the Laplace distribution translated by a constant
 
-    //TO DO: LOGNORMAL CONTROLS
-    //camera.position.x = (1/1)*mouse.x;
-    //camera.position.y = (1/1)*mouse.y;
-    //camera.position.z = 
+      //TO DO: LOGNORMAL CONTROLS
+      //camera.position.x = (1/1)*mouse.x;
+      //camera.position.y = (1/1)*mouse.y;
+      //camera.position.z = 
   };
   
   //remain at the loading screen until all images have loaded, then go to the home page

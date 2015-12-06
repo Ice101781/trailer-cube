@@ -245,127 +245,127 @@ function trailerInfo() {
                                        pixelwidth:      60,
                                        meshlength:     .02,
                                        meshwidth:    .0025,
-                                       posadjust:    { low: { x: -.05, y: -.0087, z: -.075 }, high: { x: -.05, y: +.0087, z: -.075 } }  },
+                                       posadjust:    { x: -.05, y: -.0087, z: -.075 }  },
 
                        releaseMesh: {  pixelength:     240,
                                        pixelwidth:      60,
                                        meshlength:     .01,
                                        meshwidth:    .0025,
-                                       posadjust:    { low: { x: .05475, y: -.0087, z: -.075 }, high: { x: .05475, y: +.0087, z: -.075 } }  },
+                                       posadjust:    { x: .05475, y: -.0087, z: -.075 }  },
 
                       clearingMesh: {  pixelength:    1280,
                                        pixelwidth:      16,
                                        meshlength:   .1201,
                                        meshwidth:    .0015,
-                                       posadjust:  { x: 0, y: -.01075, z: -.075 }  },
+                                       posadjust:    { x: 0, y: -.0108, z: -.075 }  },
 
                          titleMesh: {  pixelength:    1280,
                                        pixelwidth:      80,
                                        meshlength:     .04,
                                        meshwidth:    .0025,
-                                       posadjust:  { x: -.04, y: -.01285, z: -.075 }  },
+                                       posadjust:    { x: -.0395, y: -.0129, z: -.075 }  },
 
                           plotMesh: {  pixelength:    1280,
                                        pixelwidth:     256,
                                        meshlength:    .077,
                                        meshwidth:    .0154,
-                                       posadjust:  { x: -.0215, y: -.022, z: -.075 }  },
+                                       posadjust:    { x: -.02, y: -.02205, z: -.075 }  },
 
                   directorTextMesh: {  pixelength:     200,
                                        pixelwidth:      50,
                                        meshlength:    .008,
                                        meshwidth:     .002,
-                                       posadjust:  { x: .0215, y: -.01275, z: -.075 }  },
+                                       posadjust:    { x: .0245, y: -.0128, z: -.075 }  },
 
                       directorMesh: {  pixelength:     400,
                                        pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
-                                       posadjust:  { x: .0275, y: -.015, z: -.075 }  },
+                                       posadjust:    { x: .0305, y: -.01505, z: -.075 }  },
 
                       castTextMesh: {  pixelength:     200,
                                        pixelwidth:      50,
                                        meshlength:    .008,
                                        meshwidth:     .002,
-                                       posadjust:  { x: .0215, y: -.018, z: -.075 }  },
+                                       posadjust:    { x: .0245, y: -.01805, z: -.075 }  },
 
                        castMeshOne: {  pixelength:     400,
                                        pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
-                                       posadjust:  { x: .0275, y: -.02025, z: -.075 }  },
+                                       posadjust:    { x: .0305, y: -.0203, z: -.075 }  },
 
                        castMeshTwo: {  pixelength:     400,
                                        pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
-                                       posadjust:  { x: .0275, y: -.0225, z: -.075 }  },
+                                       posadjust:    { x: .0305, y: -.02255, z: -.075 }  },
 
                      castMeshThree: {  pixelength:     400,
                                        pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
-                                       posadjust:  { x: .0275, y: -.02475, z: -.075 }  },
+                                       posadjust:    { x: .0305, y: -.0248, z: -.075 }  },
 
                       castMeshFour: {  pixelength:     400,
                                        pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
-                                       posadjust:  { x: .0275, y: -.027, z: -.075 }  },
+                                       posadjust:    { x: .0305, y: -.02705, z: -.075 }  },
 
                       castMeshFive: {  pixelength:     400,
                                        pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
-                                       posadjust:  { x: .0275, y: -.02925, z: -.075 }  },
+                                       posadjust:    { x: .0305, y: -.0293, z: -.075 }  },
 
             cinematographyTextMesh: {  pixelength:     400,
                                        pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
-                                       posadjust:  { x: .04425, y: -.01285, z: -.075 }  },
+                                       posadjust:    { x: .04925, y: -.0128, z: -.075 }  },
 
              cinematographyMeshOne: {  pixelength:     400,
                                        pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
-                                       posadjust:  { x: .0465, y: -.0151, z: -.075 }  },
+                                       posadjust:    { x: .0515, y: -.01515, z: -.075 }  },
 
              cinematographyMeshTwo: {  pixelength:     400,
                                        pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
-                                       posadjust:  { x: .0465, y: -.01735, z: -.075 }  },
+                                       posadjust:    { x: .0515, y: -.0174, z: -.075 }  },
 
                    writingTextMesh: {  pixelength:     400,
                                        pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
-                                       posadjust:  { x: .04425, y: -.02025, z: -.075 }  },
+                                       posadjust:    { x: .04925, y: -.0203, z: -.075 }  },
 
                     writingMeshOne: {  pixelength:     400,
                                        pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
-                                       posadjust:  { x: .0465, y: -.0225, z: -.075 }  },
+                                       posadjust:    { x: .0515, y: -.02255, z: -.075 }  },
 
                     writingMeshTwo: {  pixelength:     400,
                                        pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
-                                       posadjust:  { x: .0465, y: -.02475, z: -.075 }  },
+                                       posadjust:    { x: .0515, y: -.0248, z: -.075 }  },
 
                   writingMeshThree: {  pixelength:     400,
                                        pixelwidth:      50,
                                        meshlength:    .016,
                                        meshwidth:     .002,
-                                       posadjust:  { x: .0465, y: -.027, z: -.075 }  },
+                                       posadjust:    { x: .0515, y: -.02705, z: -.075 }  },
 
                        dividerMesh: {  pixelength:    1280,
                                        pixelwidth:      16,
                                        meshlength:   .1201,
                                        meshwidth:    .0015,
-                                       posadjust:  { x: 0, y: -.0316, z: -.075 }  }   };
+                                       posadjust:    { x: 0, y: -.0316, z: -.075 }  }   };
 
   params = this.params;
 
@@ -382,9 +382,7 @@ function trailerInfo() {
       new THREE.MeshBasicMaterial({map: this.dynamicTextures[name].texture, transparent: true})
     );
 
-      this[name].position.set( camera.position.x + params[name].posadjust.x,
-                               camera.position.y + params[name].posadjust.y,
-                               camera.position.z + params[name].posadjust.z );
+    this[name].position.set(params[name].posadjust.x, params[name].posadjust.y, params[name].posadjust.z);
 
     this.object3D.add(this[name]);
   };
@@ -394,8 +392,9 @@ function trailerInfo() {
     new THREE.PlaneBufferGeometry(.1201, .025, 1, 1),
     new THREE.MeshBasicMaterial({color: 0x111111, transparent: true, opacity: .9})//change color to debug background position
   );
-
-    this.backgroundMesh.position.set(0, -.0199, -.07501);
+    
+    this.backgroundMesh.posadjust = { x: 0, y: -.0199, z: -.07501 };
+    this.backgroundMesh.position.set(this.backgroundMesh.posadjust.x, this.backgroundMesh.posadjust.y, this.backgroundMesh.posadjust.z);
 
   this.object3D.add(this.backgroundMesh);
 };
@@ -413,12 +412,12 @@ trailerInfo.prototype = {
 
     this.textColors = textColors;
 
-    this.dynamicTextures.genreMesh.drawText(trailers[key].genre, 10, 45, 'white', corbel('50'));
+    this.dynamicTextures.genreMesh.drawText(trailers[key].genre, 10, 47, 'white', corbel('50'));
 
-    this.dynamicTextures.releaseMesh.drawText(trailers[key].release, 50, 40, 'white', corbel('40'));
+    this.dynamicTextures.releaseMesh.drawText(trailers[key].release, 50, 45, 'white', corbel('40'));
 
-    this.dynamicTextures.clearingMesh.drawText("_________________________________________________________________________________________________________", 0, 2, textColors.thirteen, corbel('25'))//method.chain
-                                     .drawText("_________________________________________________________________________________________________________", 1, 2, textColors.thirteen, corbel('25'));
+    this.dynamicTextures.clearingMesh.drawText("_________________________________________________________________________________________________________", 0, 4, textColors.thirteen, corbel('25'))//method.chain
+                                     .drawText("_________________________________________________________________________________________________________", 1, 4, textColors.thirteen, corbel('25'));
 
     this.dynamicTextures.titleMesh.drawText(trailers[key].title.name, 15, 60, textColors.one, ricasso('55'));
 
@@ -463,8 +462,21 @@ trailerInfo.prototype = {
     hoverKey = null;
   },
 
-  positionChange: function() {
-    //TO DO:    
+  positionCheck: function() {
+    
+    if(mouse.y < 0) {
+        this.backgroundMesh.position.y = this.backgroundMesh.posadjust.y + .0398;
+  
+        for(var name in this.params) {
+          this[name].position.y = this.params[name].posadjust.y + .0394;
+        };
+    } else {
+        this.backgroundMesh.position.y = this.backgroundMesh.posadjust.y;
+        
+        for(var name in this.params) {
+          this[name].position.y = this.params[name].posadjust.y;
+        };
+    };
   }
 };
 
