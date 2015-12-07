@@ -357,6 +357,31 @@ var trailers = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  zoolander2: new trailer(  { name: 'Zoolander No.2', link: 'http://www.rottentomatoes.com/m/zoolander_2/' },
+
+                            'Comedy',
+
+                            { line1: '   Derek and Hansel are modelling again when an opposing company attempts to take them out from',
+                              line2: 'the business.',
+                              line3: '',
+                              line4: '',
+                              line5: '',
+                              line6: '' },
+
+                            { name: 'Ben Stiller', link: imdb('0001774') },
+
+                            { one: { name: 'Ben Stiller', link: imdb('0001774') }, two: { name: 'Owen Wilson', link: imdb('0005562') }, three: { name: 'Will Ferrell', link: imdb('0002071') }, four: { name: 'Penelope Cruz', link: imdb('0004851') }, five: { name: 'Kristen Wiig', link: imdb('1325419') } },
+
+                            { one: { name: 'Daniel Mindel', link: imdb('0591053') }, two: { name: '', link: '' } },
+
+                            { one: { name: 'Justin Theroux', link: imdb('0857620') }, two: { name: 'Ben Stiller', link: imdb('0001774') }, three: { name: 'Nicholas Stoller', link: imdb('0831557') } },
+
+                            '02/12/2016',
+
+                            { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   race: new trailer(  { name: 'Race', link: 'http://www.rottentomatoes.com/m/race_2016/' },
 
                       'Drama',
@@ -382,6 +407,31 @@ var trailers = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  zootopia: new trailer(  { name: 'Zootopia', link: 'http://www.rottentomatoes.com/m/zootopia/' },
+
+                          'Family',
+
+                          { line1: '   In the animal city of Zootopia, a fast-talking fox who\'s trying to make it big goes on the run when',
+                            line2: ' he\'s framed for a crime he didn\'t commit.',
+                            line3: '',
+                            line4: '',
+                            line5: '',
+                            line6: '' },
+
+                          { name: 'Byron Howard', link: imdb('0397174') },
+
+                          { one: { name: 'Idris Elba', link: imdb('0252961') }, two: { name: 'Ginnifer Goodwin', link: imdb('0329481') }, three: { name: 'Jason Bateman', link: imdb('0000867') }, four: { name: 'Alan Tudyk', link: imdb('0876138') }, five: { name: 'J.K. Simmons', link: imdb('0799777') } },
+
+                          { one: { name: '', link: '' }, two: { name: '', link: '' } },
+
+                          { one: { name: 'Jared Bush', link: imdb('1158544') }, two: { name: 'Phil Johnston', link: imdb('1601882') }, three: { name: 'Byron Howard', link: imdb('0397174') } },
+
+                          '03/04/2016',
+
+                          { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   batmanvsuperman: new trailer(  { name: 'Batman v Superman', link: 'http://www.rottentomatoes.com/m/batman_v_superman_dawn_of_justice/' },
 
                                  'Action/Adventure',
@@ -404,5 +454,80 @@ var trailers = {
                                  '03/25/2016',
 
                                  { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+
+  theboss: new trailer(  { name: 'The Boss', link: 'http://www.rottentomatoes.com/m/the_boss_2016/' },
+
+                         'Comedy',
+
+                         { line1: '   A titan of industry is sent to prison after she\'s caught for insider trading. When she emerges ready',
+                           line2: 'to rebrand herself as America\'s latest sweetheart, not everyone she screwed over is so quick to',
+                           line3: 'forgive and forget.',
+                           line4: '',
+                           line5: '',
+                           line6: '' },
+
+                         { name: 'Ben Falcone', link: imdb('1229520') },
+
+                         { one: { name: 'Melissa McCarthy', link: imdb('0565250') }, two: { name: 'Kristen Bell', link: imdb('0068338') }, three: { name: 'Peter Dinklage', link: imdb('0227759') }, four: { name: 'Kristen Schaal', link: imdb('1102891') }, five: { name: 'Kathy Bates', link: imdb('0000870') } },
+
+                         { one: { name: 'Julio Macat', link: imdb('0531310') }, two: { name: '', link: '' } },
+
+                         { one: { name: 'Ben Falcone', link: imdb('1229520') }, two: { name: 'Steve Mallory', link: imdb('1133719') }, three: { name: 'Melissa McCarthy', link: imdb('0565250') } },
+
+                         '04/08/2016',
+
+                         { videoHeightError: false, aspectRatio: 'type2' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  capamcivilwar: new trailer(  { name: 'Captain America: Civil War', link: 'http://www.rottentomatoes.com/m/captain_america_civil_war/' },
+
+                               'Action/Adventure',
+
+                               { line1: '   Political interference in the Avengers\' activities causes a rift between former allies Captain',
+                                 line2: 'America and Iron Man.',
+                                 line3: '',
+                                 line4: '',
+                                 line5: '',
+                                 line6: '' },
+
+                               { name: 'Anthony and Joe Russo', link: imdb('0751577') },
+
+                               { one: { name: 'Chris Evans', link: imdb('0262635') }, two: { name: 'Robert Downey Jr.', link: imdb('0000375') }, three: { name: 'Sebastian Stan', link: imdb('1659221') }, four: { name: 'Scarlett Johansson', link: imdb('0424060') }, five: { name: 'Elizabeth Olsen', link: imdb('0647634') } },
+
+                               { one: { name: 'Trent Opaloch', link: imdb('1022001') }, two: { name: '', link: '' } },
+
+                               { one: { name: 'Christopher Markus', link: imdb('1321655') }, two: { name: 'Stephen McFeely', link: imdb('1321656') }, three: { name: 'Mark Millar', link: imdb('2092839') } },
+
+                               '05/06/2016',
+
+                               { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  nowyouseeme2: new trailer(  { name: 'Now You See Me 2', link: 'http://www.rottentomatoes.com/m/now_you_see_me_the_second_act/' },
+
+                              'Action/Adventure',
+
+                              { line1: '   One year after outwitting the FBI and winning the public\'s adulation with their Robin Hood-style',
+                                line2: 'magic spectacles, The Four Horsemen resurface for a comeback performance in hopes of exposing the',
+                                line3: 'unethical practices of a tech magnate.',
+                                line4: '',
+                                line5: '',
+                                line6: '' },
+
+                              { name: 'Jon M. Chu', link: imdb('0160840') },
+
+                              { one: { name: 'Jesse Eisenberg', link: imdb('0251986') }, two: { name: 'Woody Harrelson', link: imdb('0000437') }, three: { name: 'Mark Ruffalo', link: imdb('0749263') }, four: { name: 'Dave Franco', link: imdb('2002649') }, five: { name: 'Lizzy Caplan', link: imdb('0135221') } },
+
+                              { one: { name: 'Peter Deming', link: imdb('0005687') }, two: { name: '', link: '' } },
+
+                              { one: { name: 'Pete Chiarelli', link: imdb('1095804') }, two: { name: 'Ed Solomon', link: imdb('0004412') }, three: { name: '', link: '' } },
+
+                              '06/10/2016',
+
+                              { videoHeightError: true, aspectRatio: 'type1' }  ),
 };
 
