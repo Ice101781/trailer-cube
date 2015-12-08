@@ -20,6 +20,7 @@ var scene          = new THREE.Scene(),
                          5: new THREE.Vector3(-0.4, 0.3475, 0.5),  6: new THREE.Vector3(-0.2, 0.3475, 0.5),  7: new THREE.Vector3( 0.0, 0.3475, 0.5),  8: new THREE.Vector3( 0.2, 0.3475, 0.5),  9: new THREE.Vector3( 0.4, 0.3475, 0.5),
                         10: new THREE.Vector3(-0.4, 0.2425, 0.5), 11: new THREE.Vector3(-0.2, 0.2425, 0.5), 12: new THREE.Vector3( 0.0, 0.2425, 0.5), 13: new THREE.Vector3( 0.2, 0.2425, 0.5), 14: new THREE.Vector3( 0.4, 0.2425, 0.5),
                         15: new THREE.Vector3(-0.4, 0.1375, 0.5), 16: new THREE.Vector3(-0.2, 0.1375, 0.5), 17: new THREE.Vector3( 0.0, 0.1375, 0.5), 18: new THREE.Vector3( 0.2, 0.1375, 0.5), 19: new THREE.Vector3( 0.4, 0.1375, 0.5),
+                        20: new THREE.Vector3(-0.4, 0.0325, 0.5), 21: new THREE.Vector3(-0.2, 0.0325, 0.5), 22: new THREE.Vector3( 0.0, 0.0325, 0.5), 23: new THREE.Vector3( 0.2, 0.0325, 0.5), 24: new THREE.Vector3( 0.4, 0.0325, 0.5),
                       };
 
 /////////////////////////////////////////objects///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -383,7 +384,7 @@ function trailerInfo() {
       new THREE.MeshBasicMaterial({map: this.dynamicTextures[name].texture, transparent: true})
     );
 
-    this[name].position.set(params[name].posadjust.x, params[name].posadjust.y, params[name].posadjust.z);
+      this[name].position.set(params[name].posadjust.x, params[name].posadjust.y, params[name].posadjust.z);
 
     this.object3D.add(this[name]);
   };
@@ -466,17 +467,14 @@ trailerInfo.prototype = {
   positionCheck: function() {
     
     if(mouse.y < 0) {
+
         this.backgroundMesh.position.y = this.backgroundMesh.posadjust.y + .0398;
-  
-        for(var name in this.params) {
-          this[name].position.y = this.params[name].posadjust.y + .0394;
-        };
+        for(var name in this.params) {this[name].position.y = this.params[name].posadjust.y + .0394};
+    
     } else {
+   
         this.backgroundMesh.position.y = this.backgroundMesh.posadjust.y;
-        
-        for(var name in this.params) {
-          this[name].position.y = this.params[name].posadjust.y;
-        };
+        for(var name in this.params) {this[name].position.y = this.params[name].posadjust.y};
     };
   }
 };
@@ -634,9 +632,7 @@ function videoPlaybackControls() {
       new THREE.MeshBasicMaterial({map: params[name].texturemap, color: params[name].color})
     );
 
-      this[name].position.set( this.object3D.position.x + params[name].posadjust.x,
-                               this.object3D.position.y + params[name].posadjust.y,
-                               this.object3D.position.z + params[name].posadjust.z );
+      this[name].position.set(this.object3D.position.x + params[name].posadjust.x, this.object3D.position.y + params[name].posadjust.y, this.object3D.position.z + params[name].posadjust.z);
 
     this.object3D.add(this[name]);
   };
@@ -686,36 +682,27 @@ videoPlaybackControls.prototype = {
 
   formatAdjustments: function() {
     if(trailers[clickKey].formatting.videoHeightError == true) {
+        
         camera.position.y += .0115;
-      
-        for(var name in this.params) { 
-          this[name].position.y += .0115; 
-        };
+        for(var name in this.params) {this[name].position.y += .0115};
       
     } else if(trailers[clickKey].formatting.aspectRatio == 'type2') {
       
         camera.position.z += .0075;
-      
-        for(var name in this.params) { 
-          this[name].position.y -= .0045;
-        };
+        for(var name in this.params) {this[name].position.y -= .0045};
     };
   },
 
   formatAdjustmentsUndo: function() {
     if(trailers[clickKey].formatting.videoHeightError == true) {
+
         camera.position.y -= .0115;
-          
-        for(var name in this.params) {
-          this[name].position.y -= .0115;
-        };        
+        for(var name in this.params) {this[name].position.y -= .0115};        
         
     } else if(trailers[clickKey].formatting.aspectRatio == 'type2') {
+
         camera.position.z -= .0075;
-          
-        for(var name in this.params) {
-          this[name].position.y += .0045;
-        };
+        for(var name in this.params) {this[name].position.y += .0045};
     };
   }
 };

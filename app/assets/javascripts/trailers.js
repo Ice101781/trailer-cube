@@ -357,6 +357,31 @@ var trailers = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  touchedwithfire: new trailer(  { name: 'Touched With Fire', link: 'http://www.rottentomatoes.com/m/touched_with_fire_2016/' },
+
+                                 'Drama',
+
+                                 { line1: '   Two manic depressives meet in a psychiatric hospital and begin a romance that brings out all of the',
+                                   line2: 'beauty and horror of their condition.',
+                                   line3: '',
+                                   line4: '',
+                                   line5: '',
+                                   line6: '' },
+
+                                 { name: 'Paul Dalio', link: imdb('3297673') },
+
+                                 { one: { name: 'Katie Holmes', link: imdb('0005017') }, two: { name: 'Luke Kirby', link: imdb('0456186') }, three: { name: 'Christine Lahti', link: imdb('0001441') }, four: { name: 'Griffin Dunne', link: imdb('0001162') }, five: { name: 'Bruce Altman', link: imdb('0022883') } },
+
+                                 { one: { name: 'Kristina Nikolova', link: imdb('1305990') }, two: { name: 'Alexander Stanishev', link: imdb('1932518') } },
+
+                                 { one: { name: 'Paul Dalio', link: imdb('3297673') }, two: { name: '', link: '' }, three: { name: '', link: '' } },
+
+                                 '02/12/2016',
+
+                                 { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   zoolander2: new trailer(  { name: 'Zoolander No.2', link: 'http://www.rottentomatoes.com/m/zoolander_2/' },
 
                             'Comedy',
@@ -407,6 +432,31 @@ var trailers = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  godsofegypt: new trailer(  { name: 'Gods of Egypt', link: 'http://www.rottentomatoes.com/m/gods_of_egypt/' },
+
+                             'Action/Adventure',
+
+                             { line1: '   A common thief joins a mythical god on a quest through Egypt.',
+                               line2: '',
+                               line3: '',
+                               line4: '',
+                               line5: '',
+                               line6: '' },
+
+                             { name: 'Alex Proyas', link: imdb('0001639') },
+
+                             { one: { name: 'Gerard Butler', link: imdb('0124930') }, two: { name: 'Chadwick Boseman', link: imdb('1569276') }, three: { name: 'Rufus Sewell', link: imdb('0001722') }, four: { name: 'Nikolaj Coster-Waldau', link: imdb('0182666') }, five: { name: 'Courtney Eaton', link: imdb('5196907') } },
+
+                             { one: { name: 'Peter Menzies Jr.', link: imdb('0579977') }, two: { name: '', link: '' } },
+
+                             { one: { name: 'Matt Sazama', link: imdb('1948885') }, two: { name: 'Burk Sharpless', link: imdb('2332952') }, three: { name: '', link: '' } },
+
+                             '02/26/2016',
+
+                             { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   zootopia: new trailer(  { name: 'Zootopia', link: 'http://www.rottentomatoes.com/m/zootopia/' },
 
                           'Family',
@@ -429,6 +479,32 @@ var trailers = {
                           '03/04/2016',
 
                           { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  eyeinthesky: new trailer(  { name: 'Eye In The Sky', link: 'http://www.rottentomatoes.com/m/eye_in_the_sky/' },
+
+                             'Drama',
+
+                             { line1: '   EYE IN THE SKY stars Helen Mirren as Colonel Katherine Powell, a UK-based military officer in command',
+                               line2: 'of a top secret drone operation to capture terrorists in Kenya. Through remote surveillance and',
+                               line3: 'on-the-ground intel, Powell discovers the targets are planning a suicide bombing and the mission escalates',
+                               line4: 'from "capture" to "kill." But as American pilot Steve Watts (Aaron Paul) is about to engage, a nine-year',
+                               line5: 'old girl enters the kill zone triggering an international dispute, reaching the highest levels of US and',
+                               line6: 'British government, over the moral, political, and personal implications of modern warfare.',
+                             },
+
+                             { name: 'Gavin Hood', link: imdb('0004303') },
+
+                             { one: { name: 'Helen Mirren', link: imdb('0000545') }, two: { name: 'Aaron Paul', link: imdb('0666739') }, three: { name: 'Alan Rickman', link: imdb('0000614') }, four: { name: 'Barkhad Abdi', link: imdb('5831542') }, five: { name: 'Jeremy Northam', link: imdb('0000562') } },
+
+                             { one: { name: 'Haris Zambarloukos', link: imdb('0952539') }, two: { name: '', link: '' } },
+
+                             { one: { name: 'Guy Hibbert', link: imdb('0382505') }, two: { name: '', link: '' }, three: { name: '', link: '' } },
+
+                             '03/11/2016',
+
+                             { videoHeightError: true, aspectRatio: 'type1' }  ),
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -482,6 +558,31 @@ var trailers = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  barbershopthenextcut: new trailer(  { name: 'Barbershop: The Next Cut', link: 'http://www.rottentomatoes.com/m/barbershop_the_next_cut_2016/' },
+
+                                      'Comedy',
+
+                                      { line1: '   It\'s been more than 10 years since our last appointment at Calvin\'s Barbershop. Calvin and his',
+                                        line2: 'longtime crew are still there, but the shop has undergone some major changes. Most noticeably, our',
+                                        line3: 'once male-dominated sanctuary is now co-ed.',
+                                        line4: '',
+                                        line5: '',
+                                        line6: '' },
+
+                                      { name: 'Malcolm D. Lee', link: imdb('0002700') },
+
+                                      { one: { name: 'O\'Shea Jackson', link: imdb('0001084') }, two: { name: 'Cedric Kyles', link: imdb('0147825') }, three: { name: 'Anthony Anderson', link: imdb('0026364') }, four: { name: 'Lonnie Lynn', link: imdb('0996669') }, five: { name: 'Onika Maraj', link: imdb('3747326') } },
+
+                                      { one: { name: 'Greg Gardiner', link: imdb('0306755') }, two: { name: '', link: '' } },
+
+                                      { one: { name: 'Kenya Barris', link: imdb('1244069') }, two: { name: 'Tracy Oliver', link: imdb('2002824') }, three: { name: 'Mark Brown', link: imdb('0114197') } },
+
+                                      '04/15/2016',
+
+                                      { videoHeightError: false, aspectRatio: 'type2' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   capamcivilwar: new trailer(  { name: 'Captain America: Civil War', link: 'http://www.rottentomatoes.com/m/captain_america_civil_war/' },
 
                                'Action/Adventure',
@@ -504,6 +605,31 @@ var trailers = {
                                '05/06/2016',
 
                                { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  theniceguys: new trailer(  { name: 'The Nice Guys', link: 'http://www.rottentomatoes.com/m/the_nice_guys/' },
+
+                             'Drama',
+
+                             { line1: '   A private eye investigates the apparent suicide of a fading porn star in 1970s Los Angeles and',
+                               line2: 'uncovers a conspiracy.',
+                               line3: '',
+                               line4: '',
+                               line5: '',
+                               line6: '' },
+
+                             { name: 'Shane Black', link: imdb('0000948') },
+
+                             { one: { name: 'Russell Crowe', link: imdb('0000128') }, two: { name: 'Ryan Gosling', link: imdb('0331516') }, three: { name: 'Matt Bomer', link: imdb('0093589') }, four: { name: 'Kim Basinger', link: imdb('0000107') }, five: { name: 'Margaret Qualley', link: imdb('4960279') } },
+
+                             { one: { name: 'Philippe Rousselot', link: imdb('0003542') }, two: { name: '', link: '' } },
+
+                             { one: { name: 'Shane Black', link: imdb('0000948') }, two: { name: 'Anthony Bagarozzi', link: imdb('0046524') }, three: { name: '', link: '' } },
+
+                             '05/20/2016',
+
+                             { videoHeightError: true, aspectRatio: 'type1' }  ),
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
