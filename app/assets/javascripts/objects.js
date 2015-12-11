@@ -16,11 +16,12 @@ var scene          = new THREE.Scene(),
     deepSkyBlue    = 'rgb(0, 191, 255)',
 
     screenLocations = {
-                         0: new THREE.Vector3(-0.4, 0.4525, 0.5),  1: new THREE.Vector3(-0.2, 0.4525, 0.5),  2: new THREE.Vector3( 0.0, 0.4525, 0.5),  3: new THREE.Vector3( 0.2, 0.4525, 0.5),  4: new THREE.Vector3( 0.4, 0.4525, 0.5),
-                         5: new THREE.Vector3(-0.4, 0.3475, 0.5),  6: new THREE.Vector3(-0.2, 0.3475, 0.5),  7: new THREE.Vector3( 0.0, 0.3475, 0.5),  8: new THREE.Vector3( 0.2, 0.3475, 0.5),  9: new THREE.Vector3( 0.4, 0.3475, 0.5),
-                        10: new THREE.Vector3(-0.4, 0.2425, 0.5), 11: new THREE.Vector3(-0.2, 0.2425, 0.5), 12: new THREE.Vector3( 0.0, 0.2425, 0.5), 13: new THREE.Vector3( 0.2, 0.2425, 0.5), 14: new THREE.Vector3( 0.4, 0.2425, 0.5),
-                        15: new THREE.Vector3(-0.4, 0.1375, 0.5), 16: new THREE.Vector3(-0.2, 0.1375, 0.5), 17: new THREE.Vector3( 0.0, 0.1375, 0.5), 18: new THREE.Vector3( 0.2, 0.1375, 0.5), 19: new THREE.Vector3( 0.4, 0.1375, 0.5),
-                        20: new THREE.Vector3(-0.4, 0.0325, 0.5), 21: new THREE.Vector3(-0.2, 0.0325, 0.5), 22: new THREE.Vector3( 0.0, 0.0325, 0.5), 23: new THREE.Vector3( 0.2, 0.0325, 0.5), 24: new THREE.Vector3( 0.4, 0.0325, 0.5),
+                         0: new THREE.Vector3(-0.4,  0.4525, 0.5),  1: new THREE.Vector3(-0.2,  0.4525, 0.5),  2: new THREE.Vector3( 0.0,  0.4525, 0.5),  3: new THREE.Vector3( 0.2,  0.4525, 0.5),  4: new THREE.Vector3( 0.4,  0.4525, 0.5),
+                         5: new THREE.Vector3(-0.4,  0.3475, 0.5),  6: new THREE.Vector3(-0.2,  0.3475, 0.5),  7: new THREE.Vector3( 0.0,  0.3475, 0.5),  8: new THREE.Vector3( 0.2,  0.3475, 0.5),  9: new THREE.Vector3( 0.4,  0.3475, 0.5),
+                        10: new THREE.Vector3(-0.4,  0.2425, 0.5), 11: new THREE.Vector3(-0.2,  0.2425, 0.5), 12: new THREE.Vector3( 0.0,  0.2425, 0.5), 13: new THREE.Vector3( 0.2,  0.2425, 0.5), 14: new THREE.Vector3( 0.4,  0.2425, 0.5),
+                        15: new THREE.Vector3(-0.4,  0.1375, 0.5), 16: new THREE.Vector3(-0.2,  0.1375, 0.5), 17: new THREE.Vector3( 0.0,  0.1375, 0.5), 18: new THREE.Vector3( 0.2,  0.1375, 0.5), 19: new THREE.Vector3( 0.4,  0.1375, 0.5),
+                        20: new THREE.Vector3(-0.4,  0.0325, 0.5), 21: new THREE.Vector3(-0.2,  0.0325, 0.5), 22: new THREE.Vector3( 0.0,  0.0325, 0.5), 23: new THREE.Vector3( 0.2,  0.0325, 0.5), 24: new THREE.Vector3( 0.4,  0.0325, 0.5),
+                        25: new THREE.Vector3(-0.4, -0.0725, 0.5), 26: new THREE.Vector3(-0.2, -0.0725, 0.5), 27: new THREE.Vector3( 0.0, -0.0725, 0.5), 28: new THREE.Vector3( 0.2, -0.0725, 0.5), 29: new THREE.Vector3( 0.4, -0.0725, 0.5),
                       };
 
 /////////////////////////////////////////objects///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -466,7 +467,7 @@ trailerInfo.prototype = {
 
   positionCheck: function() {
     
-    if(mouse.y < 0) {
+    if(mouse.y < -0.0275) {
 
         this.backgroundMesh.position.y = this.backgroundMesh.posadjust.y + .0398;
         for(var name in this.params) {this[name].position.y = this.params[name].posadjust.y + .0394};

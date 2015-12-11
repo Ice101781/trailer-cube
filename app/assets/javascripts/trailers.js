@@ -282,6 +282,31 @@ var trailers = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  thebenefactor: new trailer(  { name: 'The Benefactor', link: 'http://www.rottentomatoes.com/m/the_benefactor/' },
+
+                               'Drama',
+
+                               { line1: '   A philanthropist meddles in the lives of newly-married couples in an attempt to relive his past.',
+                                 line2: '',
+                                 line3: '',
+                                 line4: '',
+                                 line5: '',
+                                 line6: '' },
+
+                               { name: 'Andrew Renzi', link: imdb('3005627') },
+
+                               { one: { name: 'Richard Gere', link: imdb('0000152') }, two: { name: 'Dakota Fanning', link: imdb('0266824') }, three: { name: 'Theo James', link: imdb('3772243') }, four: { name: 'Clarke Peters', link: imdb('0676370') }, five: { name: 'Brian Anthony Wilson', link: imdb('0933096') } },
+
+                               { one: { name: 'Joe Anderson', link: imdb('2208050') }, two: { name: '', link: '' } },
+
+                               { one: { name: 'Andrew Renzi', link: imdb('3005627') }, two: { name: '', link: '' }, three: { name: '', link: '' } },
+
+                               '01/15/2016',
+
+                               { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   dirtygrandpa: new trailer(  { name: 'Dirty Grandpa', link: 'http://www.rottentomatoes.com/m/dirty_grandpa/' },
 
                               'Comedy',
@@ -508,6 +533,31 @@ var trailers = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  midnightspecial: new trailer(  { name: 'Midnight Special', link: 'http://www.rottentomatoes.com/m/midnight_special_2015/' },
+
+                                 'Sci-Fi',
+
+                                 { line1: '   Michael Shannon, Joel Edgerton, and Kirsten Dunst star in writer/director Jeff Nichols\' drama about',
+                                   line2: 'a father and his eight-year-old son who go on the lam upon discovering that the boy possesses mysterious',
+                                   line3: 'powers.',
+                                   line4: '',
+                                   line5: '',
+                                   line6: '' },
+
+                                 { name: 'Jeff Nichols', link: imdb('2158772') },
+
+                                 { one: { name: 'Michael Shannon', link: imdb('0788335') }, two: { name: 'Joel Edgerton', link: imdb('0249291') }, three: { name: 'Kirsten Dunst', link: imdb('0000379') }, four: { name: 'Sam Shepard', link: imdb('0001731') }, five: { name: 'Adam Driver', link: imdb('3485845') } },
+
+                                 { one: { name: 'Adam Stone', link: imdb('1309148') }, two: { name: '', link: '' } },
+
+                                 { one: { name: 'Jeff Nichols', link: imdb('2158772') }, two: { name: '', link: '' }, three: { name: '', link: '' } },
+
+                                 '03/18/2016',
+
+                                 { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   batmanvsuperman: new trailer(  { name: 'Batman v Superman', link: 'http://www.rottentomatoes.com/m/batman_v_superman_dawn_of_justice/' },
 
                                  'Action/Adventure',
@@ -655,5 +705,80 @@ var trailers = {
                               '06/10/2016',
 
                               { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  thebfg: new trailer(  { name: 'The BFG', link: 'http://www.rottentomatoes.com/m/the_bfg_2016/' },
+
+                        'Family',
+
+                        { line1: '   A girl named Sophie encounters the Big Friendly Giant who, despite his intimidating appearance,',
+                          line2: 'turns out to be a kindhearted soul who is considered an outcast by the other giants because unlike',
+                          line3: 'his peers, he refuses to eat boys and girls.',
+                          line4: '',
+                          line5: '',
+                          line6: '' },
+
+                        { name: 'Steven Spielberg', link: imdb('0000229') },
+
+                        { one: { name: 'Mark Rylance', link: imdb('0753314') }, two: { name: 'Rebecca Hall', link: imdb('0356017') }, three: { name: 'Bill Hader', link: imdb('0352778') }, four: { name: 'Penelope Wilton', link: imdb('0934362') }, five: { name: 'Jemaine Clement', link: imdb('1318596') } },
+
+                        { one: { name: 'Janusz Kaminski', link: imdb('0001405') }, two: { name: '', link: '' } },
+
+                        { one: { name: 'Melissa Mathison', link: imdb('0558953') }, two: { name: 'Roald Dahl', link: imdb('0001094') }, three: { name: '', link: '' } },
+
+                        '07/01/2016',
+
+                        { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  thesecretlifeofpets: new trailer(  { name: 'The Secret Life of Pets', link: 'http://www.rottentomatoes.com/m/the_secret_life_of_pets/' },
+
+                                     'Family',
+
+                                     { line1: '   Taking place in a Manhattan apartment building, Max\'s life as a favorite pet is turned upside down',
+                                       line2: 'when his owner brings home a sloppy mongrel named Duke. They have to put their quarrels behind when',
+                                       line3: 'they find out that an adorable white bunny named Snowball is building an army of abandoned pets',
+                                       line4: 'determined to take revenge on all happy-owned pets and their owners.',
+                                       line5: '',
+                                       line6: '' },
+
+                                     { name: 'Chris Renaud', link: imdb('0719208') },
+
+                                     { one: { name: 'Lake Bell', link: imdb('1128572') }, two: { name: 'Kevin Hart', link: imdb('0366389') }, three: { name: 'Ellie Kemper', link: imdb('2608689') }, four: { name: 'Jenny Slate', link: imdb('2809577') }, five: { name: 'Louis C.K.', link: imdb('0127373') } },
+
+                                     { one: { name: '', link: '' }, two: { name: '', link: '' } },
+
+                                     { one: { name: 'Ken Daurio', link: imdb('0202425') }, two: { name: 'Brian Lynch', link: imdb('0528244') }, three: { name: 'Cinco Paul', link: imdb('0666791') } },
+
+                                     '07/08/2016',
+
+                                     { videoHeightError: false, aspectRatio: 'type2' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  amonstercalls: new trailer(  { name: 'A Monster Calls', link: 'http://www.rottentomatoes.com/m/a_monster_calls/' },
+
+                               'Drama',
+
+                               { line1: '   A visually spectacular drama from acclaimed director Juan Antonio Bayona (“The Impossible”), based on',
+                                 line2: 'the award-winning children’s fantasy novel. 12-year-old Conor (Lewis MacDougall) attempts to deal with his',
+                                 line3: 'mother’s (Felicity Jones) illness and the bullying of his classmates by escaping into a fantastical world',
+                                 line4: 'of monsters and fairy tales that explore courage, loss, and faith.',
+                                 line5: '',
+                                 line6: '' },
+
+                               { name: 'J.A. Bayona', link: imdb('1291105') },
+
+                               { one: { name: 'Liam Neeson', link: imdb('0000553') }, two: { name: 'Felicity Jones', link: imdb('0428065') }, three: { name: 'Sigourney Weaver', link: imdb('0000244') }, four: { name: 'Lewis MacDougall', link: imdb('6484968') }, five: { name: 'Toby Kebbell', link: imdb('1527905') } },
+
+                               { one: { name: 'Oscar Faura', link: imdb('1260544') }, two: { name: '', link: '' } },
+
+                               { one: { name: 'Patrick Ness', link: imdb('4710432') }, two: { name: '', link: '' }, three: { name: '', link: '' } },
+
+                               '10/14/2016',
+
+                               { videoHeightError: true, aspectRatio: 'type1' }  ),
 };
 
