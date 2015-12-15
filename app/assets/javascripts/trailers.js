@@ -533,6 +533,31 @@ var trailers = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  thebrothersgrimsby: new trailer(  { name: 'The Brothers Grimsby', link: 'http://www.rottentomatoes.com/m/the_brothers_grimsby/' },
+
+                                    'Comedy',
+
+                                    { line1: '   A new assignment forces a top spy to team up with his football hooligan brother.',
+                                      line2: '',
+                                      line3: '',
+                                      line4: '',
+                                      line5: '',
+                                      line6: '' },
+
+                                    { name: 'Louis Leterrier', link: imdb('0504642') },
+
+                                    { one: { name: 'Sacha Baron Cohen', link: imdb('0056187') }, two: { name: 'Mark Strong', link: imdb('0835016') }, three: { name: 'Penélope Cruz', link: imdb('0004851') }, four: { name: 'Isla Fisher', link: imdb('0279545') }, five: { name: 'Rebel Wilson', link: imdb('2313103') } },
+
+                                    { one: { name: 'Oliver Wood', link: imdb('0005929') }, two: { name: '', link: '' } },
+
+                                    { one: { name: 'Sacha Baron Cohen', link: imdb('0056187') }, two: { name: 'Phil Johnston', link: imdb('1601882') }, three: { name: 'Peter Baynham', link: imdb('0063165') } },
+
+                                    '03/11/2016',
+
+                                    { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   midnightspecial: new trailer(  { name: 'Midnight Special', link: 'http://www.rottentomatoes.com/m/midnight_special_2015/' },
 
                                  'Sci-Fi',
@@ -581,7 +606,32 @@ var trailers = {
 
                                  { videoHeightError: true, aspectRatio: 'type1' }  ),
 
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  isawthelight: new trailer(  { name: 'I Saw The Light', link: 'http://www.rottentomatoes.com/m/i_saw_the_light/' },
+
+                              'Drama',
+
+                              { line1: '   The story of the country-western singer Hank Williams, who in his brief life created one of the',
+                                line2: 'greatest bodies of work in American music. The film chronicles his rise to fame and its tragic effect',
+                                line3: 'on his health and personal life.',
+                                line4: '',
+                                line5: '',
+                                line6: '' },
+
+                              { name: 'Marc Abraham', link: imdb('0008953') },
+
+                              { one: { name: 'Tom Hiddleston', link: imdb('1089991') }, two: { name: 'Elizabeth Olsen', link: imdb('0647634') }, three: { name: 'David Krumholtz', link: imdb('0472710') }, four: { name: 'Bradley Whitford', link: imdb('0925966') }, five: { name: 'Cherry Jones', link: imdb('0427728') } },
+
+                              { one: { name: 'Dante Spinotti', link: imdb('0005883') }, two: { name: '', link: '' } },
+
+                              { one: { name: 'Marc Abraham', link: imdb('0008953') }, two: { name: 'Colin Escott', link: imdb('1660892') }, three: { name: 'George Merritt', link: imdb('7778699') } },
+
+                              '03/25/2016',
+
+                              { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   theboss: new trailer(  { name: 'The Boss', link: 'http://www.rottentomatoes.com/m/the_boss_2016/' },
 
@@ -660,7 +710,7 @@ var trailers = {
 
   theniceguys: new trailer(  { name: 'The Nice Guys', link: 'http://www.rottentomatoes.com/m/the_nice_guys/' },
 
-                             'Drama',
+                             'Comedy',
 
                              { line1: '   A private eye investigates the apparent suicide of a fading porn star in 1970s Los Angeles and',
                                line2: 'uncovers a conspiracy.',
@@ -680,6 +730,56 @@ var trailers = {
                              '05/20/2016',
 
                              { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  xmenapocalypse: new trailer(  { name: 'X-Men: Apocalypse', link: 'http://www.rottentomatoes.com/m/x_men_apocalypse/' },
+
+                                'Action/Adventure',
+ 
+                                { line1: '   With the emergence of the world\'s first mutant, Apocalypse, the X-Men must unite to defeat his',
+                                  line2: 'extinction level plan.',
+                                  line3: '',
+                                  line4: '',
+                                  line5: '',
+                                  line6: '' },
+
+                                { name: 'Bryan Singer', link: imdb('0001741') },
+
+                                { one: { name: 'James McAvoy', link: imdb('0564215') }, two: { name: 'Michael Fassbender', link: imdb('1055413') }, three: { name: 'Jennifer Lawrence', link: imdb('2225369') }, four: { name: 'Oscar Isaac', link: imdb('1209966') }, five: { name: 'Nicholas Hoult', link: imdb('0396558') } },
+
+                                { one: { name: 'Newton Thomas Sigel', link: imdb('0005875') }, two: { name: '', link: '' } },
+
+                                { one: { name: 'Simon Kinberg', link: imdb('1334526') }, two: { name: 'Bryan Singer', link: imdb('0001741') }, three: { name: 'Michael Dougherty', link: imdb('1002424') } },
+
+                                '05/27/2016',
+
+                                { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  tmnt2: new trailer(  { name: 'TMNT: Out Of The Shadows', link: 'http://www.rottentomatoes.com/m/teenage_mutant_ninja_turtles_out_of_the_shadows/' },
+
+                       'Action/Adventure',
+
+                       { line1: '   The Turtles return to save the city from a dangerous threat.',
+                         line2: '',
+                         line3: '',
+                         line4: '',
+                         line5: '',
+                         line6: '' },
+
+                       { name: 'Dave Green', link: imdb('1757777') },
+
+                       { one: { name: 'Megan Fox', link: imdb('1083271') }, two: { name: 'Johnny Knoxville', link: imdb('0424216') }, three: { name: 'Jeremy Howard', link: imdb('0397386') }, four: { name: 'Tony Shalhoub', link: imdb('0001724') }, five: { name: 'Brian Tee', link: imdb('0974575') } },
+
+                       { one: { name: 'Lula Carvalho', link: imdb('0142464') }, two: { name: '', link: '' } },
+
+                       { one: { name: 'Josh Appelbaum', link: imdb('0032227') }, two: { name: 'André Nemec', link: imdb('0625858') }, three: { name: 'Peter Laird', link: imdb('0481990') } },
+
+                       '06/03/2016',
+
+                       { videoHeightError: true, aspectRatio: 'type1' }  ),
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -755,6 +855,31 @@ var trailers = {
                                      '07/08/2016',
 
                                      { videoHeightError: false, aspectRatio: 'type2' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  startrekbeyond: new trailer(  { name: 'Star Trek Beyond', link: 'http://www.rottentomatoes.com/m/star_trek_beyond/' },
+
+                                'Action/Adventure',
+
+                                { line1: '   The further adventures of James T. Kirk (Chris Pine), Spock (Zachary Quinto) and the rest of the',
+                                  line2: 'Enterprise crew.',
+                                  line3: '',
+                                  line4: '',
+                                  line5: '',
+                                  line6: '' },
+
+                                { name: 'Justin Lin', link: imdb('0510912') },
+
+                                { one: { name: 'Chris Pine', link: imdb('1517976') }, two: { name: 'Zachary Quinto', link: imdb('0704270') }, three: { name: 'Simon Pegg', link: imdb('0670408') }, four: { name: 'Karl Urban', link: imdb('0881631') }, five: { name: 'Zoe Saldana', link: imdb('0757855') } },
+
+                                { one: { name: 'Stephen F. Windon', link: imdb('0934752') }, two: { name: '', link: '' } },
+
+                                { one: { name: 'Simon Pegg', link: imdb('0670408') }, two: { name: 'Doug Jung', link: imdb('1136647') }, three: { name: 'Roberto Orci', link: imdb('0649460') } },
+
+                                '07/22/2016',
+
+                                { videoHeightError: true, aspectRatio: 'type1' }  ),
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
