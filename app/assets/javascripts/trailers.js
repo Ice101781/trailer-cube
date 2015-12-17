@@ -558,6 +558,31 @@ var trailers = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  allegiant: new trailer(  { name: 'Allegiant', link: 'http://www.rottentomatoes.com/m/the_divergent_series_allegiant/' },
+
+                           'Action/Adventure',
+
+                           { line1: '   Beatrice Prior and Tobias Eaton venture into the world outside of the fence and are taken into',
+                             line2: 'protective custody by a mysterious agency known as the Bureau of Genetic Welfare.',
+                             line3: '',
+                             line4: '',
+                             line5: '',
+                             line6: '' },
+
+                           { name: 'Robert Schwentke', link: imdb('0777881') },
+
+                           { one: { name: 'Shailene Woodley', link: imdb('0940362') }, two: { name: 'Theo James', link: imdb('3772243') }, three: { name: 'Zoë Kravitz', link: imdb('2368789') }, four: { name: 'Naomi Watts', link: imdb('0915208') }, five: { name: 'Miles Teller', link: imdb('1886602') } },
+
+                           { one: { name: 'Florian Ballhaus', link: imdb('0050832') }, two: { name: '', link: '' } },
+
+                           { one: { name: 'Noah Oppenheim', link: imdb('3834300') }, two: { name: 'Veronica Roth', link: imdb('4316121') }, three: { name: 'Adam Cooper', link: imdb('0177836') } },
+
+                           '03/18/2016',
+
+                           { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   midnightspecial: new trailer(  { name: 'Midnight Special', link: 'http://www.rottentomatoes.com/m/midnight_special_2015/' },
 
                                  'Sci-Fi',
@@ -633,6 +658,31 @@ var trailers = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  mybigfatgreekwedding2: new trailer(  { name: 'Big Fat Greek Wedding 2', link: 'http://www.rottentomatoes.com/m/my_big_fat_greek_wedding_2/' },
+
+                                       'Comedy',
+
+                                       { line1: '   After spending most of their time focusing on their troubling teenage daughter, Toula and Ian are',
+                                         line2: 'facing marital problems while also having to deal with yet another Greek wedding - this time,',
+                                         line3: 'even bigger and fatter.',
+                                         line4: '',
+                                         line5: '',
+                                         line6: '' },
+
+                                       { name: 'Kirk Jones', link: imdb('0428600') },
+
+                                       { one: { name: 'Nia Vardalos', link: imdb('0889522') }, two: { name: 'John Corbett', link: imdb('0179173') }, three: { name: 'Lainie Kazan', link: imdb('0443577') }, four: { name: 'Michael Constantine', link: imdb('0176073') }, five: { name: 'Elena Kampouris', link: imdb('4502102') } },
+
+                                       { one: { name: 'Jim Denault', link: imdb('0002681') }, two: { name: '', link: '' } },
+
+                                       { one: { name: 'Nia Vardalos', link: imdb('0889522') }, two: { name: '', link: '' }, three: { name: '', link: '' } },
+
+                                       '03/25/2016',
+
+                                       { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   theboss: new trailer(  { name: 'The Boss', link: 'http://www.rottentomatoes.com/m/the_boss_2016/' },
 
                          'Comedy',
@@ -680,6 +730,31 @@ var trailers = {
                                       '04/15/2016',
 
                                       { videoHeightError: false, aspectRatio: 'type2' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  thehuntsman2: new trailer(  { name: 'The Huntsman 2', link: 'http://www.rottentomatoes.com/m/the_huntsman_winters_war_2016/' },
+
+                              'Fantasy',
+
+                              { line1: '   As two evil sisters prepare to conquer the land, two renegades - Eric the Huntsmen, who previously',
+                                line2: 'aided Snow White in defeating Ravenna, and his forbidden lover, Sara - set out to stop them.',
+                                line3: '',
+                                line4: '',
+                                line5: '',
+                                line6: '' },
+
+                              { name: 'C. Nicolas-Troyan', link: imdb('1031639') },
+
+                              { one: { name: 'Chris Hemsworth', link: imdb('1165110') }, two: { name: 'Charlize Theron', link: imdb('0000234') }, three: { name: 'Jessica Chastain', link: imdb('1567113') }, four: { name: 'Emily Blunt', link: imdb('1289434') }, five: { name: 'Sam Claflin', link: imdb('3510471') } },
+
+                              { one: { name: 'Phedon Papamichael', link: imdb('0003659') }, two: { name: '', link: '' } },
+
+                              { one: { name: 'E. Spiliotopoulos', link: imdb('0818746') }, two: { name: 'Craig Mazin', link: imdb('0563301') }, three: { name: 'Evan Daugherty', link: imdb('2489193') } },
+
+                              '04/22/2016',
+
+                              { videoHeightError: true, aspectRatio: 'type1' }  ),
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -808,6 +883,31 @@ var trailers = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  independenceday2: new trailer(  { name: 'Independence Day 2', link: 'http://www.rottentomatoes.com/m/independence_day_resurgence/' },
+
+                                  'Action/Adventure',
+
+                                  { line1: '   We always knew they were coming back. After INDEPENDENCE DAY redefined the event movie genre, the',
+                                    line2: 'next epic chapter delivers global catastrophe on an unimaginable scale. Using recovered alien',
+                                    line3: 'technology, the nations of Earth have collaborated on an immense defense program to protect the planet.',
+                                    line4: 'But nothing can prepare us for the aliens’ advanced and unprecedented force. Only the ingenuity of a',
+                                    line5: 'few brave men and women can bring our world back from the brink of extinction.',
+                                    line6: '' },
+
+                                  { name: 'Roland Emmerich', link: imdb('0000386') },
+
+                                  { one: { name: 'Jeff Goldblum', link: imdb('0000156') }, two: { name: 'Bill Pullman', link: imdb('0000597') }, three: { name: 'Vivica A. Fox', link: imdb('0000407') }, four: { name: 'Liam Hemsworth', link: imdb('2955013') }, five: { name: 'William Fichtner', link: imdb('0001209') } },
+
+                                  { one: { name: 'Markus Förderer', link: imdb('2775581') }, two: { name: '', link: '' } },
+
+                                  { one: { name: 'Carter Blanchard', link: imdb('1125328') }, two: { name: 'Dean Devlin', link: imdb('0002041') }, three: { name: 'Roland Emmerich', link: imdb('0000386') } },
+
+                                  '06/24/2016',
+
+                                  { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   thebfg: new trailer(  { name: 'The BFG', link: 'http://www.rottentomatoes.com/m/the_bfg_2016/' },
 
                         'Family',
@@ -855,6 +955,31 @@ var trailers = {
                                      '07/08/2016',
 
                                      { videoHeightError: false, aspectRatio: 'type2' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  iceage5: new trailer(  { name: 'Ice Age 5', link: 'http://www.rottentomatoes.com/m/ice_age_collision_course/' },
+
+                         'Family',
+
+                         { line1: '   Scrat\'s epic pursuit of the elusive acorn catapults him into the universe where he accidentally sets',
+                           line2: 'off a series of cosmic events that transform and threaten the Ice Age world. To save themselves, Sid,',
+                           line3: 'Manny, Diego, and the rest of the herd must leave their home and embark on a quest full of comedy and',
+                           line4: 'adventure, traveling to exotic new lands and encountering a host of colorful new characters.',
+                           line5: '',
+                           line6: '' },
+
+                         { name: 'Mike Thurmeier', link: imdb('0862211') },
+
+                         { one: { name: 'Denis Leary', link: imdb('0001459') }, two: { name: 'Ray Romano', link: imdb('0005380') }, three: { name: 'John Leguizamo', link: imdb('0000491') }, four: { name: 'Jennifer Lopez', link: imdb('0000182') }, five: { name: 'Simon Pegg', link: imdb('0670408') } },
+
+                         { one: { name: 'Renato Falcão', link: imdb('0006549') }, two: { name: '', link: '' } },
+
+                         { one: { name: 'Michael Berg', link: imdb('0073850') }, two: { name: 'Aubrey Solomon', link: imdb('0813289') }, three: { name: 'Michael J. Wilson', link: imdb('5022110') } },
+
+                         '07/22/2016',
+
+                         { videoHeightError: true, aspectRatio: 'type1' }  ),
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

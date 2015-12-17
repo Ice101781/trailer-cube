@@ -23,6 +23,7 @@ var scene          = new THREE.Scene(),
                         20: new THREE.Vector3(-0.4,  0.0325, 0.5), 21: new THREE.Vector3(-0.2,  0.0325, 0.5), 22: new THREE.Vector3( 0.0,  0.0325, 0.5), 23: new THREE.Vector3( 0.2,  0.0325, 0.5), 24: new THREE.Vector3( 0.4,  0.0325, 0.5),
                         25: new THREE.Vector3(-0.4, -0.0725, 0.5), 26: new THREE.Vector3(-0.2, -0.0725, 0.5), 27: new THREE.Vector3( 0.0, -0.0725, 0.5), 28: new THREE.Vector3( 0.2, -0.0725, 0.5), 29: new THREE.Vector3( 0.4, -0.0725, 0.5),
                         30: new THREE.Vector3(-0.4, -0.1775, 0.5), 31: new THREE.Vector3(-0.2, -0.1775, 0.5), 32: new THREE.Vector3( 0.0, -0.1775, 0.5), 33: new THREE.Vector3( 0.2, -0.1775, 0.5), 34: new THREE.Vector3( 0.4, -0.1775, 0.5),
+                        35: new THREE.Vector3(-0.4, -0.2825, 0.5), 36: new THREE.Vector3(-0.2, -0.2825, 0.5), 37: new THREE.Vector3( 0.0, -0.2825, 0.5), 38: new THREE.Vector3( 0.2, -0.2825, 0.5), 39: new THREE.Vector3( 0.4, -0.2825, 0.5),
                       };
 
 /////////////////////////////////////////objects///////////////////////////////////////////////////////////////////////////////////////////////////
