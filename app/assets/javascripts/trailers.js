@@ -357,6 +357,31 @@ var trailers = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  terminus: new trailer(  { name: 'Terminus', link: 'http://www.rottentomatoes.com/m/terminus_2016/' },
+
+                          'Sci-Fi',
+
+                          { line1: '   Following a near-fatal accident, David Chamberlain makes an unprecedented discovery that will not',
+                            line2: 'only determine the fate of his family, but of mankind.',
+                            line3: '',
+                            line4: '',
+                            line5: '',
+                            line6: '' },
+
+                          { name: 'Marc Furmie', link: imdb('2611815') },
+
+                          { one: { name: 'Jai Koutrae', link: imdb('1195175') }, two: { name: 'Kendra Appleton', link: imdb('4362834') }, three: { name: 'Todd Lasance', link: imdb('2642892') }, four: { name: 'Bren Foster', link: imdb('1248409') }, five: { name: 'Brendan Clearkin', link: imdb('2301067') } },
+
+                          { one: { name: 'Kieran Fowler', link: imdb('3603998') }, two: { name: '', link: '' } },
+
+                          { one: { name: 'Marc Furmie', link: imdb('2611815') }, two: { name: 'Shiyan Zheng', link: imdb('4284682') }, three: { name: 'Gabriel Dowrick', link: imdb('1907744') } },
+
+                          '01/22/2016',
+
+                          { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   hailcaesar: new trailer(  { name: 'Hail, Caesar!', link: 'http://www.rottentomatoes.com/m/hail_caesar_2009/' },
 
                             'Comedy',
@@ -457,6 +482,31 @@ var trailers = {
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  eddietheeagle: new trailer(  { name: 'Eddie The Eagle', link: 'http://www.rottentomatoes.com/m/eddie_the_eagle/' },
+
+                               'Drama',
+
+                               { line1: '   Inspired by true events, Eddie the Eagle is a feel-good story about Michael “Eddie” Edwards (Taron',
+                                 line2: 'Egerton), an unlikely but courageous British ski-jumper who never stopped believing in himself – even',
+                                 line3: 'as an entire nation was counting him out. With the help of a rebellious and charismatic coach (played',
+                                 line4: 'by Hugh Jackman), Eddie takes on the establishment and wins the hearts of sports fans around the world',
+                                 line5: 'by making an improbable and historic showing at the 1988 Calgary Winter Olympics.',
+                                 line6: '' },
+
+                               { name: 'Dexter Fletcher', link: imdb('0002077') },
+
+                               { one: { name: 'Taron Egerton', link: imdb('5473782') }, two: { name: 'Hugh Jackman', link: imdb('0413168') }, three: { name: 'Christopher Walken', link: imdb('0000686') }, four: { name: 'Rune Temte', link: imdb('0854815') }, five: { name: 'Tim McInnerny', link: imdb('0570570') } },
+
+                               { one: { name: 'George Richmond', link: imdb('0725104') }, two: { name: '', link: '' } },
+
+                               { one: { name: 'Sean Macaulay', link: imdb('2306331') }, two: { name: 'Simon Kelton', link: imdb('2035069') }, three: { name: '', link: '' } },
+
+                               '02/26/2016',
+
+                               { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   godsofegypt: new trailer(  { name: 'Gods of Egypt', link: 'http://www.rottentomatoes.com/m/gods_of_egypt/' },
 
                              'Action/Adventure',
@@ -479,6 +529,31 @@ var trailers = {
                              '02/26/2016',
 
                              { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  whiskeytangofoxtrot: new trailer(  { name: 'Whiskey Tango Foxtrot', link: 'http://www.rottentomatoes.com/m/whiskey_tango_foxtrot/' },
+
+                                     'Drama',
+
+                                     { line1: '   A journalist recounts her wartime coverage in Afghanistan and Pakistan.',
+                                       line2: '',
+                                       line3: '',
+                                       line4: '',
+                                       line5: '',
+                                       line6: '' },
+
+                                     { name: 'Glenn Ficarra', link: imdb('0275629') },
+
+                                     { one: { name: 'Tina Fey', link: imdb('0275486') }, two: { name: 'Margot Robbie', link: imdb('3053338') }, three: { name: 'Billy Bob Thornton', link: imdb('0000671') }, four: { name: 'Martin Freeman', link: imdb('0293509') }, five: { name: 'Josh Charles', link: imdb('0001038') } },
+
+                                     { one: { name: 'Xavier Grobet', link: imdb('0004267') }, two: { name: '', link: '' } },
+
+                                     { one: { name: 'Kim Barker', link: imdb('6310055') }, two: { name: 'Robert Carlock', link: imdb('1061622') }, three: { name: '', link: '' } },
+
+                                     '03/04/2016',
+
+                                     { videoHeightError: false, aspectRatio: 'type2' }  ),
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -530,6 +605,31 @@ var trailers = {
                              '03/11/2016',
 
                              { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  hellomynameisdoris: new trailer(  { name: 'Hello, My Name Is Doris', link: 'http://www.rottentomatoes.com/m/hello_my_name_is_doris/' },
+
+                                    'Comedy',
+
+                                    { line1: '   A self-help seminar inspires a sixty-something woman to romantically pursue her younger co-worker.',
+                                      line2: '',
+                                      line3: '',
+                                      line4: '',
+                                      line5: '',
+                                      line6: '' },
+
+                                    { name: 'Michael Showalter', link: imdb('0795290') },
+
+                                    { one: { name: 'Sally Field', link: imdb('0000398') }, two: { name: 'Max Greenfield', link: imdb('0339011') }, three: { name: 'Beth Behrs', link: imdb('3396631') }, four: { name: 'W. McLendon-Covey', link: imdb('1018488') }, five: { name: 'Stephen Root', link: imdb('0740535') } },
+
+                                    { one: { name: 'Brian Burgoyne', link: imdb('1125431') }, two: { name: '', link: '' } },
+
+                                    { one: { name: 'Laura Terruso', link: imdb('2884474') }, two: { name: 'Michael Showalter', link: imdb('0795290') }, three: { name: '', link: '' } },
+
+                                    '03/11/2016',
+
+                                    { videoHeightError: false, aspectRatio: 'type2' }  ),
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -932,6 +1032,31 @@ var trailers = {
                         { videoHeightError: true, aspectRatio: 'type1' }  ),
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  thelegendoftarzan: new trailer(  { name: 'The Legend of Tarzan', link: 'http://www.rottentomatoes.com/m/the_legend_of_tarzan/' },
+
+                                   'Action/Adventure',
+
+                                   { line1: '   It has been years since the man once known as Tarzan (Skarsgård) left the jungles of Africa behind',
+                                     line2: 'for a gentrified life as John Clayton III, Lord Greystoke, with his beloved wife, Jane (Robbie) at his',
+                                     line3: 'side. Now, he has been invited back to the Congo to serve as a trade emissary of Parliament, unaware',
+                                     line4: 'that he is a pawn in a deadly convergence of greed and revenge, masterminded by the Belgian, Captain',
+                                     line5: 'Leon Rom (Waltz). But those behind the murderous plot have no idea what they are about to unleash.',
+                                     line6: '' },
+
+                                   { name: 'David Yates', link: imdb('0946734') },
+
+                                   { one: { name: 'Alexander Skarsgård', link: imdb('0002907') }, two: { name: 'Margot Robbie', link: imdb('3053338') }, three: { name: 'Christoph Waltz', link: imdb('0910607') }, four: { name: 'Samuel L. Jackson', link: imdb('0000168') }, five: { name: 'Ella Purnell', link: imdb('3480246') } },
+
+                                   { one: { name: 'Henry Braham', link: imdb('0103956') }, two: { name: '', link: '' } },
+
+                                   { one: { name: 'Adam Cozad', link: imdb('3092414') }, two: { name: 'Craig Brewer', link: imdb('0108132') }, three: { name: '', link: '' } },
+
+                                   '07/01/2016',
+
+                                   { videoHeightError: true, aspectRatio: 'type1' }  ),
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
 
   thesecretlifeofpets: new trailer(  { name: 'The Secret Life of Pets', link: 'http://www.rottentomatoes.com/m/the_secret_life_of_pets/' },
 

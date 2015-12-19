@@ -469,7 +469,7 @@ function init() {
   
   //set trailer locations, position the video screens and add them to the cube, then load the image stills
   for(var key in trailers) {
-    trailers[key].location = screenLocations[Object.keys(trailers).indexOf(key)];
+    trailers[key].location = screenLocations.face1[Object.keys(trailers).indexOf(key)];
     trailers[key].videoScreen.position.copy(trailers[key].location);
     trailers[key].videoScreen.position.z += .001;
     trailers[key].imageStill = THREE.ImageUtils.loadTexture( 'public_assets/'+key+'.jpg', undefined, function(){loadedImages++} );
