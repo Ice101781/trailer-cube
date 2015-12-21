@@ -4,7 +4,7 @@ window.onload = function() {
 var light            = new pointLights(),
     spinBox          = new rhombicDodecahedron(.75),
     loading          = new loadBar(),
-    cube             = new wireFrameCube(20, 0x000000),
+    cube             = new wireFrameCube(20, 0x111111),
     info             = new trailerInfo(),
     playbackControls = new videoPlaybackControls();
 
@@ -19,6 +19,18 @@ if( $("container") != null ) {
   renderer.setClearColor(0x000000);
   append( renderer.domElement, $("container") );
 };
+
+
+
+//cursor lock; forking for cross-browser support
+/*
+$("container").requestPointerLock = $("container").requestPointerLock || $("container").mozRequestPointerLock || $("container").webkitRequestPointerLock;
+
+$("container").onclick = function() {
+  $("container").requestPointerLock();
+  console.log("Yup, the container was clicked!");
+};
+*/
 
 /////////////////////////////////////////user functions////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -314,8 +326,9 @@ function onMouseClick() {
     };
 
     if(clickCount == 2) {
-      //darken the background for video playback
+      //darken the background for video playback, camouflage the cube
       renderer.setClearColor(0x000000);
+      cube.mesh.material.color.setHex(0x000000);
 
       //remove the trailer info and position the camera in front of the video
       camera.remove(info.object3D);
@@ -398,8 +411,9 @@ function onMouseClick() {
         playbackControls.object3D.visible = false;
         scene.remove(playbackControls.object3D);
 
-        //lighten the background for app navigation
+        //lighten the background for app navigation, camouflage the cube
         renderer.setClearColor(0x111111);
+        cube.mesh.material.color.setHex(0x111111);
         
         camera.position.set(0, 0, 2);
         camera.add(info.object3D);
@@ -481,33 +495,6 @@ function init() {
 
 
 function animate() {
-  //check for highlighted objects; order onMouseHover() and controls this way to prevent trailer info "flicker"
-  onMouseHover();
-
-  if(loading.mesh.parent != scene && clickCount != 1 && playbackControls.object3D.parent != scene) {
-    //maintain correct position of trailer info
-    info.positionCheck();
-
-    //controls
-      //OLD
-      //camera.position.x = mouse.x/2;
-      //camera.position.z = Math.abs(mouse.y)+1;
-
-      //PARABOLIC IN THE X-Z PLANE
-      //camera.position.x = mouse.x;
-      //camera.position.z = Math.pow(mouse.x, 2)+1;
-
-      //EXPONENTIAL
-      camera.position.x = (1/4)*mouse.x;
-      camera.position.y = (2/5)*mouse.y;
-      camera.position.z = (1/(2*(1/2)))*Math.pow(Math.E, -Math.abs(mouse.y)/(1/2))+(7/10);//the pdf of the Laplace distribution translated by a constant
-
-      //TO DO: LOGNORMAL CONTROLS
-      //camera.position.x = (1/1)*mouse.x;
-      //camera.position.y = (1/1)*mouse.y;
-      //camera.position.z = 
-  };
-  
   //remain at the loading screen until all images have loaded, then go to the home page
   if(loadedImages != 0) {
     switch(loadedImages) {
@@ -520,6 +507,15 @@ function animate() {
         imagesLoaded();
         break;
     };
+  };
+
+  //check for highlighted objects; order onMouseHover() and controls this way to prevent trailer info "flicker"
+  onMouseHover();
+
+  //maintain correct positions of camera and trailer info
+  if(loading.mesh.parent != scene && clickCount != 1 && playbackControls.object3D.parent != scene) {
+    setCameraPosition();
+    info.positionCheck();
   };
 
   //update a video if it's playing, and verify the correct fullscreen button is visible

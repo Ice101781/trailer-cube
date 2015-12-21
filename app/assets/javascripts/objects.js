@@ -105,6 +105,15 @@ trailer.prototype = {
 };
 
 
+//controls
+setCameraPosition = function() {
+  
+  camera.position.x = .25*mouse.x;
+  camera.position.y = .4*mouse.y;
+  camera.position.z = .9;
+};
+
+
 //lights
 function pointLights() {
   
@@ -225,9 +234,9 @@ function theVoid() {
 //the cube
 function wireFrameCube(segments, hex) {
 
-  segments = typeof segments !== 'undefined' ? segments : 100;
-  hex      = typeof hex      !== 'undefined' ? hex      : 0x4B32AF;
-  
+  segments   = typeof segments   !== 'undefined' ? segments   : 100;
+  hex        = typeof hex        !== 'undefined' ? hex        : 0x4B32AF;
+
   this.mesh = new THREE.Mesh(
     new THREE.BoxGeometry(1, 1, 1, segments, segments, segments),
     new THREE.MeshBasicMaterial({color: hex, wireframe: true})
@@ -468,7 +477,7 @@ trailerInfo.prototype = {
 
   positionCheck: function() {
     
-    if(mouse.y < 0) {
+    if(mouse.y <= 0) {
 
         this.backgroundMesh.position.y = this.backgroundMesh.posadjust.y + .0398;
         for(var name in this.params) {this[name].position.y = this.params[name].posadjust.y + .0394};
