@@ -10,7 +10,15 @@ gem 'sass-rails', '~> 4.0.3'
 gem 'bootstrap-sass'
 
 # Use sqlite3 as the database for Active Record
+group :development, :test do
 gem 'sqlite3'
+end
+
+# Use Postgres as the database in production
+group :production do
+gem 'pg'
+gem 'rails_12factor'
+end
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
