@@ -4,16 +4,6 @@
   };
 
 
-//HTML tag function(s)
-  function $(id) {
-    return document.getElementById(id);
-  };
-
-  function create(id) {
-    return document.createElement(id);
-  };
-
-
 //convert number of seconds to a 'minutes-seconds' string
   function sec_to_string(seconds) {
     var mins_decimal = seconds/60,

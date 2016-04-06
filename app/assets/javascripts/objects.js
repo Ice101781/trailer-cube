@@ -50,10 +50,10 @@ function trailer(title, genre, plot, director, cast, cinematography, writing, re
   this.release        = release;
   this.formatting     = formatting; 
 
-  this.video = create("video");
+  this.video = document.createElement("video");
     this.video.crossOrigin = 'anonymous';
 
-  this.canvas = create("canvas");
+  this.canvas = document.createElement("canvas");
     this.canvas.width  = 1280;
     this.canvas.height = 720;
 

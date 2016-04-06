@@ -34,11 +34,6 @@ Rails.application.configure do
   config.assets.js_compressor = NoCompression.new
   config.assets.css_compressor = NoCompression.new
 
-  # Debug mode disables concatenation and preprocessing of assets.
-  # This option may cause significant delays in view rendering with a large
-  # number of complex assets.
-  config.assets.debug = true
-
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
 

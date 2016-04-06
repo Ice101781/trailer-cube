@@ -10,18 +10,18 @@ var light            = new pointLights(),
 
 //append the container to the document, then the renderer to the container
 if(document.body != null) {
-  document.body.appendChild($("container"));
+  document.body.appendChild(document.getElementById("container"));
 };
 
-if($("container") != null) {
+if(document.getElementById("container") != null) {
   renderer.setSize(window.innerWidth, window.innerHeight);
   //black background during loading
   renderer.setClearColor(0x000000);
-  $("container").appendChild(renderer.domElement);
+  document.getElementById("container").appendChild(renderer.domElement);
 };
 
 
-//cursor lock; forking for cross-browser support
+//cursor lock - depends on helper that no longer exists!
 /*
 $("container").requestPointerLock = $("container").requestPointerLock || $("container").mozRequestPointerLock || $("container").webkitRequestPointerLock;
 
