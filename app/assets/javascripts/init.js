@@ -343,7 +343,7 @@ function onMouseClick() {
       trailers[clickKey].playVideo();
 
       //mute for development
-      trailers[clickKey].video.muted = true;
+      trailers[clickKey].video.muted = false;
 
       //position and add the playback controls
       playbackControls.object3D.position.copy(trailers[clickKey].videoScreen.position);
