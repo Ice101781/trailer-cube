@@ -342,8 +342,8 @@ function onMouseClick() {
       trailers[clickKey].video.src = source(clickKey);
       trailers[clickKey].playVideo();
 
-      //mute for development
-      trailers[clickKey].video.muted = false;
+      //mute videos in development
+      //trailers[clickKey].video.muted = true;
 
       //position and add the playback controls
       playbackControls.object3D.position.copy(trailers[clickKey].videoScreen.position);
