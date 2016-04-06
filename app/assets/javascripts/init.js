@@ -9,17 +9,16 @@ var light            = new pointLights(),
     playbackControls = new videoPlaybackControls();
 
 //append the container to the document, then the renderer to the container
-if( document.body != null ) { 
-  append( $("container"), document.body );
+if(document.body != null) {
+  document.body.appendChild($("container"));
 };
 
-if( $("container") != null ) {
+if($("container") != null) {
   renderer.setSize(window.innerWidth, window.innerHeight);
   //black background during loading
   renderer.setClearColor(0x000000);
-  append( renderer.domElement, $("container") );
+  $("container").appendChild(renderer.domElement);
 };
-
 
 
 //cursor lock; forking for cross-browser support
@@ -31,6 +30,7 @@ $("container").onclick = function() {
   console.log("Yup, the container was clicked!");
 };
 */
+
 
 /////////////////////////////////////////user functions////////////////////////////////////////////////////////////////////////////////////////////
 

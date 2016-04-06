@@ -9,10 +9,6 @@
     return document.getElementById(id);
   };
 
-  function append(child, parent) {
-    return parent.appendChild(child);
-  };
-
   function create(id) {
     return document.createElement(id);
   };
