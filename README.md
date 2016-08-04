@@ -4,7 +4,7 @@
 
 ###Since the application is unfinished, what are the limitations of the user-experience (UX)?
 
-&nbsp; The current design allows the user to navigate around the active face of the cube with the mouse and select any trailer for more info or viewing. As of now, there is only one face of the cube available, so an important part of the design concept is missing. The original intent was to give the user the ability to access more trailers by clicking the far sides of the active face; this action would trigger a 90 degree rotation of the cube thereby displaying the next face of trailers.
+&nbsp; The current design allows the user to navigate around the active face of the cube with the mouse and select any trailer for more info or viewing. As of now, there is only one face of the cube available, so an important part of the design concept is missing. The original intent was to give the user the ability to access more trailers by clicking the far sides of the active face; this action would trigger a 90 degree rotation of the cube thereby displaying the next face of trailers. It's also worth noting that *trailer_cube* is not a mobile-friendly experience.
 
 ###Why was development on *trailer_cube* stopped?
 
