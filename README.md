@@ -8,4 +8,4 @@
 
 ###Is *trailer_cube* still in development?
 
-&nbsp; *trailer_cube* is no longer in development mainly because of the amount of time that proved necessary to manage a database of the latest movie trailers. It seemed more prudent to focus on developing applications that don't demand daily upkeep. In addition to this, there are intellectual property considerations. Hopefully, this demo and the code supporting it still prove useful in some way to those looking for examples of Three.js implementations that focus on HTML5 video as a medium.
+&nbsp; *trailer_cube* is no longer in development mainly because of the amount of time that proved necessary to manage a database of the latest movie trailers. It seemed more prudent to focus on developing applications that don't demand daily upkeep. In addition to this, there are intellectual property considerations. Hopefully, this demo and the code supporting it still prove useful to those looking for examples of Three.js implementations that focus on HTML5 video as a medium.
