@@ -1,11 +1,11 @@
-###What is *trailer_cube*?  
+<a href="http://trailer-cube.herokuapp.com/">trailer_cube</a>
+===
 
-&nbsp; *trailer_cube* is a desktop design concept for a movie trailer web application that leverages the power of the Three.js API. Every aspect of the UI on the main page, with the exception of the header and footer, is set in three-dimensional space. For example, video playback is achieved via a canvas element that's been mapped to a plane in 3D. When the user clicks on a trailer to play it, no other page is loaded; the camera in the scene is simply positioned in front of the plane containing the video canvas so that playback occurs as expected. Similarly, the buttons that control video playback are images that have been mapped to corresponding planes; these are then positioned in front of the current trailer and displayed accordingly.
+&nbsp; A design concept for a movie trailer website.
 
-###Is it still in development?
+---
+### About
 
-&nbsp; *trailer_cube* is no longer in development. The amount of time required to maintain a database of the latest movie trailers proved to be prohibitive, and it seemed more productive to focus on creating applications that don't necessitate daily management. In addition to this, there are intellectual property considerations. Hopefully, this demo and the code supporting it will still be useful to those looking for examples of Three.js implementations that focus on HTML5 video as a medium.
+&nbsp; trailer_cube is a <a href="https://github.com/rails/rails">Ruby on Rails</a>-based application which depends on <a href="https://github.com/mrdoob/three.js/">Three.js</a>. All media is stored on and served from <a href="https://aws.amazon.com/s3/">Amazon S3</a>.
 
-###Why is it called *trailer_cube*?
-
-&nbsp; The original intent was to give the user the ability to access more trailers by clicking the far sides of the browser window. This action would trigger a 90-degree rotation of the "cube" to display another "face" of trailers. The present design allows the user to navigate with the mouse around a single face and select any trailer for more info or viewing.
+&nbsp; The entirety of the user interface, with the exception of the header and footer, is rendered in 3D and contained within a single `<div>` element. 
