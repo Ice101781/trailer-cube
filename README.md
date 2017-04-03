@@ -15,7 +15,7 @@
 <img width="" alt="main page" src="https://drive.google.com/uc?export=download&id=0B3rehuqgDPeVRnhaT2IxdUlZWVU">
 <br>
 
-&nbsp; Select an image to lock on a trailer, and the other images will darken to highlight the choice. Click any purple text to link to corresponding <a href="http://www.imdb.com">IMDB</a> content. Click the purple horizontal rule to exit the current selection, or the image again to position the camera in front and play the trailer.
+&nbsp; Select an image to lock on a trailer, and the other images will darken to highlight the choice. Click the title to link to corresponding content on <a href="http://www.rottentomatoes.com">Rotten Tomatoes</a>, or any other purple text to view <a href="http://www.imdb.com">IMDB</a> pages. Click the purple horizontal rule to exit the current selection, or the image again to position the camera in front and play the trailer.
 
 <br>
 <img width="" alt="trailer selected" src="https://drive.google.com/uc?export=download&id=0B3rehuqgDPeVd1NTSU1HUS1yZ1U">
