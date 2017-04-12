@@ -1,7 +1,7 @@
 <a href="http://trailer-cube.herokuapp.com/">trailer_cube</a>
 ===
 
-&nbsp; This project is a <a href="https://github.com/rails/rails">Ruby on Rails</a>-based application which depends on <a href="https://github.com/mrdoob/three.js/">Three.js</a>. All media are stored on <a href="https://aws.amazon.com/s3/">Amazon S3</a>, are copyright of their respective owners, and have been presented only for instructional purposes.
+&nbsp; This project is a <a href="https://github.com/rails/rails">Ruby on Rails</a>-based application hosted on <a href="http://www.heroku.com">Heroku</a>. It has a dependency on <a href="https://github.com/mrdoob/three.js/">Three.js</a>. All media are stored on <a href="https://aws.amazon.com/s3/">Amazon's S3 Web Service</a>, are copyright of their respective owners, and have been presented only for instructional purposes.
 
 &nbsp; The entirety of the user interface, with the exception of the header and footer, is rendered in 3D and contained within a single `<div>` element. In the load screen below, the icon and progress bar are geometric objects that share the same "space". The camera is set closest to the user, followed by the progress bar, and finally the icon. The approach is unconventional yet the experience is still familiar.
 
