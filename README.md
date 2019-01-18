@@ -25,3 +25,14 @@
 
 <br>
 <img width="" alt="trailer playing" src="https://drive.google.com/uc?export=download&id=0B3rehuqgDPeVSjBsa0ZVV1kyUWc">
+<br>
+
+***
+Concept Graphics
+
+<br>
+<img width="" alt="concept 1" src="https://drive.google.com/uc?export=download&id=1eOxtnVcCLissfZgLC22dz9Qx3ZraDVaa">
+<br>
+
+<br>
+<img width="" alt="concept 2" src="https://drive.google.com/uc?export=download&id=1cClUGameSgHpin7_5a25RMR2_wniFdSU">
